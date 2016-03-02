@@ -19,5 +19,6 @@
 		<form-login />
 		<http-basic />
 		<logout />
+		<csrf disabled="true"/>
 	</http>
 </beans:beans>
