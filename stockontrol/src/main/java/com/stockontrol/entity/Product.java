@@ -7,20 +7,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.envers.Audited;
 
 @Entity
-public class Product
+public class Product extends BaseEntity
 {
-	@Id
-	@GeneratedValue
-	private Long id;
-	
 	@Column(nullable = false, unique = true, length = 255)
 	@Audited
 	private String name;
@@ -37,11 +31,6 @@ public class Product
 	@Audited
 	private List<Batch> batches = new ArrayList<Batch>();
 
-	public Long getId()
-	{
-		return id;
-	}
-
 	public List<Batch> getBatches()
 	{
 		return batches;
@@ -50,16 +39,6 @@ public class Product
 	public void setBatches(List<Batch> batches)
 	{
 		this.batches = batches;
-	}
-
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
-
-	public String getName()
-	{
-		return name;
 	}
 
 	public void setName(String name)

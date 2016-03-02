@@ -4,19 +4,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.envers.Audited;
 
 @Entity
-public class Batch
+public class Batch extends BaseEntity
 {
-	@Id
-	@GeneratedValue
-	private Long id;
-	
 	@Audited
 	@Column(nullable = false, length = 255)
 	private String identifier;
@@ -36,16 +30,6 @@ public class Batch
 	@Audited
 	@ManyToOne
 	private Product product;
-
-	public Long getId()
-	{
-		return id;
-	}
-
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
 
 	public String getIdentifier()
 	{
