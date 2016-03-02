@@ -10,15 +10,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.envers.Audited;
+
 @Entity
 public class Category
 {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
 	@Column(nullable = false, unique = true, length = 255)
+	@Audited
 	private String name;
+	
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+	@Audited
 	private List<Product> Products = new ArrayList<>();
 
 	public void setProducts(List<Product> products)

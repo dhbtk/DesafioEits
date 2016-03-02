@@ -8,17 +8,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.envers.Audited;
+
 @Entity
 public class Product
 {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
 	@Column(nullable = false, unique = true, length = 255)
+	@Audited
 	private String name;
+	
 	@Column(nullable = false, precision = 16, scale = 2)
+	@Audited
 	private BigDecimal price;
+	
 	@ManyToOne
+	@Audited
 	private Category category;
 
 	public Long getId()
