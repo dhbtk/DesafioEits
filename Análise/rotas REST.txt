@@ -1,28 +1,29 @@
 GET    /users{/,/index}
 POST   /users{/,/index}
-GET    /users/{:id}
-PATCH  /users/{:id}
-DELETE /users{:id}
-POST   /users/{:id}/deactivate
-POST   /users/{:id}/activate
+GET    /users/:id
+PATCH  /users/:id
+DELETE /users:id
+POST   /users/:id/deactivate
+POST   /users/:id/activate
 
 GET    /categories{/,/index}
 POST   /categories{/,/index}
-GET    /categories/{:id}
-PATCH  /categories/{:id}
-DELETE /categories{:id}
+GET    /categories/:id
+GET    /categories/:id/products
+PATCH  /categories/:id
+DELETE /categories/:id
 
 GET    /products{/,/index}
 POST   /products{/,/index}
-GET    /products/{:id}
-GET    /products/{:id}/batches
-POST   /products/{:id}/batches
-GET    /products/{:id}/batches/expired
-GET    /products/{:id}/batches/expiring
-PATCH  /products/{:id}
-DELETE /products{:id}
+GET    /products/:id
+GET    /products/:id/batches
+POST   /products/:id/batches
+GET    /products/:id/batches/expired
+GET    /products/:id/batches/expiring
+PATCH  /products/:id
+DELETE /products/:id
 
 GET    /batches{/,/index}
-GET    /batches/{:id}
-PATCH  /batches/{:id}/outgoing
+GET    /batches/:id
+PATCH  /batches/:id/outgoing
 
