@@ -6,12 +6,15 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<authentication-manager>
-		<authentication-provider>
-			<user-service>
-				<user name="admin" password="teste" authorities="ROLE_USER, ROLE_ADMIN" />
-			</user-service>
+		<authentication-provider user-service-ref="customUserDetailsService">
+			<password-encoder hash="bcrypt" />
 		</authentication-provider>
 	</authentication-manager>
+	
+	<global-method-security pre-post-annotations="enabled" />
+	
+	<beans:bean id="customUserDetailsService" class="com.stockontrol.service.UserDetailsService" />
+	
 	<http pattern="/resources/css/**" security="none" />
 	<http pattern="/webjars/**" security="none" />
 	<http>
@@ -21,4 +24,16 @@
 		<logout />
 		<csrf disabled="true"/>
 	</http>
+	
+	<beans:bean id="roleVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
+		<beans:constructor-arg ref="roleHierarchy" />
+	</beans:bean>
+	<beans:bean id="roleHierarchy" class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+		<beans:property name="hierarchy">
+			<beans:value>
+				ROLE_ADMIN > ROLE_USER
+			</beans:value>
+		</beans:property>
+	</beans:bean>
+	
 </beans:beans>

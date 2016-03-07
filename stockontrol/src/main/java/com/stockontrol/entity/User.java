@@ -2,9 +2,12 @@ package com.stockontrol.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.envers.Audited;
 
+@Table(name = "users")
 @Entity
 public class User extends BaseEntity
 {
@@ -13,13 +16,13 @@ public class User extends BaseEntity
 		User, Administrator;
 	}
 	
-	@Column(nullable = false, length = 255)
+	@Column(name = "full_name", nullable = false, length = 255)
 	@Audited
 	private String fullName;
 	@Column(nullable = false, unique = true, length = 255)
 	@Audited
 	private String email;
-	@Column(nullable = false, length = 255)
+	@Column(name = "password_digest", nullable = false, length = 255)
 	@Audited
 	private String passwordDigest;
 	@Column(nullable = false)
@@ -28,6 +31,8 @@ public class User extends BaseEntity
 	@Column(nullable = false)
 	@Audited
 	private boolean active;
+	@Transient
+	private String password;
 	
 	
 	public String getFullName()
@@ -70,4 +75,13 @@ public class User extends BaseEntity
 	{
 		this.active = active;
 	}
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+	public String getPassword()
+	{
+		return password;
+	}
+	
 }

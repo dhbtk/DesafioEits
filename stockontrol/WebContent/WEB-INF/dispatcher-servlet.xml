@@ -19,5 +19,7 @@
     <mvc:resources mapping="/webjars/**" location="/webjars/" />
     
     <mvc:default-servlet-handler />
+    
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
 
 </beans>
