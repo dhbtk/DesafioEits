@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.envers.Audited;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Category extends BaseEntity
 {	
@@ -18,13 +20,18 @@ public class Category extends BaseEntity
 	@Audited
 	private String name;
 	
+	@Column(columnDefinition = "text")
+	@Audited
+	private String text;
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Audited
 	private List<Product> Products = new ArrayList<>();
 
-	public void setProducts(List<Product> products)
+	public String getName()
 	{
-		Products = products;
+		return name;
 	}
 
 	public List<Product> getProducts()
@@ -32,13 +39,23 @@ public class Category extends BaseEntity
 		return Products;
 	}
 
-	public String getName()
+	public String getText()
 	{
-		return name;
+		return text;
 	}
 
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+	
+	public void setProducts(List<Product> products)
+	{
+		Products = products;
+	}
+
+	public void setText(String text)
+	{
+		this.text = text;
 	}
 }

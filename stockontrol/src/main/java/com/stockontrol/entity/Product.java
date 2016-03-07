@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.envers.Audited;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Product extends BaseEntity
 {
@@ -28,6 +30,7 @@ public class Product extends BaseEntity
 	@Audited
 	private Category category;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Audited
 	private List<Batch> batches = new ArrayList<Batch>();
