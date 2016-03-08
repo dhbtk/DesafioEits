@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.stockontrol.entity.Batch;
+import com.stockontrol.entity.Product;
 import com.stockontrol.repository.BatchRepository;
 
 @Service("batchService")
@@ -17,6 +18,8 @@ public class BatchService
 {
 	@Autowired
 	private BatchRepository batchRepository;
+	@Autowired
+	private ProductService productService;
 	
 	@PreAuthorize("hasRole('USER')")
 	@Transactional
@@ -43,7 +46,7 @@ public class BatchService
 	@Transactional
 	public List<Batch> findAllByProductId(Long productId)
 	{
-		return batchRepository.findAllByProductId(productId);
+		return batchRepository.findAllByProduct(productService.find(productId));
 	}
 	
 	@PreAuthorize("hasRole('USER')")
@@ -57,7 +60,7 @@ public class BatchService
 	@Transactional
 	public List<Batch> findAllExpiredByProductId(Long productId)
 	{
-		return batchRepository.findAllExpiredByProductId(productId);
+		return batchRepository.findAllExpiredByProduct(productService.find(productId));
 	}
 	
 	@PreAuthorize("hasRole('USER')")
@@ -71,7 +74,7 @@ public class BatchService
 	@Transactional
 	public List<Batch> findAllExpiringByProductId(Long productId)
 	{
-		return batchRepository.findAllExpiringByProductId(productId);
+		return batchRepository.findAllExpiringByProduct(productService.find(productId));
 	}
 	
 	@PreAuthorize("hasRole('USER')")
