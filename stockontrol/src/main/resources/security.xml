@@ -19,7 +19,6 @@
 	<http pattern="/webjars/**" security="none" />
 	<http>
 		<intercept-url pattern="/**" access="hasRole('USER')" />
-		<form-login />
 		<http-basic />
 		<logout />
 		<csrf disabled="true"/>
