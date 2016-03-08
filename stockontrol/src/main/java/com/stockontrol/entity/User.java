@@ -4,8 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Table(name = "users")
 @Entity
@@ -16,21 +19,32 @@ public class User extends BaseEntity
 		User, Administrator;
 	}
 	
+	@NotBlank
 	@Column(name = "full_name", nullable = false, length = 255)
 	@Audited
 	private String fullName;
+	
+	@NotBlank
+	@Email
 	@Column(nullable = false, unique = true, length = 255)
 	@Audited
 	private String email;
+	
+	@NotBlank
 	@Column(name = "password_digest", nullable = false, length = 255)
 	@Audited
 	private String passwordDigest;
+	
 	@Column(nullable = false)
 	@Audited
 	private Profile profile;
+	
+	@NotNull
 	@Column(nullable = false)
 	@Audited
+	
 	private boolean active;
+	
 	@Transient
 	private String password;
 	

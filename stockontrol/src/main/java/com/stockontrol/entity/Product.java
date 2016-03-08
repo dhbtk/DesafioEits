@@ -11,8 +11,11 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,14 +23,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Product extends BaseEntity
 {
+	
+	@NotBlank
 	@Column(nullable = false, unique = true, length = 255)
 	@Audited
 	private String name;
 	
+	@Min(0)
 	@Column(nullable = false, precision = 16, scale = 2)
 	@Audited
 	private BigDecimal price;
 	
+	@NotNull
 	@ManyToOne
 	@Audited
 	private Category category;

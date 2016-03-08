@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Category extends BaseEntity
 {	
+	@NotBlank
 	@Column(nullable = false, unique = true, length = 255)
 	@Audited
 	private String name;
