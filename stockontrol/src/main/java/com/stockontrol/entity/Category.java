@@ -24,7 +24,7 @@ public class Category extends BaseEntity
 	
 	@Column(columnDefinition = "text")
 	@Audited
-	private String text;
+	private String description;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -41,9 +41,9 @@ public class Category extends BaseEntity
 		return Products;
 	}
 
-	public String getText()
+	public String getDescription()
 	{
-		return text;
+		return description;
 	}
 
 	public void setName(String name)
@@ -56,8 +56,8 @@ public class Category extends BaseEntity
 		Products = products;
 	}
 
-	public void setText(String text)
+	public void setDescription(String description)
 	{
-		this.text = text;
+		this.description = description;
 	}
 }

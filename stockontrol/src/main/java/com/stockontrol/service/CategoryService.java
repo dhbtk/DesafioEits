@@ -5,6 +5,7 @@ import java.util.List;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ public class CategoryService
 	private CategoryRepository categoryRepository;
 	
 	@RemoteMethod
+	@PreAuthorize("hasRole('USER')")
 	@Transactional
 	public List<Category> findAll()
 	{
@@ -26,6 +28,7 @@ public class CategoryService
 	}
 	
 	@RemoteMethod
+	@PreAuthorize("hasRole('USER')")
 	@Transactional
 	public Category find(Long id)
 	{
@@ -33,6 +36,7 @@ public class CategoryService
 	}
 
 	@RemoteMethod
+	@PreAuthorize("hasRole('USER')")
 	@Transactional
 	public Category save(Category category)
 	{
@@ -40,6 +44,7 @@ public class CategoryService
 	}
 	
 	@RemoteMethod
+	@PreAuthorize("hasRole('USER')")
 	@Transactional
 	public void delete(Category category)
 	{

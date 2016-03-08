@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stockontrol.entity.Category;
+import com.stockontrol.entity.Product;
 import com.stockontrol.service.CategoryService;
+import com.stockontrol.service.ProductService;
 
 @RestController
 @RequestMapping("/categories")
@@ -18,6 +20,8 @@ public class CategoriesController
 {
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private ProductService productService;
 	
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
 	public List<Category> index()
@@ -25,11 +29,18 @@ public class CategoriesController
 		return categoryService.findAll();
 	}
 	
+	@RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
+	public List<Product> listProducts(@PathVariable Long id)
+	{
+		return productService.findAllByCategoryId(id);
+	}
+	
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.POST)
-	public Category create(@RequestParam(name = "name", required = true) String name)
+	public Category create(@RequestParam(name = "name", required = true) String name, @RequestParam(name = "description") String description)
 	{
 		Category category = new Category();
 		category.setName(name);
+		category.setDescription(description);
 		return categoryService.save(category);
 	}
 	
@@ -39,5 +50,25 @@ public class CategoriesController
 		return categoryService.find(id);
 	}
 	
+	@RequestMapping(value = "/{id}", method = {RequestMethod.PATCH, RequestMethod.PUT})
+	public Category update(@PathVariable Long id,@RequestParam("name") String name,@RequestParam("description") String description)
+	{
+		Category category = categoryService.find(id);
+		if(name != null)
+		{
+			category.setName(name);
+		}
+		if(description != null)
+		{
+			category.setDescription(description);
+		}
+		return categoryService.save(category);
+	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public void delete(@PathVariable Long id)
+	{
+		Category category = categoryService.find(id);
+		categoryService.delete(category);
+	}
 }
