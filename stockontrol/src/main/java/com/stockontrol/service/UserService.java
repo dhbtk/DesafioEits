@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.stockontrol.entity.User;
 import com.stockontrol.repository.UserRepository;
@@ -15,15 +16,15 @@ public class UserService
 {
 	@Autowired
 	private UserRepository userRepository;
-	@Autowired
-	private BCryptPasswordEncoder encoder;
 	
+	@Transactional
 	public User findByEmail(String email)
 	{
 		return userRepository.findByEmail(email);
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
+	@Transactional
 	public User activate(User user)
 	{
 		if(user.isActive())
@@ -35,6 +36,7 @@ public class UserService
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
+	@Transactional
 	public User deactivate(User user)
 	{
 		if(!user.isActive())
@@ -46,20 +48,24 @@ public class UserService
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
+	@Transactional
 	public User find(Long id)
 	{
 		return userRepository.findOne(id);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
+	@Transactional
 	public List<User> findAll()
 	{
 		return userRepository.findAll();
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
+	@Transactional
 	public User save(User user)
 	{
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		if(user.getPassword() != null)
 		{
 			user.setPasswordDigest(encoder.encode(user.getPassword()));
