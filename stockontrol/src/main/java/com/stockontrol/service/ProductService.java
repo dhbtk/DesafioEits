@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.stockontrol.entity.Product;
 import com.stockontrol.repository.ProductRepository;
 
+import junit.framework.Assert;
+
 @Service("productService")
 public class ProductService
 {
@@ -18,16 +20,16 @@ public class ProductService
 	
 	@PreAuthorize("hasRole('USER')")
 	@Transactional
-	public List<Product> findAllByCategoryId(Long id)
+	public List<Product> listAllByFilters(Long categoryId, String name)
 	{
-		return productRepository.findAllByCategoryId(id);
+		return productRepository.listAllByFilters(categoryId, name);
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@Transactional
-	public void delete(Product product)
+	public void delete(Long id)
 	{
-		productRepository.delete(product);
+		productRepository.delete(id);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
@@ -46,8 +48,17 @@ public class ProductService
 	
 	@PreAuthorize("hasRole('USER')")
 	@Transactional
-	public Product save(Product product)
+	public Product insert(Product product)
 	{
+		Assert.assertNull("Produto já existe!", product.getId());
+		return productRepository.saveAndFlush(product);
+	}
+	
+	@PreAuthorize("hasRole('USER')")
+	@Transactional
+	public Product update(Product product)
+	{
+		Assert.assertNotNull("Produto não existe!", product.getId());
 		return productRepository.saveAndFlush(product);
 	}
 }

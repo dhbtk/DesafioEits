@@ -65,9 +65,8 @@ public class CategoryService
 	@RemoteMethod
 	@PreAuthorize("hasRole('USER')")
 	@Transactional
-	public void delete(Category category)
+	public void delete(Long id)
 	{
-		Assert.assertNotNull("Categoria ainda não existe!", category.getId());
-		categoryRepository.delete(category);
+		categoryRepository.delete(id);
 	}
 }
