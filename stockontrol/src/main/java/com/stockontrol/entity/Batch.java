@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Table(name = "batches")
 @Entity
 public class Batch extends BaseEntity
@@ -72,6 +74,7 @@ public class Batch extends BaseEntity
 		this.expiresAt = expiresAt;
 	}
 	
+	@JsonIgnore
 	@AssertTrue
 	public boolean isValidRange()
 	{
