@@ -1,5 +1,6 @@
 package com.stockontrol.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,53 +23,66 @@ public class CategoriesController
 	private CategoryService categoryService;
 	@Autowired
 	private ProductService productService;
-	
-	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
+
+	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public List<Category> index(@RequestParam(required = false, value = "name") String name)
 	{
 		return categoryService.listAllByFilters(name);
 	}
-	
+
 	@RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
 	public List<Product> listProducts(@PathVariable Long id)
 	{
-		return productService.findAllByCategoryId(id);
+		return productService.listAllByFilters(id, null);
 	}
-	
-	@RequestMapping(value = {"", "/"}, method = RequestMethod.POST)
-	public Category create(@RequestParam(name = "name", required = true) String name, @RequestParam(name = "description", required = false) String description)
+
+	@RequestMapping(value = "/{id}/products", method = RequestMethod.POST)
+	public Product insertProduct(@PathVariable Long id, @RequestParam(name = "name", required = true) String name,
+			@RequestParam(name = "price", required = true) BigDecimal price)
+	{
+		Product product = new Product();
+		Category category = categoryService.find(id);
+		product.setName(name);
+		product.setPrice(price);
+		product.setCategory(category);
+		return productService.insert(product);
+	}
+
+	@RequestMapping(value = { "", "/" }, method = RequestMethod.POST)
+	public Category create(@RequestParam(name = "name", required = true) String name,
+			@RequestParam(name = "description", required = false) String description)
 	{
 		Category category = new Category();
 		category.setName(name);
 		category.setDescription(description);
 		return categoryService.insert(category);
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Category show(@PathVariable Long id)
 	{
 		return categoryService.find(id);
 	}
-	
-	@RequestMapping(value = "/{id}", method = {RequestMethod.PATCH, RequestMethod.PUT})
-	public Category update(@PathVariable Long id,@RequestParam("name") String name,@RequestParam("description") String description)
+
+	@RequestMapping(value = "/{id}", method = { RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.POST })
+	public Category update(@PathVariable Long id, @RequestParam(name = "name", required = false) String name,
+			@RequestParam(name = "description", required = false) String description)
 	{
 		Category category = categoryService.find(id);
-		if(name != null)
+		if (name != null)
 		{
 			category.setName(name);
 		}
-		if(description != null)
+		if (description != null)
 		{
 			category.setDescription(description);
 		}
 		return categoryService.update(category);
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable Long id)
 	{
-		Category category = categoryService.find(id);
-		categoryService.delete(category);
+		categoryService.delete(id);
 	}
 }
