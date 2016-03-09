@@ -20,7 +20,8 @@ public interface BatchRepository extends JpaRepository<Batch, Long>
 	@Query("select b from Batch b where date(b.expiresAt) > date(now()) and b.product.id = ?1")
 	public List<Batch> listAllExpiring(Long productId);
 	
+	// FIXME
 	@Query("select b from Batch b where (?1 is null or b.product.name like '%?1%') and "
-			+ "(?2 is null or b.identifier like '%?2%') and (?3 is null or b.expiresAt <= ?3) and (?4 is null or b.product.id = ?4)")
+			+ "(?2 is null or b.identifier like '%?2%') and (?3 is null) and (?4 is null or b.product.id = ?4)")
 	public List<Batch> listAllByFilters(String productName, String identifier, Date maxExpirationDate, Long productId);
 }
