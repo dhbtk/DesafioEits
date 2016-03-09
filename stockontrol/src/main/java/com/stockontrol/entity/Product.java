@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Formula;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -34,6 +35,11 @@ public class Product extends BaseEntity
 	@Audited
 	private BigDecimal price;
 	
+	public String getName()
+	{
+		return name;
+	}
+
 	@NotNull
 	@ManyToOne
 	@Audited
@@ -43,6 +49,30 @@ public class Product extends BaseEntity
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Audited
 	private List<Batch> batches = new ArrayList<Batch>();
+	
+	@Formula("(select count(*) from batches b where b.product_id = id)")
+	private Long batchCount;
+	
+	@Formula("(select count(*) from batches b where b.product_id = id and date(b.expires_at) > date(now()))")
+	private Long expiringBatchCount;
+	
+	@Formula("(select count(*) from batches b where b.product_id = id and date(b.expires_at) <= date(now()))")
+	private Long expiredBatchCount;
+
+	public Long getBatchCount()
+	{
+		return batchCount;
+	}
+
+	public Long getExpiringBatchCount()
+	{
+		return expiringBatchCount;
+	}
+
+	public Long getExpiredBatchCount()
+	{
+		return expiredBatchCount;
+	}
 
 	public List<Batch> getBatches()
 	{
@@ -78,5 +108,5 @@ public class Product extends BaseEntity
 	{
 		this.category = category;
 	}
-
+	
 }

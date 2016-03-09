@@ -35,6 +35,7 @@ public class User extends BaseEntity
 	@Audited
 	private String passwordDigest;
 	
+	@NotNull
 	@Column(nullable = false)
 	@Audited
 	private Profile profile;
@@ -42,7 +43,6 @@ public class User extends BaseEntity
 	@NotNull
 	@Column(nullable = false)
 	@Audited
-	
 	private boolean active;
 	
 	@Transient
