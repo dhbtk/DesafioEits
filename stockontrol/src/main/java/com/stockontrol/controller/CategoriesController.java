@@ -24,9 +24,9 @@ public class CategoriesController
 	private ProductService productService;
 	
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
-	public List<Category> index()
+	public List<Category> index(@RequestParam(required = false, value = "name") String name)
 	{
-		return categoryService.findAll();
+		return categoryService.listAllByFilters(name);
 	}
 	
 	@RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
@@ -36,12 +36,12 @@ public class CategoriesController
 	}
 	
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.POST)
-	public Category create(@RequestParam(name = "name", required = true) String name, @RequestParam(name = "description") String description)
+	public Category create(@RequestParam(name = "name", required = true) String name, @RequestParam(name = "description", required = false) String description)
 	{
 		Category category = new Category();
 		category.setName(name);
 		category.setDescription(description);
-		return categoryService.save(category);
+		return categoryService.insert(category);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -62,7 +62,7 @@ public class CategoriesController
 		{
 			category.setDescription(description);
 		}
-		return categoryService.save(category);
+		return categoryService.update(category);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

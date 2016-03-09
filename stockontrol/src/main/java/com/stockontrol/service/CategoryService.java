@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.stockontrol.entity.Category;
 import com.stockontrol.repository.CategoryRepository;
 
+import junit.framework.Assert;
+
 @RemoteProxy
 @Service("categoryService")
 public class CategoryService
@@ -22,9 +24,16 @@ public class CategoryService
 	@RemoteMethod
 	@PreAuthorize("hasRole('USER')")
 	@Transactional
-	public List<Category> findAll()
+	public List<Category> listAllByFilters(String name)
 	{
-		return categoryRepository.findAll();
+		if(name == null)
+		{
+			return categoryRepository.findAll();
+		}
+		else
+		{
+			return categoryRepository.findAllByNameIgnoreCaseContaining(name);
+		}
 	}
 	
 	@RemoteMethod
@@ -38,8 +47,18 @@ public class CategoryService
 	@RemoteMethod
 	@PreAuthorize("hasRole('USER')")
 	@Transactional
-	public Category save(Category category)
+	public Category insert(Category category)
 	{
+		Assert.assertNull("Categoria já existe!", category.getId());
+		return categoryRepository.saveAndFlush(category);
+	}
+	
+	@RemoteMethod
+	@PreAuthorize("hasRole('USER')")
+	@Transactional
+	public Category update(Category category)
+	{
+		Assert.assertNotNull("Categoria ainda não existe!", category.getId());
 		return categoryRepository.saveAndFlush(category);
 	}
 	
@@ -48,6 +67,7 @@ public class CategoryService
 	@Transactional
 	public void delete(Category category)
 	{
+		Assert.assertNotNull("Categoria ainda não existe!", category.getId());
 		categoryRepository.delete(category);
 	}
 }
