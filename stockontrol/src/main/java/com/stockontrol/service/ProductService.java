@@ -22,10 +22,26 @@ public class ProductService
 	@Transactional
 	public List<Product> listAllByFilters(Long categoryId, String name)
 	{
-		return productRepository.listAllByFilters(categoryId, name);
+		if(categoryId == null && name == null)
+		{
+			return productRepository.findAll();
+		}
+		else if(categoryId == null)
+		{
+			return productRepository.findAllByNameContaining(name);
+		}
+		else if(name == null)
+		{
+			return productRepository.findAllByCategoryId(categoryId);
+		}
+		else
+		{
+			return productRepository.findAllByCategoryIdAndNameContaining(categoryId, name);
+		}
+		//return productRepository.listAllByFilters(categoryId, name);
 	}
 	
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER')")
 	@Transactional
 	public void delete(Long id)
 	{

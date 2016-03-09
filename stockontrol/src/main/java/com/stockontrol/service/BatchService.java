@@ -43,6 +43,20 @@ public class BatchService
 	
 	@PreAuthorize("hasRole('USER')")
 	@Transactional
+	public List<Batch> listAllExpired(Long productId)
+	{
+		return batchRepository.listAllExpired(productId);
+	}
+	
+	@PreAuthorize("hasRole('USER')")
+	@Transactional
+	public List<Batch> listAllExpiring(Long productId)
+	{
+		return batchRepository.listAllExpiring(productId);
+	}
+	
+	@PreAuthorize("hasRole('USER')")
+	@Transactional
 	public Batch registerOutgoingById(Long id, int quantity)
 	{
 		Batch batch = find(id);
