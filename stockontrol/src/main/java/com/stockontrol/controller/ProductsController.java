@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.stockontrol.entity.Batch;
 import com.stockontrol.entity.Category;
 import com.stockontrol.entity.Product;
+import com.stockontrol.service.BatchService;
 import com.stockontrol.service.CategoryService;
 import com.stockontrol.service.ProductService;
 
@@ -24,6 +26,8 @@ public class ProductsController
 	private ProductService productService;
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private BatchService batchService;
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public List<Product> index(@RequestParam(required = false, value = "name") String name)
@@ -34,19 +38,27 @@ public class ProductsController
 	@RequestMapping(value = "/{id}/batches", method = RequestMethod.GET)
 	public List<Batch> listBatches(@PathVariable Long id)
 	{
-		return null;
+		return batchService.listAllByFilters(null, null, null, id);
 	}
-
-	@RequestMapping(value = { "", "/" }, method = RequestMethod.POST)
-	public Product create(@RequestParam(name = "name", required = true) String name,
-			@RequestParam(name = "price", required = true) BigDecimal price,
-			@RequestParam(name = "category_id", required = true) Long categoryId)
+	
+	@RequestMapping(value = "/{id}/batches/expiring", method = RequestMethod.GET)
+	public List<Batch> listExpiringBatches(@PathVariable Long id)
 	{
-		Product product = new Product();
-		product.setCategory(categoryService.find(categoryId));
-		product.setPrice(price);
-		product.setName(name);
-		return productService.insert(product);
+		return batchService.listAllExpiring(id);
+	}
+	
+	@RequestMapping(value = "/{id}/batches/expired", method = RequestMethod.GET)
+	public List<Batch> listExpiredBatches(@PathVariable Long id)
+	{
+		return batchService.listAllExpired(id);
+	}
+	
+	@RequestMapping(value = "/{id}/batches", method = RequestMethod.POST)
+	public Batch insertBatch(@PathVariable Long id, @RequestBody Batch batch)
+	{
+		Product product = productService.find(id);
+		batch.setProduct(product);
+		return batchService.insert(batch);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -56,17 +68,20 @@ public class ProductsController
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.POST })
-	public Product update(@PathVariable Long id, @RequestParam(name = "name", required = false) String name,
-			@RequestParam(name = "price", required = false) BigDecimal price)
+	public Product update(@PathVariable Long id, @RequestBody Product sentProduct)
 	{
 		Product product = productService.find(id);
-		if(name != null)
+		if(sentProduct.getName() != null)
 		{
-			product.setName(name);
+			product.setName(sentProduct.getName());
 		}
-		if(price != null)
+		if(sentProduct.getPrice() != null)
 		{
-			product.setPrice(price);
+			product.setPrice(sentProduct.getPrice());
+		}
+		if(sentProduct.getCategoryId() != null)
+		{
+			product.setCategory(categoryService.find(sentProduct.getCategoryId()));
 		}
 		return productService.update(product);
 	}
