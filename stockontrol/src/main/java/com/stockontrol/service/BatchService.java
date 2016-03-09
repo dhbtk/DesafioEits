@@ -1,8 +1,7 @@
 package com.stockontrol.service;
 
+import java.util.Date;
 import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,21 +9,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.stockontrol.entity.Batch;
-import com.stockontrol.entity.Product;
 import com.stockontrol.repository.BatchRepository;
+
+import junit.framework.Assert;
 
 @Service("batchService")
 public class BatchService
 {
 	@Autowired
 	private BatchRepository batchRepository;
-	@Autowired
-	private ProductService productService;
 	
 	@PreAuthorize("hasRole('USER')")
 	@Transactional
-	public Batch create(Batch batch)
+	public Batch insert(Batch batch)
 	{
+		Assert.assertNull("Lote já existe!",batch.getId());
 		return batchRepository.saveAndFlush(batch);
 	}
 	
@@ -37,44 +36,9 @@ public class BatchService
 	
 	@PreAuthorize("hasRole('USER')")
 	@Transactional
-	public List<Batch> findAll()
+	public List<Batch> listAllByFilters(String productName, String identifier, Date maxExpirationDate, Long productId)
 	{
-		return batchRepository.findAll();
-	}
-	
-	@PreAuthorize("hasRole('USER')")
-	@Transactional
-	public List<Batch> findAllByProductId(Long productId)
-	{
-		return batchRepository.findAllByProduct(productService.find(productId));
-	}
-	
-	@PreAuthorize("hasRole('USER')")
-	@Transactional
-	public List<Batch> findAllExpired()
-	{
-		return batchRepository.findAllExpired();
-	}
-	
-	@PreAuthorize("hasRole('USER')")
-	@Transactional
-	public List<Batch> findAllExpiredByProductId(Long productId)
-	{
-		return batchRepository.findAllExpiredByProduct(productService.find(productId));
-	}
-	
-	@PreAuthorize("hasRole('USER')")
-	@Transactional
-	public List<Batch> findAllExpiring()
-	{
-		return batchRepository.findAllExpiring();
-	}
-	
-	@PreAuthorize("hasRole('USER')")
-	@Transactional
-	public List<Batch> findAllExpiringByProductId(Long productId)
-	{
-		return batchRepository.findAllExpiringByProduct(productService.find(productId));
+		return batchRepository.listAllByFilters(productName, identifier, maxExpirationDate, productId);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
@@ -82,18 +46,17 @@ public class BatchService
 	public Batch registerOutgoingById(Long id, int quantity)
 	{
 		Batch batch = find(id);
-		if(batch == null)
-		{
-			throw new EntityNotFoundException(String.format("Lote com id %d não encontrado",id));
-		}
-		if(quantity > batch.getQuantity())
-		{
-			throw new IllegalArgumentException("Tentando remover mais itens do lote do que há no lote");
-		}
-		else if(quantity == batch.getQuantity())
+		Assert.assertNotNull(String.format("Lote com id %d não existe", id), batch);
+		Assert.assertTrue(String.format("Não é possível remover %d itens do lote id %d com %d itens", quantity, batch.getId(), batch.getQuantity()),batch.getQuantity() >= quantity);
+		if(quantity == batch.getQuantity())
 		{
 			batchRepository.delete(batch);
 			return null;
+		}
+		else
+		{
+			batch.setQuantity(batch.getQuantity() - quantity);
+			batch = batchRepository.saveAndFlush(batch);
 		}
 		return batch;
 	}

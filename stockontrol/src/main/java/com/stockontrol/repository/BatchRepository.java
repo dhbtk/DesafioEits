@@ -2,7 +2,7 @@ package com.stockontrol.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 
@@ -14,15 +14,13 @@ public interface BatchRepository extends JpaRepository<Batch, Long>
 {
 	public List<Batch> findAllByProduct(Product product);
 	
-	@Query("select b from Batch b where date(b.expiresAt) <= date(now())")
-	public List<Batch> findAllExpired();
+	@Query("select b from Batch b where date(b.expiresAt) <= date(now()) and b.product.id = ?1")
+	public List<Batch> listAllExpired(Long productId);
 	
-	@Query("select b from Batch b where date(b.expiresAt) <= date(now()) and b.product = ?1")
-	public List<Batch> findAllExpiredByProduct(Product product);
+	@Query("select b from Batch b where date(b.expiresAt) > date(now()) and b.product.id = ?1")
+	public List<Batch> listAllExpiring(Long productId);
 	
-	@Query("select b from Batch b where date(b.expiresAt) > date(now())")
-	public List<Batch> findAllExpiring();
-	
-	@Query("select b from Batch b where date(b.expiresAt) > date(now()) and b.product = ?1")
-	public List<Batch> findAllExpiringByProduct(Product product);
+	@Query("select b from Batch b where (?1 is null or b.product.name like '%?1%') and "
+			+ "(?2 is null or b.identifier like '%?2%') and (?3 is null or b.expiresAt <= ?3) and (?4 is null or b.product.id = ?4)")
+	public List<Batch> listAllByFilters(String productName, String identifier, Date maxExpirationDate, Long productId);
 }
