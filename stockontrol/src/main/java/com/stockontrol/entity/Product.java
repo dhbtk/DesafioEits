@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -40,10 +41,22 @@ public class Product extends BaseEntity
 		return name;
 	}
 
-	@NotNull
 	@ManyToOne
 	@Audited
 	private Category category;
+	
+	public Long getCategoryId()
+	{
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId)
+	{
+		this.categoryId = categoryId;
+	}
+
+	@Column(name = "category_id", insertable = false, updatable = false)
+	private Long categoryId;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
