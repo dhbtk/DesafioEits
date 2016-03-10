@@ -1,7 +1,9 @@
 package com.stockontrol.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.jpa.criteria.predicate.BooleanExpressionPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.stockontrol.entity.User;
+import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.BooleanExpression;
+import com.stockontrol.entity.QUser;
 import com.stockontrol.repository.UserRepository;
 
 @Service("userService")
@@ -56,9 +61,38 @@ public class UserService
 	
 	@PreAuthorize("hasRole('USER')")
 	@Transactional
-	public List<User> findAll()
+	public Iterable<User> listAllByFilters(String fullName, String email, Boolean active, User.Profile profile)
 	{
-		return userRepository.findAll();
+		QUser user = QUser.user;
+		ArrayList<BooleanExpression> preds = new ArrayList<BooleanExpression>();
+		BooleanExpression ex;
+		int i;
+		
+		if(fullName == null && email == null && active == null && profile == null)
+		{
+			return userRepository.findAll();
+		}
+		if(fullName != null)
+		{
+			preds.add(user.fullName.containsIgnoreCase(fullName));
+		}
+		if(email != null)
+		{
+			preds.add(user.email.containsIgnoreCase(email));
+		}
+		if(active != null)
+		{
+			preds.add(user.active.eq(active));
+		}
+		if(profile != null)
+		{
+			preds.add(user.profile.eq(profile));
+		}
+		for(i = 1, ex = preds.get(0); i < preds.size(); i++)
+		{
+			ex = ex.and(preds.get(i));
+		}
+		return userRepository.findAll(ex);
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")

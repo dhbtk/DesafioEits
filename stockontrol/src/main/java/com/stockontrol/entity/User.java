@@ -10,6 +10,8 @@ import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Table(name = "users")
 @Entity
 public class User extends BaseEntity
@@ -30,7 +32,7 @@ public class User extends BaseEntity
 	@Audited
 	private String email;
 	
-	@NotBlank
+	@JsonIgnore
 	@Column(name = "password_digest", nullable = false, length = 255)
 	@Audited
 	private String passwordDigest;
@@ -45,6 +47,7 @@ public class User extends BaseEntity
 	@Audited
 	private boolean active;
 	
+	@NotBlank
 	@Transient
 	private String password;
 	
