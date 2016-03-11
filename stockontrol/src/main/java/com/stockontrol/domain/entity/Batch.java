@@ -1,6 +1,6 @@
 package com.stockontrol.domain.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,76 +19,49 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Batch extends BaseEntity
 {
+	@NotNull
+	@Audited
+	@Column(name = "expires_at", nullable = false)
+	private LocalDate expiresAt;
+
 	@NotBlank
 	@Audited
 	@Column(nullable = false, length = 255)
 	private String identifier;
-	
+
 	@NotNull
 	@Audited
 	@Column(name = "manufactured_at", nullable = false)
-	private Date manufacturedAt;
-	
-	@NotNull
-	@Audited
-	@Column(name = "expires_at", nullable = false)
-	private Date expiresAt;
-	
-	@Min(1)
-	@Audited
-	@Column(nullable = false)
-	private Long quantity;
-	
+	private LocalDate manufacturedAt;
+
 	@NotNull
 	@Audited
 	@ManyToOne
 	private Product product;
+
+	@Min(1)
+	@Audited
+	@Column(nullable = false)
+	private Long quantity;
+
+	@NotNull
+	@Audited
+	@ManyToOne
+	private User user;
+
+	public LocalDate getExpiresAt()
+	{
+		return expiresAt;
+	}
 
 	public String getIdentifier()
 	{
 		return identifier;
 	}
 
-	public void setIdentifier(String identifier)
-	{
-		this.identifier = identifier;
-	}
-
-	public Date getManufacturedAt()
+	public LocalDate getManufacturedAt()
 	{
 		return manufacturedAt;
-	}
-
-	public void setManufacturedAt(Date manufacturedAt)
-	{
-		this.manufacturedAt = manufacturedAt;
-	}
-
-	public Date getExpiresAt()
-	{
-		return expiresAt;
-	}
-
-	public void setExpiresAt(Date expiresAt)
-	{
-		this.expiresAt = expiresAt;
-	}
-	
-	@JsonIgnore
-	@AssertTrue
-	public boolean isValidRange()
-	{
-		return this.manufacturedAt != null && this.expiresAt != null && this.expiresAt.compareTo(this.manufacturedAt) >= 0;
-	}
-
-	public Long getQuantity()
-	{
-		return quantity;
-	}
-
-	public void setQuantity(Long quantity)
-	{
-		this.quantity = quantity;
 	}
 
 	public Product getProduct()
@@ -96,8 +69,51 @@ public class Batch extends BaseEntity
 		return product;
 	}
 
+	public Long getQuantity()
+	{
+		return quantity;
+	}
+
+	public User getUser()
+	{
+		return user;
+	}
+
+	@JsonIgnore
+	@AssertTrue
+	public boolean isValidRange()
+	{
+		return this.manufacturedAt != null && this.expiresAt != null
+				&& this.expiresAt.compareTo(this.manufacturedAt) >= 0;
+	}
+
+	public void setExpiresAt(LocalDate expiresAt)
+	{
+		this.expiresAt = expiresAt;
+	}
+
+	public void setIdentifier(String identifier)
+	{
+		this.identifier = identifier;
+	}
+
+	public void setManufacturedAt(LocalDate manufacturedAt)
+	{
+		this.manufacturedAt = manufacturedAt;
+	}
+
 	public void setProduct(Product product)
 	{
 		this.product = product;
+	}
+
+	public void setQuantity(Long quantity)
+	{
+		this.quantity = quantity;
+	}
+
+	public void setUser(User user)
+	{
+		this.user = user;
 	}
 }
