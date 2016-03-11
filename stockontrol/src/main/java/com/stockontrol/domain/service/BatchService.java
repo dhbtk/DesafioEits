@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.stockontrol.domain.entity.Batch;
 import com.stockontrol.domain.repository.BatchRepository;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 @Service("batchService")
 public class BatchService

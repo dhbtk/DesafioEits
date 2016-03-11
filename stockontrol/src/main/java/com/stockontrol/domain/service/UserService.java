@@ -3,7 +3,6 @@ package com.stockontrol.domain.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.jpa.criteria.predicate.BooleanExpressionPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,11 +13,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mysema.query.types.Predicate;
 import com.mysema.query.types.expr.BooleanExpression;
+import com.stockontrol.domain.entity.QUser;
 import com.stockontrol.domain.entity.User;
 import com.stockontrol.domain.repository.UserRepository;
-import com.stockontrol.domain.entity.QUser;
 
 @Service("userService")
 public class UserService implements org.springframework.security.core.userdetails.UserDetailsService

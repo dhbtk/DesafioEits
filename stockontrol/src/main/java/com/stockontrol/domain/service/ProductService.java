@@ -13,7 +13,7 @@ import com.stockontrol.domain.entity.Product;
 import com.stockontrol.domain.repository.CategoryRepository;
 import com.stockontrol.domain.repository.ProductRepository;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 @Service("productService")
 public class ProductService
