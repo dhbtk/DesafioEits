@@ -1,5 +1,7 @@
 package com.stockontrol.domain.entity;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -17,29 +19,29 @@ public abstract class BaseEntity
 	private Long id;
 	
 	@Column(name = "created_at", nullable = false)
-	private Date createdAt;
+	private LocalDateTime createdAt;
 	
 	@Column(name = "updated_at", nullable = false)
-	private Date updatedAt;
+	private LocalDateTime updatedAt;
 	
 	@PrePersist
 	protected void onCreate()
 	{
-		createdAt = updatedAt = new Date();
+		createdAt = updatedAt = LocalDateTime.now();
 	}
 	
 	@PreUpdate
 	protected void onUpdate()
 	{
-		updatedAt = new Date();
+		updatedAt = LocalDateTime.now();
 	}
 
-	public Date getCreatedAt()
+	public LocalDateTime getCreatedAt()
 	{
 		return createdAt;
 	}
 
-	public Date getUpdatedAt()
+	public LocalDateTime getUpdatedAt()
 	{
 		return updatedAt;
 	}
