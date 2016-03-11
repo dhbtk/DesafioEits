@@ -6,6 +6,10 @@ import java.util.List;
 import org.hibernate.jpa.criteria.predicate.BooleanExpressionPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +21,33 @@ import com.stockontrol.domain.repository.UserRepository;
 import com.stockontrol.domain.entity.QUser;
 
 @Service("userService")
-public class UserService
+public class UserService implements org.springframework.security.core.userdetails.UserDetailsService
 {
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Transactional
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException
+	{
+		User user = userRepository.findByEmail(email);
+		if (user == null)
+		{
+			throw new UsernameNotFoundException("Email não encontrado: " + email);
+		}
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPasswordDigest(),
+				user.isActive(), true, true, true, getUserAuthorities(user));
+	}
+
+	private List<GrantedAuthority> getUserAuthorities(User user)
+	{
+		List<GrantedAuthority> roles = new ArrayList<>();
+		if(user.getProfile() == User.Profile.Administrator)
+		{
+			roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		}
+		roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+		return roles;
+	}
 	
 	@Transactional
 	public User findByEmail(String email)

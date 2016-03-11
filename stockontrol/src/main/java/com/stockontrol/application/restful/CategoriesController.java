@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.stockontrol.domain.entity.Category;
 import com.stockontrol.domain.entity.Product;
-import com.stockontrol.domain.service.CategoryService;
 import com.stockontrol.domain.service.ProductService;
 
 @RestController
@@ -23,14 +22,12 @@ import com.stockontrol.domain.service.ProductService;
 public class CategoriesController
 {
 	@Autowired
-	private CategoryService categoryService;
-	@Autowired
 	private ProductService productService;
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public List<Category> index(@RequestParam(required = false, value = "name") String name)
 	{
-		return categoryService.listAllByFilters(name);
+		return productService.listAllCategoriesByFilters(name);
 	}
 
 	@RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
@@ -42,26 +39,26 @@ public class CategoriesController
 	@RequestMapping(value = "/{id}/products", method = RequestMethod.POST)
 	public Product insertProduct(@PathVariable Long id, @Valid @RequestBody Product product)
 	{
-		product.setCategory(categoryService.find(id));
+		product.setCategory(productService.findCategory(id));
 		return productService.insert(product);
 	}
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.POST)
 	public Category create(@Valid @RequestBody Category category)
 	{
-		return categoryService.insert(category);
+		return productService.insertCategory(category);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Category show(@PathVariable Long id)
 	{
-		return categoryService.find(id);
+		return productService.findCategory(id);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.POST })
 	public Category update(@PathVariable Long id, @RequestBody Category sentCategory)
 	{
-		Category category = categoryService.find(id);
+		Category category = productService.findCategory(id);
 		if (sentCategory.getName() != null)
 		{
 			category.setName(sentCategory.getName());
@@ -70,12 +67,12 @@ public class CategoriesController
 		{
 			category.setDescription(sentCategory.getDescription());
 		}
-		return categoryService.update(category);
+		return productService.updateCategory(category);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable Long id)
 	{
-		categoryService.delete(id);
+		productService.deleteCategory(id);
 	}
 }

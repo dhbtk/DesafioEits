@@ -15,7 +15,6 @@ import com.stockontrol.domain.entity.Batch;
 import com.stockontrol.domain.entity.Category;
 import com.stockontrol.domain.entity.Product;
 import com.stockontrol.domain.service.BatchService;
-import com.stockontrol.domain.service.CategoryService;
 import com.stockontrol.domain.service.ProductService;
 
 @RestController
@@ -24,8 +23,6 @@ public class ProductsController
 {
 	@Autowired
 	private ProductService productService;
-	@Autowired
-	private CategoryService categoryService;
 	@Autowired
 	private BatchService batchService;
 
@@ -81,7 +78,7 @@ public class ProductsController
 		}
 		if(sentProduct.getCategoryId() != null)
 		{
-			product.setCategory(categoryService.find(sentProduct.getCategoryId()));
+			product.setCategory(productService.findCategory(sentProduct.getCategoryId()));
 		}
 		return productService.update(product);
 	}

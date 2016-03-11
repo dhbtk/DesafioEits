@@ -13,7 +13,7 @@
 	
 	<global-method-security pre-post-annotations="enabled" />
 	
-	<beans:bean id="customUserDetailsService" class="com.stockontrol.domain.service.UserDetailsService" />
+	<beans:bean id="customUserDetailsService" class="com.stockontrol.domain.service.UserService" />
 	
 	<http pattern="/resources/css/**" security="none" />
 	<http pattern="/webjars/**" security="none" />
