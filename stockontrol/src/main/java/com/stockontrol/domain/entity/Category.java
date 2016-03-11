@@ -7,8 +7,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Formula;
 import org.hibernate.envers.Audited;
@@ -20,14 +22,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Category extends BaseEntity
 {
+	@Column(columnDefinition = "text")
+	@Audited
+	private String description;
+
 	@NotBlank
 	@Column(nullable = false, unique = true, length = 255)
 	@Audited
 	private String name;
-
-	@Column(columnDefinition = "text")
-	@Audited
-	private String description;
 
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Audited
@@ -35,28 +37,23 @@ public class Category extends BaseEntity
 
 	@Formula("(SELECT SUM((SELECT COUNT(*) FROM batches b WHERE b.product_id = p.id)) FROM products p WHERE p.category_id = id)")
 	private Long totalBatchCount;
-	@Formula("(SELECT SUM((SELECT COUNT(*) FROM batches b WHERE b.product_id = p.id AND "
-			+ " DATE(b.expires_at) > DATE(NOW()))) FROM products p WHERE p.category_id = id)")
-	private Long totalExpiringBatchCount;
+
 	@Formula("(SELECT SUM((SELECT COUNT(*) FROM batches b WHERE b.product_id = p.id AND "
 			+ "DATE(b.expires_at) <= DATE(NOW()))) FROM products p WHERE p.category_id = id)")
 	private Long totalExpiredBatchCount;
 
-	public Long getTotalBatchCount()
-	{
-		return totalBatchCount;
-	}
+	@Formula("(SELECT SUM((SELECT COUNT(*) FROM batches b WHERE b.product_id = p.id AND "
+			+ " DATE(b.expires_at) > DATE(NOW()))) FROM products p WHERE p.category_id = id)")
+	private Long totalExpiringBatchCount;
 
-	public Long getTotalExpiringBatchCount()
+	@NotNull
+	@Audited
+	@ManyToOne
+	private User user;
+	public String getDescription()
 	{
-		return totalExpiringBatchCount;
+		return description;
 	}
-
-	public Long getTotalExpiredBatchCount()
-	{
-		return totalExpiredBatchCount;
-	}
-
 	public String getName()
 	{
 		return name;
@@ -68,9 +65,29 @@ public class Category extends BaseEntity
 		return Products;
 	}
 
-	public String getDescription()
+	public Long getTotalBatchCount()
 	{
-		return description;
+		return totalBatchCount;
+	}
+
+	public Long getTotalExpiredBatchCount()
+	{
+		return totalExpiredBatchCount;
+	}
+
+	public Long getTotalExpiringBatchCount()
+	{
+		return totalExpiringBatchCount;
+	}
+
+	public User getUser()
+	{
+		return user;
+	}
+
+	public void setDescription(String description)
+	{
+		this.description = description;
 	}
 
 	public void setName(String name)
@@ -83,8 +100,8 @@ public class Category extends BaseEntity
 		Products = products;
 	}
 
-	public void setDescription(String description)
+	public void setUser(User user)
 	{
-		this.description = description;
+		this.user = user;
 	}
 }

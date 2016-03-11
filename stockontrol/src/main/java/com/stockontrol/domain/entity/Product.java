@@ -25,66 +25,46 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Product extends BaseEntity
 {
-	
-	@NotBlank
-	@Column(nullable = false, unique = true, length = 255)
-	@Audited
-	private String name;
-	
-	@Min(0)
-	@Column(nullable = false, precision = 16, scale = 2)
-	@Audited
-	private BigDecimal price;
-	
-	public String getName()
-	{
-		return name;
-	}
 
-	@ManyToOne
-	@Audited
-	private Category category;
-	
-	public Long getCategoryId()
-	{
-		return categoryId;
-	}
+	@Formula("(select count(*) from batches b where b.product_id = id)")
+	private Long batchCount;
 
-	public void setCategoryId(Long categoryId)
-	{
-		this.categoryId = categoryId;
-	}
-
-	@Column(name = "category_id", insertable = false, updatable = false)
-	private Long categoryId;
-	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Audited
 	private List<Batch> batches = new ArrayList<Batch>();
-	
-	@Formula("(select count(*) from batches b where b.product_id = id)")
-	private Long batchCount;
-	
-	@Formula("(select count(*) from batches b where b.product_id = id and date(b.expires_at) > date(now()))")
-	private Long expiringBatchCount;
-	
+
+	@ManyToOne
+	@Audited
+	private Category category;
+
+	@Column(name = "category_id", insertable = false, updatable = false)
+	private Long categoryId;
+
 	@Formula("(select count(*) from batches b where b.product_id = id and date(b.expires_at) <= date(now()))")
 	private Long expiredBatchCount;
+
+	@Formula("(select count(*) from batches b where b.product_id = id and date(b.expires_at) > date(now()))")
+	private Long expiringBatchCount;
+
+	@NotBlank
+	@Column(nullable = false, unique = true, length = 255)
+	@Audited
+	private String name;
+
+	@Min(0)
+	@Column(nullable = false, precision = 16, scale = 2)
+	@Audited
+	private BigDecimal price;
+
+	@NotNull
+	@Audited
+	@ManyToOne
+	private User user;
 
 	public Long getBatchCount()
 	{
 		return batchCount;
-	}
-
-	public Long getExpiringBatchCount()
-	{
-		return expiringBatchCount;
-	}
-
-	public Long getExpiredBatchCount()
-	{
-		return expiredBatchCount;
 	}
 
 	public List<Batch> getBatches()
@@ -92,14 +72,29 @@ public class Product extends BaseEntity
 		return batches;
 	}
 
-	public void setBatches(List<Batch> batches)
+	public Category getCategory()
 	{
-		this.batches = batches;
+		return category;
 	}
 
-	public void setName(String name)
+	public Long getCategoryId()
 	{
-		this.name = name;
+		return categoryId;
+	}
+
+	public Long getExpiredBatchCount()
+	{
+		return expiredBatchCount;
+	}
+
+	public Long getExpiringBatchCount()
+	{
+		return expiringBatchCount;
+	}
+
+	public String getName()
+	{
+		return name;
 	}
 
 	public BigDecimal getPrice()
@@ -107,19 +102,39 @@ public class Product extends BaseEntity
 		return price;
 	}
 
-	public void setPrice(BigDecimal price)
+	public User getUser()
 	{
-		this.price = price;
+		return user;
 	}
 
-	public Category getCategory()
+	public void setBatches(List<Batch> batches)
 	{
-		return category;
+		this.batches = batches;
 	}
 
 	public void setCategory(Category category)
 	{
 		this.category = category;
 	}
-	
+
+	public void setCategoryId(Long categoryId)
+	{
+		this.categoryId = categoryId;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public void setPrice(BigDecimal price)
+	{
+		this.price = price;
+	}
+
+	public void setUser(User user)
+	{
+		this.user = user;
+	}
+
 }
