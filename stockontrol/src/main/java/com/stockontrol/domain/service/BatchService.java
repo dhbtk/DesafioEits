@@ -1,4 +1,4 @@
-package com.stockontrol.service;
+package com.stockontrol.domain.service;
 
 import java.util.Date;
 import java.util.List;
@@ -8,8 +8,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.stockontrol.entity.Batch;
-import com.stockontrol.repository.BatchRepository;
+import com.stockontrol.domain.entity.Batch;
+import com.stockontrol.domain.repository.BatchRepository;
 
 import junit.framework.Assert;
 

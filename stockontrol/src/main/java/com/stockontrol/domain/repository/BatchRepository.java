@@ -1,4 +1,4 @@
-package com.stockontrol.repository;
+package com.stockontrol.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 
-import com.stockontrol.entity.Batch;
-import com.stockontrol.entity.Product;
+import com.stockontrol.domain.entity.Batch;
+import com.stockontrol.domain.entity.Product;
 
 @Repository("batchRepository")
 public interface BatchRepository extends JpaRepository<Batch, Long>

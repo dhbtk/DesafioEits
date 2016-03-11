@@ -1,4 +1,4 @@
-package com.stockontrol.controller;
+package com.stockontrol.application.restful;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.stockontrol.entity.Category;
-import com.stockontrol.entity.Product;
-import com.stockontrol.service.CategoryService;
-import com.stockontrol.service.ProductService;
+import com.stockontrol.domain.entity.Category;
+import com.stockontrol.domain.entity.Product;
+import com.stockontrol.domain.service.CategoryService;
+import com.stockontrol.domain.service.ProductService;
 
 @RestController
 @RequestMapping("/categories")

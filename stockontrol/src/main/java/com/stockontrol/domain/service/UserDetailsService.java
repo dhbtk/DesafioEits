@@ -1,8 +1,8 @@
-package com.stockontrol.service;
+package com.stockontrol.domain.service;
 
 import org.springframework.stereotype.Service;
 
-import com.stockontrol.entity.User;
+import com.stockontrol.domain.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;

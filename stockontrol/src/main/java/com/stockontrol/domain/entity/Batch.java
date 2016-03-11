@@ -1,4 +1,4 @@
-package com.stockontrol.entity;
+package com.stockontrol.domain.entity;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package com.stockontrol.service;
+package com.stockontrol.domain.service;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.stockontrol.entity.Product;
-import com.stockontrol.repository.ProductRepository;
+import com.stockontrol.domain.entity.Product;
+import com.stockontrol.domain.repository.ProductRepository;
 
 import junit.framework.Assert;
 

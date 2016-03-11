@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.stockontrol.entity.User;
+import com.stockontrol.domain.entity.User;
 
 import static junit.framework.Assert.assertTrue;
 

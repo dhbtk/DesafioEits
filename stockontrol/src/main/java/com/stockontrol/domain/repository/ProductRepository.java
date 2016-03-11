@@ -1,4 +1,4 @@
-package com.stockontrol.repository;
+package com.stockontrol.domain.repository;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.stockontrol.entity.Product;
+import com.stockontrol.domain.entity.Product;
 
 @Repository("productRepository")
 public interface ProductRepository extends JpaRepository<Product, Long>

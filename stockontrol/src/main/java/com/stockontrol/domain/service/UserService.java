@@ -1,4 +1,4 @@
-package com.stockontrol.service;
+package com.stockontrol.domain.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +10,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.stockontrol.entity.User;
 import com.mysema.query.types.Predicate;
 import com.mysema.query.types.expr.BooleanExpression;
-import com.stockontrol.entity.QUser;
-import com.stockontrol.repository.UserRepository;
+import com.stockontrol.domain.entity.User;
+import com.stockontrol.domain.repository.UserRepository;
+import com.stockontrol.domain.entity.QUser;
 
 @Service("userService")
 public class UserService
