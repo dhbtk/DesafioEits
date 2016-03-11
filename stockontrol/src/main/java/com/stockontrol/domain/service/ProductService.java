@@ -3,6 +3,7 @@ package com.stockontrol.domain.service;
 import java.util.List;
 
 import org.directwebremoting.annotations.RemoteMethod;
+import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import com.stockontrol.domain.repository.ProductRepository;
 import org.junit.Assert;
 
 @Service("productService")
+@Transactional
+@RemoteProxy(name = "productService")
 public class ProductService
 {
 	@Autowired
@@ -24,8 +27,8 @@ public class ProductService
 	private CategoryRepository categoryRepository;
 	
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
-	public List<Product> listAllByFilters(Long categoryId, String name)
+	@RemoteMethod
+	public List<Product> listAllProductsByFilters(Long categoryId, String name)
 	{
 		if(categoryId == null && name == null)
 		{
@@ -47,37 +50,37 @@ public class ProductService
 	}
 	
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
-	public void delete(Long id)
+	@RemoteMethod
+	public void deleteProduct(Long id)
 	{
 		productRepository.delete(id);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
-	public List<Product> findAll()
+	@RemoteMethod
+	public List<Product> findAllProducts()
 	{
 		return productRepository.findAll();
 	}
 	
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
-	public Product find(Long id)
+	@RemoteMethod
+	public Product findProduct(Long id)
 	{
 		return productRepository.findOne(id);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
-	public Product insert(Product product)
+	@RemoteMethod
+	public Product insertProduct(Product product)
 	{
 		Assert.assertNull("Produto já existe!", product.getId());
 		return productRepository.saveAndFlush(product);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
-	public Product update(Product product)
+	@RemoteMethod
+	public Product updateProduct(Product product)
 	{
 		Assert.assertNotNull("Produto não existe!", product.getId());
 		return productRepository.saveAndFlush(product);
@@ -85,7 +88,6 @@ public class ProductService
 	
 	@RemoteMethod
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
 	public List<Category> listAllCategoriesByFilters(String name)
 	{
 		if(name == null)
@@ -100,7 +102,6 @@ public class ProductService
 	
 	@RemoteMethod
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
 	public Category findCategory(Long id)
 	{
 		return categoryRepository.findOne(id);
@@ -108,7 +109,6 @@ public class ProductService
 
 	@RemoteMethod
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
 	public Category insertCategory(Category category)
 	{
 		Assert.assertNull("Categoria já existe!", category.getId());
@@ -117,7 +117,6 @@ public class ProductService
 	
 	@RemoteMethod
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
 	public Category updateCategory(Category category)
 	{
 		Assert.assertNotNull("Categoria ainda não existe!", category.getId());
@@ -126,7 +125,6 @@ public class ProductService
 	
 	@RemoteMethod
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
 	public void deleteCategory(Long id)
 	{
 		categoryRepository.delete(id);

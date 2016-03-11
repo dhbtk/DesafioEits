@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.directwebremoting.annotations.DataTransferObject;
 import org.hibernate.annotations.Formula;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
@@ -20,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Table(name = "categories")
 @Entity
+@DataTransferObject(javascript = "Category")
 public class Category extends BaseEntity
 {
 	@Column(columnDefinition = "text")
@@ -38,13 +40,13 @@ public class Category extends BaseEntity
 	@Formula("(SELECT SUM((SELECT COUNT(*) FROM batches b WHERE b.product_id = p.id)) FROM products p WHERE p.category_id = id)")
 	private Long totalBatchCount;
 
-	@Formula("(SELECT SUM((SELECT COUNT(*) FROM batches b WHERE b.product_id = p.id AND "
-			+ "DATE(b.expires_at) <= DATE(NOW()))) FROM products p WHERE p.category_id = id)")
-	private Long totalExpiredBatchCount;
-
-	@Formula("(SELECT SUM((SELECT COUNT(*) FROM batches b WHERE b.product_id = p.id AND "
-			+ " DATE(b.expires_at) > DATE(NOW()))) FROM products p WHERE p.category_id = id)")
-	private Long totalExpiringBatchCount;
+//	@Formula("(SELECT SUM((SELECT COUNT(*) FROM batches b WHERE b.product_id = p.id AND "
+//			+ "DATE(b.expires_at) <= DATE(NOW()))) FROM products p WHERE p.category_id = id)")
+//	private Long totalExpiredBatchCount;
+//
+//	@Formula("(SELECT SUM((SELECT COUNT(*) FROM batches b WHERE b.product_id = p.id AND "
+//			+ " DATE(b.expires_at) > DATE(NOW()))) FROM products p WHERE p.category_id = id)")
+//	private Long totalExpiringBatchCount;
 
 	@NotNull
 	@Audited
@@ -70,15 +72,15 @@ public class Category extends BaseEntity
 		return totalBatchCount;
 	}
 
-	public Long getTotalExpiredBatchCount()
-	{
-		return totalExpiredBatchCount;
-	}
-
-	public Long getTotalExpiringBatchCount()
-	{
-		return totalExpiringBatchCount;
-	}
+//	public Long getTotalExpiredBatchCount()
+//	{
+//		return totalExpiredBatchCount;
+//	}
+//
+//	public Long getTotalExpiringBatchCount()
+//	{
+//		return totalExpiringBatchCount;
+//	}
 
 	public User getUser()
 	{

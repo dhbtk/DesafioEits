@@ -27,7 +27,7 @@ public class ProductsController
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public List<Product> index(@RequestParam(required = false, value = "name") String name)
 	{
-		return productService.listAllByFilters(null, name);
+		return productService.listAllProductsByFilters(null, name);
 	}
 
 	@RequestMapping(value = "/{id}/batches", method = RequestMethod.GET)
@@ -51,7 +51,7 @@ public class ProductsController
 	@RequestMapping(value = "/{id}/batches", method = RequestMethod.POST)
 	public Batch insertBatch(@PathVariable Long id, @RequestBody Batch batch)
 	{
-		Product product = productService.find(id);
+		Product product = productService.findProduct(id);
 		batch.setProduct(product);
 		return batchService.insert(batch);
 	}
@@ -59,13 +59,13 @@ public class ProductsController
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Product show(@PathVariable Long id)
 	{
-		return productService.find(id);
+		return productService.findProduct(id);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.POST })
 	public Product update(@PathVariable Long id, @RequestBody Product sentProduct)
 	{
-		Product product = productService.find(id);
+		Product product = productService.findProduct(id);
 		if(sentProduct.getName() != null)
 		{
 			product.setName(sentProduct.getName());
@@ -78,12 +78,12 @@ public class ProductsController
 		{
 			product.setCategory(productService.findCategory(sentProduct.getCategoryId()));
 		}
-		return productService.update(product);
+		return productService.updateProduct(product);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable Long id)
 	{
-		productService.delete(id);
+		productService.deleteProduct(id);
 	}
 }

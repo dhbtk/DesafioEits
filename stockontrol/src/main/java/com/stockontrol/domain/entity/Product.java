@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.directwebremoting.annotations.DataTransferObject;
 import org.hibernate.annotations.Formula;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Table(name = "products")
 @Entity
+@DataTransferObject(javascript = "Product")
 public class Product extends BaseEntity
 {
 

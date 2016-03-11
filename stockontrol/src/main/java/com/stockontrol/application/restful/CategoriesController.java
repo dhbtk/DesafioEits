@@ -32,14 +32,14 @@ public class CategoriesController
 	@RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
 	public List<Product> listProducts(@PathVariable Long id, @RequestParam(name = "name", required = false) String name)
 	{
-		return productService.listAllByFilters(id, name);
+		return productService.listAllProductsByFilters(id, name);
 	}
 
 	@RequestMapping(value = "/{id}/products", method = RequestMethod.POST)
 	public Product insertProduct(@PathVariable Long id, @Valid @RequestBody Product product)
 	{
 		product.setCategory(productService.findCategory(id));
-		return productService.insert(product);
+		return productService.insertProduct(product);
 	}
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.POST)

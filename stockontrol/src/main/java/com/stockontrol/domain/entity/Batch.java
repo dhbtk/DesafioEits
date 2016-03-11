@@ -10,6 +10,7 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.directwebremoting.annotations.DataTransferObject;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Table(name = "batches")
 @Entity
+@DataTransferObject(javascript = "Batch")
 public class Batch extends BaseEntity
 {
 	@NotNull

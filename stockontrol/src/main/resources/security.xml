@@ -6,14 +6,17 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<authentication-manager>
-		<authentication-provider user-service-ref="customUserDetailsService">
-			<password-encoder hash="bcrypt" />
+<!-- 		<authentication-provider user-service-ref="customUserDetailsService"> -->
+<!-- 			<password-encoder hash="bcrypt" /> -->
+<!-- 		</authentication-provider> -->
+		<authentication-provider>
+			<user-service><user name="admin@admin.com" password="admin" authorities="ROLE_ADMIN,ROLE_USER"/></user-service>
 		</authentication-provider>
 	</authentication-manager>
 	
 	<global-method-security pre-post-annotations="enabled" />
 	
-	<beans:bean id="customUserDetailsService" class="com.stockontrol.domain.service.UserService" />
+<!-- 	<beans:bean id="customUserDetailsService" class="com.stockontrol.domain.service.UserService" /> -->
 	
 	<http pattern="/resources/css/**" security="none" />
 	<http pattern="/webjars/**" security="none" />

@@ -11,16 +11,20 @@ import org.springframework.transaction.annotation.Transactional;
 import com.stockontrol.domain.entity.Batch;
 import com.stockontrol.domain.repository.BatchRepository;
 
+import org.directwebremoting.annotations.RemoteMethod;
+import org.directwebremoting.annotations.RemoteProxy;
 import org.junit.Assert;
 
 @Service("batchService")
+@Transactional
+@RemoteProxy(name = "batchService")
 public class BatchService
 {
 	@Autowired
 	private BatchRepository batchRepository;
 	
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
+	@RemoteMethod
 	public Batch insert(Batch batch)
 	{
 		Assert.assertNull("Lote já existe!",batch.getId());
@@ -28,35 +32,35 @@ public class BatchService
 	}
 	
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
+	@RemoteMethod
 	public Batch find(Long id)
 	{
 		return batchRepository.findOne(id);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
+	@RemoteMethod
 	public List<Batch> listAllByFilters(String productName, String identifier, Date maxExpirationDate, Long productId)
 	{
 		return batchRepository.listAllByFilters(productName, identifier, maxExpirationDate, productId);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
+	@RemoteMethod
 	public List<Batch> listAllExpired(Long productId)
 	{
 		return batchRepository.listAllExpired(productId);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
+	@RemoteMethod
 	public List<Batch> listAllExpiring(Long productId)
 	{
 		return batchRepository.listAllExpiring(productId);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
-	@Transactional
+	@RemoteMethod
 	public Batch registerOutgoingById(Long id, int quantity)
 	{
 		Batch batch = find(id);

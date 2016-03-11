@@ -6,6 +6,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.directwebremoting.annotations.DataTransferObject;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -14,8 +15,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Table(name = "users")
 @Entity
+@DataTransferObject(javascript = "User")
 public class User extends BaseEntity
 {
+	@DataTransferObject
 	public enum Profile
 	{
 		User, Administrator;
