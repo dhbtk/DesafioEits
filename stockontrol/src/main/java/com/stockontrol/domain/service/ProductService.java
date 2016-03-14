@@ -1,20 +1,22 @@
 package com.stockontrol.domain.service;
 
-import java.util.List;
-
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.stockontrol.domain.entity.Category;
 import com.stockontrol.domain.entity.Product;
+import com.stockontrol.domain.entity.QCategory;
+import com.stockontrol.domain.entity.QProduct;
 import com.stockontrol.domain.repository.CategoryRepository;
 import com.stockontrol.domain.repository.ProductRepository;
-
-import org.junit.Assert;
+import com.stockontrol.domain.util.PredicateList;
 
 @Service("productService")
 @Transactional
@@ -25,51 +27,40 @@ public class ProductService
 	private ProductRepository productRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
-	
+
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
-	public List<Product> listAllProductsByFilters(Long categoryId, String name)
+	public Page<Product> listAllProductsByFilters(Long categoryId, String name, PageRequest page)
 	{
-		if(categoryId == null && name == null)
-		{
-			return productRepository.findAll();
-		}
-		else if(categoryId == null)
-		{
-			return productRepository.findAllByNameContaining(name);
-		}
-		else if(name == null)
-		{
-			return productRepository.findAllByCategoryId(categoryId);
-		}
-		else
-		{
-			return productRepository.findAllByCategoryIdAndNameContaining(categoryId, name);
-		}
-		//return productRepository.listAllByFilters(categoryId, name);
+		QProduct product = QProduct.product;
+		PredicateList predicates = new PredicateList();
+		predicates
+				.add(categoryId, product.category.id.eq(categoryId))
+				.add(name, product.name.containsIgnoreCase(name));
+		return productRepository.findAll(predicates.getIntersection(), page);
 	}
-	
+
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
 	public void deleteProduct(Long id)
 	{
 		productRepository.delete(id);
 	}
-	
+
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
-	public List<Product> findAllProducts()
+	public Page<Product> findAllProducts(PageRequest page)
 	{
-		return productRepository.findAll();
+		return productRepository.findAll(page);
 	}
-	
+
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
 	public Product findProduct(Long id)
 	{
 		return productRepository.findOne(id);
 	}
-	
+
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
 	public Product insertProduct(Product product)
@@ -77,7 +68,7 @@ public class ProductService
 		Assert.assertNull("Produto já existe!", product.getId());
 		return productRepository.saveAndFlush(product);
 	}
-	
+
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
 	public Product updateProduct(Product product)
@@ -85,21 +76,21 @@ public class ProductService
 		Assert.assertNotNull("Produto não existe!", product.getId());
 		return productRepository.saveAndFlush(product);
 	}
-	
+
 	@RemoteMethod
 	@PreAuthorize("hasRole('USER')")
-	public List<Category> listAllCategoriesByFilters(String name)
+	public Page<Category> listAllCategoriesByFilters(String name, PageRequest page)
 	{
-		if(name == null)
+		QCategory category = QCategory.category;
+		if (name == null)
 		{
-			return categoryRepository.findAll();
-		}
-		else
+			return categoryRepository.findAll(page);
+		} else
 		{
-			return categoryRepository.findAllByNameIgnoreCaseContaining(name);
+			return categoryRepository.findAll(category.name.containsIgnoreCase(name), page);
 		}
 	}
-	
+
 	@RemoteMethod
 	@PreAuthorize("hasRole('USER')")
 	public Category findCategory(Long id)
@@ -114,7 +105,7 @@ public class ProductService
 		Assert.assertNull("Categoria já existe!", category.getId());
 		return categoryRepository.saveAndFlush(category);
 	}
-	
+
 	@RemoteMethod
 	@PreAuthorize("hasRole('USER')")
 	public Category updateCategory(Category category)
@@ -122,7 +113,7 @@ public class ProductService
 		Assert.assertNotNull("Categoria ainda não existe!", category.getId());
 		return categoryRepository.saveAndFlush(category);
 	}
-	
+
 	@RemoteMethod
 	@PreAuthorize("hasRole('USER')")
 	public void deleteCategory(Long id)
