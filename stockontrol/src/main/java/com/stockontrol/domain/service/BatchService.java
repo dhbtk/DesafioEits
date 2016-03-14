@@ -1,19 +1,21 @@
 package com.stockontrol.domain.service;
 
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 
+import org.directwebremoting.annotations.RemoteMethod;
+import org.directwebremoting.annotations.RemoteProxy;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.stockontrol.domain.entity.Batch;
+import com.stockontrol.domain.entity.QBatch;
 import com.stockontrol.domain.repository.BatchRepository;
-
-import org.directwebremoting.annotations.RemoteMethod;
-import org.directwebremoting.annotations.RemoteProxy;
-import org.junit.Assert;
+import com.stockontrol.domain.util.PredicateList;
 
 @Service("batchService")
 @Transactional
@@ -40,23 +42,30 @@ public class BatchService
 	
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
-	public List<Batch> listAllByFilters(String productName, String identifier, Date maxExpirationDate, Long productId)
+	public Page<Batch> listAllByFilters(String productName, String identifier, LocalDate maxExpirationDate, Long productId, PageRequest page)
 	{
-		return batchRepository.listAllByFilters(productName, identifier, maxExpirationDate, productId);
+		QBatch batch = QBatch.batch;
+		PredicateList predicates = new PredicateList();
+		predicates
+				.add(productName, batch.product.name.containsIgnoreCase(productName))
+				.add(identifier, batch.identifier.containsIgnoreCase(identifier))
+				.add(maxExpirationDate, batch.expiresAt.loe(maxExpirationDate))
+				.add(productId, batch.product.id.eq(productId));
+		return batchRepository.findAll(predicates.getIntersection(), page);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
-	public List<Batch> listAllExpired(Long productId)
+	public Page<Batch> listAllExpired(Long productId, PageRequest page)
 	{
-		return batchRepository.listAllExpired(productId);
+		return batchRepository.listAllExpired(productId, page);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
-	public List<Batch> listAllExpiring(Long productId)
+	public Page<Batch> listAllExpiring(Long productId, PageRequest page)
 	{
-		return batchRepository.listAllExpiring(productId);
+		return batchRepository.listAllExpiring(productId, page);
 	}
 	
 	@PreAuthorize("hasRole('USER')")

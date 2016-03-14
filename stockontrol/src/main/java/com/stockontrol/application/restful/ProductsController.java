@@ -1,8 +1,7 @@
 package com.stockontrol.application.restful;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,27 +24,27 @@ public class ProductsController
 	private BatchService batchService;
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
-	public List<Product> index(@RequestParam(required = false, value = "name") String name)
+	public Iterable<Product> index(@RequestParam(required = false, value = "name") String name, @RequestParam(name = "page", defaultValue = "0") int page)
 	{
-		return productService.listAllProductsByFilters(null, name);
+		return productService.listAllProductsByFilters(null, name, new PageRequest(page, 20));
 	}
 
 	@RequestMapping(value = "/{id}/batches", method = RequestMethod.GET)
-	public List<Batch> listBatches(@PathVariable Long id)
+	public Iterable<Batch> listBatches(@PathVariable Long id, @RequestParam(name = "page", defaultValue = "0") int page)
 	{
-		return batchService.listAllByFilters(null, null, null, id);
+		return batchService.listAllByFilters(null, null, null, id, new PageRequest(page, 20));
 	}
 	
 	@RequestMapping(value = "/{id}/batches/expiring", method = RequestMethod.GET)
-	public List<Batch> listExpiringBatches(@PathVariable Long id)
+	public Iterable<Batch> listExpiringBatches(@PathVariable Long id, @RequestParam(name = "page", defaultValue = "0") int page)
 	{
-		return batchService.listAllExpiring(id);
+		return batchService.listAllExpiring(id, new PageRequest(page, 20));
 	}
 	
 	@RequestMapping(value = "/{id}/batches/expired", method = RequestMethod.GET)
-	public List<Batch> listExpiredBatches(@PathVariable Long id)
+	public Iterable<Batch> listExpiredBatches(@PathVariable Long id, @RequestParam(name = "page", defaultValue = "0") int page)
 	{
-		return batchService.listAllExpired(id);
+		return batchService.listAllExpired(id, new PageRequest(page, 20));
 	}
 	
 	@RequestMapping(value = "/{id}/batches", method = RequestMethod.POST)

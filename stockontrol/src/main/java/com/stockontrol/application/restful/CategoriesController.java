@@ -1,10 +1,9 @@
 package com.stockontrol.application.restful;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,15 +23,18 @@ public class CategoriesController
 	private ProductService productService;
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
-	public List<Category> index(@RequestParam(required = false, value = "name") String name)
+	public Iterable<Category> index(@RequestParam(required = false, value = "name") String name,
+			@RequestParam(name = "page", defaultValue = "0") int page)
 	{
-		return productService.listAllCategoriesByFilters(name);
+		return productService.listAllCategoriesByFilters(name, new PageRequest(page, 20));
 	}
 
 	@RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
-	public List<Product> listProducts(@PathVariable Long id, @RequestParam(name = "name", required = false) String name)
+	public Iterable<Product> listProducts(@PathVariable Long id,
+			@RequestParam(name = "name", required = false) String name,
+			@RequestParam(name = "page", defaultValue = "0") int page)
 	{
-		return productService.listAllProductsByFilters(id, name);
+		return productService.listAllProductsByFilters(id, name, new PageRequest(page, 20));
 	}
 
 	@RequestMapping(value = "/{id}/products", method = RequestMethod.POST)
