@@ -1,6 +1,7 @@
 package com.stockontrol.application.restful;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,12 +19,12 @@ public class UsersController
 	private UserService userService;
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
-	public Iterable<User> listUsers(@RequestParam(name = "fullName", required = false) String fullName,
-			@RequestParam(name = "email", required = false) String email,
+	public Iterable<User> listUsers(@RequestParam(name = "filter", required = false) String filter,
 			@RequestParam(name = "active", required = false) Boolean active,
-			@RequestParam(name = "profile", required = false) User.Profile profile)
+			@RequestParam(name = "profile", required = false) User.Profile profile,
+			@RequestParam(name = "page", defaultValue = "0") int page)
 	{
-		return userService.listAllByFilters(fullName, email, active, profile);
+		return userService.listAllByFilters(filter, active, profile, new PageRequest(page, 20));
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
