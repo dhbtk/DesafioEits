@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -58,24 +60,20 @@ public class UserService
 
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
-	public Iterable<User> listAllByFilters(String fullName, String email, Boolean active, User.Profile profile)
+	public Page<User> listAllByFilters(String nameOrEmail, Boolean active, User.Profile profile, PageRequest page)
 	{
 		QUser user = QUser.user;
 		ArrayList<BooleanExpression> preds = new ArrayList<BooleanExpression>();
 		BooleanExpression ex;
 		int i;
 
-		if (fullName == null && email == null && active == null && profile == null)
+		if (nameOrEmail == null && active == null && profile == null)
 		{
-			return userRepository.findAll();
+			return userRepository.findAll(page);
 		}
-		if (fullName != null)
+		if (nameOrEmail != null)
 		{
-			preds.add(user.fullName.containsIgnoreCase(fullName));
-		}
-		if (email != null)
-		{
-			preds.add(user.email.containsIgnoreCase(email));
+			preds.add(user.fullName.containsIgnoreCase(nameOrEmail).or(user.email.containsIgnoreCase(nameOrEmail)));
 		}
 		if (active != null)
 		{
@@ -89,7 +87,7 @@ public class UserService
 		{
 			ex = ex.and(preds.get(i));
 		}
-		return userRepository.findAll(ex);
+		return userRepository.findAll(ex, page);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")

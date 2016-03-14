@@ -33,6 +33,7 @@ public class User extends BaseEntity
 	@Audited
 	private String email;
 	
+	@NotBlank
 	@Column(name = "password_digest", nullable = false, length = 255)
 	@Audited
 	private String passwordDigest;
@@ -47,7 +48,6 @@ public class User extends BaseEntity
 	@Audited
 	private Boolean active;
 	
-	@NotBlank
 	@Transient
 	private String password;
 	
