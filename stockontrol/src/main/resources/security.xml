@@ -23,11 +23,17 @@
 	<http pattern="/resources/css/**" security="none" />
 	<http pattern="/webjars/**" security="none" />
 	<http>
-		<intercept-url pattern="/**" access="hasRole('USER')" />
-		<http-basic />
-		<logout />
+		<intercept-url pattern="/**" access="hasRole('USER')"/>
+		<form-login login-page="/login.html" password-parameter="password" username-parameter="email" />
+		<logout logout-url="/logout.html" />
 		<csrf disabled="true"/>
 	</http>
+<!-- 	<http> -->
+<!-- 		<intercept-url pattern="/**" access="hasRole('USER')" /> -->
+<!-- 		<http-basic /> -->
+<!-- 		<logout /> -->
+<!-- 		<csrf disabled="true"/> -->
+<!-- 	</http> -->
 	
 	<beans:bean id="roleVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
 		<beans:constructor-arg ref="roleHierarchy" />

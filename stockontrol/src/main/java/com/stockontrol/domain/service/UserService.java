@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,6 +89,13 @@ public class UserService
 			ex = ex.and(preds.get(i));
 		}
 		return userRepository.findAll(ex, page);
+	}
+	
+	@PreAuthorize("hasRole('USER')")
+	@RemoteMethod
+	public User getCurrent()
+	{
+		return userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
