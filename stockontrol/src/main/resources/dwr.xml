@@ -7,4 +7,9 @@
 	
 	<annotation-config id="dwrAnnotationConfig" />
 	<annotation-scan base-package="com.stockontrol.domain.entity" scanDataTransferObject="true" scanRemoteProxy="false"/>
+	
+	<configuration>
+		<convert class="java.lang.Exception" type="exception" />
+		<convert class="java.lang.StackTraceElement" type="bean" />
+	</configuration>
 </beans:beans>

@@ -19,8 +19,6 @@ import org.hibernate.annotations.Formula;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Table(name = "products")
 @Entity
 @DataTransferObject(javascript = "Product")
@@ -30,7 +28,6 @@ public class Product extends BaseEntity
 	@Formula("(select count(*) from batches b where b.product_id = id)")
 	private Long batchCount;
 
-	@JsonIgnore
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Audited
 	private List<Batch> batches = new ArrayList<Batch>();

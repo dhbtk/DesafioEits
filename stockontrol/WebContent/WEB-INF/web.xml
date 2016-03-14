@@ -41,6 +41,10 @@
 			<param-name>debug</param-name>
 			<param-value>true</param-value>
 		</init-param>
+		<init-param>
+			<param-name>configFileLocation</param-name>
+			<param-value>WEB-INF/dwr.xml</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dwr</servlet-name>

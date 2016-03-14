@@ -14,8 +14,6 @@ import org.directwebremoting.annotations.DataTransferObject;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Table(name = "batches")
 @Entity
 @DataTransferObject(javascript = "Batch")
@@ -81,7 +79,6 @@ public class Batch extends BaseEntity
 		return user;
 	}
 
-	@JsonIgnore
 	@AssertTrue
 	public boolean isValidRange()
 	{

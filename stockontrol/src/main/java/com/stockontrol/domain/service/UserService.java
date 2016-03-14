@@ -2,8 +2,6 @@ package com.stockontrol.domain.service;
 
 import java.util.ArrayList;
 
-import javax.validation.Valid;
-
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,8 @@ public class UserService
 {
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@RemoteMethod
@@ -96,7 +96,6 @@ public class UserService
 	@RemoteMethod
 	public User save(User user)
 	{
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		if (user.getPassword() != null)
 		{
 			user.setPasswordDigest(encoder.encode(user.getPassword()));
@@ -108,7 +107,7 @@ public class UserService
 	@RemoteMethod
 	public User insert(User user)
 	{
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		user.setPasswordDigest(encoder.encode(user.getPassword()));
 		return userRepository.saveAndFlush(user);
 	}
 }
