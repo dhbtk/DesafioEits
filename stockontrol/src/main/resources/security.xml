@@ -1,44 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
+
 	<authentication-manager>
 		<authentication-provider user-service-ref="customUserDetailsService">
 			<password-encoder hash="bcrypt" />
 		</authentication-provider>
-<!-- 		<authentication-provider> -->
-<!-- 			<user-service><user name="admin@admin.com" password="admin" authorities="ROLE_ADMIN,ROLE_USER"/></user-service> -->
-<!-- 		</authentication-provider> -->
+		<!-- <authentication-provider> -->
+		<!-- <user-service><user name="admin@admin.com" password="admin" authorities="ROLE_ADMIN,ROLE_USER"/></user-service> -->
+		<!-- </authentication-provider> -->
 	</authentication-manager>
-	
+
 	<global-method-security pre-post-annotations="enabled" />
-	
-	<beans:bean id="customUserDetailsService" class="com.stockontrol.domain.service.UserDetailsService" />
-	
-	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-	
-	<http pattern="/resources/css/**" security="none" />
+
+	<beans:bean id="customUserDetailsService"
+		class="com.stockontrol.domain.service.UserDetailsService" />
+
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+	<http pattern="/resources/**" security="none" />
 	<http pattern="/webjars/**" security="none" />
+	<http pattern="/login.html" security="none" />
 	<http>
-		<intercept-url pattern="/**" access="hasRole('USER')"/>
-		<form-login login-page="/login.html" password-parameter="password" username-parameter="email" />
-		<logout logout-url="/logout.html" />
-		<csrf disabled="true"/>
+		<intercept-url pattern="/**" access="hasRole('USER')" />
+		<form-login login-page="/login.html" password-parameter="password"
+			username-parameter="email" login-processing-url="/authenticate"
+			authentication-failure-handler-ref="authenticationFailureHandler" />
+		<logout />
+		<csrf disabled="true" />
 	</http>
-<!-- 	<http> -->
-<!-- 		<intercept-url pattern="/**" access="hasRole('USER')" /> -->
-<!-- 		<http-basic /> -->
-<!-- 		<logout /> -->
-<!-- 		<csrf disabled="true"/> -->
-<!-- 	</http> -->
-	
-	<beans:bean id="roleVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
+	<!-- <http> -->
+	<!-- <intercept-url pattern="/**" access="hasRole('USER')" /> -->
+	<!-- <http-basic /> -->
+	<!-- <logout /> -->
+	<!-- <csrf disabled="true"/> -->
+	<!-- </http> -->
+
+	<beans:bean id="roleVoter"
+		class="org.springframework.security.access.vote.RoleHierarchyVoter">
 		<beans:constructor-arg ref="roleHierarchy" />
 	</beans:bean>
-	<beans:bean id="roleHierarchy" class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+	<beans:bean id="roleHierarchy"
+		class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
 		<beans:property name="hierarchy">
 			<beans:value>
 				ROLE_ADMIN > ROLE_USER
@@ -46,4 +52,6 @@
 		</beans:property>
 	</beans:bean>
 	
+	<beans:bean id="authenticationFailureHandler" class="com.stockontrol.application.security.AuthenticationFailureHandler" />
+
 </beans:beans>

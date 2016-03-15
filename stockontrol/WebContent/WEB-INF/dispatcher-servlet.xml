@@ -17,6 +17,7 @@
     <mvc:annotation-driven />
     
     <mvc:resources mapping="/webjars/**" location="/webjars/" />
+    <mvc:resources location="/resources/" mapping="/*.html" />
     
     <mvc:default-servlet-handler />
     

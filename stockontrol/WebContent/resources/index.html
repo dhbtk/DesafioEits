@@ -1,10 +1,50 @@
-<!doctype html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="Stockontrol">
 <head>
 	<meta charset="UTF-8" />
-	<title>Stockontrol</title>
+	<title>Controle de Estoque</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/webjars/angular-material/1.0.6/angular-material.css">
+	<link rel="stylesheet" href="/resources/css/style.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
-	
+<body ng-controller="MainController" ng-cloak layout="column">
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<md-button class="md-icon-button" aria-label="Menu">
+				<md-icon>menu</md-icon>
+			</md-button>
+			<h2><span>Usuários</span></h2>
+			<md-button>
+				Novo
+			</md-button>
+			<span flex></span>
+			<span>admin@admin.com</span>
+			<md-menu>
+				<md-button ng-click="openLogoutMenu($mdOpenMenu, $event)" class="md-icon-button" aria-label="Menu">
+					<md-icon md-menu-origin aria-label="Opções">more_vert</md-icon>
+				</md-button>
+				<md-menu-content>
+					<md-button ng-click="logout()">
+						Sair
+					</md-button>
+				</md-menu-content>
+			</md-menu>
+		</div>
+	</md-toolbar>
+	<div ng-view></div>
+	<script src="/webjars/angularjs/1.5.0/angular.js"></script>
+	<script src="/webjars/angular-animate/1.5.0/angular-animate.js"></script>
+	<script src="/webjars/angular-aria/1.5.0/angular-aria.js"></script>
+	<script src="/webjars/angular-messages/1.5.0/angular-messages.js"></script>
+	<script src="/webjars/angular-material/1.0.6/angular-material.js"></script>
+	<script src="/webjars/angular-ui-router/0.2.18/release/angular-ui-router.js"></script>
+	<script src="/resources/js/stockontrol.js"></script>
+	<script src="/resources/js/controllers/MainController.js"></script>
+	<script src="/resources/js/controllers/UsersController.js"></script>
+	<script type="text/javascript" src="/dwr/engine.js"></script>
+  <script type="text/javascript" src="/dwr/interface/userService.js"></script>
+	<script type="text/javascript" src="/dwr/interface/productService.js"></script>
+	<script type="text/javascript" src="/dwr/interface/batchService.js"></script>
 </body>
 </html>
