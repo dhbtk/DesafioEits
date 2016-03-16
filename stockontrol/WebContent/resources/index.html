@@ -11,14 +11,11 @@
 </head>
 <body ng-controller="MainController" ng-cloak layout="column">
 	<md-toolbar>
-		<div class="md-toolbar-tools">
+		<div class="md-toolbar-tools" layout="row">
 			<md-button class="md-icon-button" aria-label="Menu">
 				<md-icon>menu</md-icon>
 			</md-button>
-			<h2><span>Usuários</span></h2>
-			<md-button>
-				Novo
-			</md-button>
+			<div ng-include="header.location" class="header-partial"></div>
 			<span flex></span>
 			<span style="font-size: 70%">{{model.currentUser.email}}</span>
 			<md-menu>

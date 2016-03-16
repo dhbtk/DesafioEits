@@ -1,4 +1,13 @@
 /**
+ * Maldita GAS Tecnologia
+ */
+
+object[width="0"]
+{
+	display: none;
+}
+
+/**
  * Containers
  */
 
@@ -30,6 +39,16 @@
 	{
 		margin: 0 35px;
 	}
+}
+
+/**
+ * Alinhando o h2 do cabeçalho
+ */
+
+.header-partial, .header-partial h2
+{
+	display: flex;
+	align-items: center;
 }
 
 /**

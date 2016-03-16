@@ -7,6 +7,8 @@ Stockontrol.controller('MainController',function($scope, $http, $state, $window)
 		currentUser: null
 	}
 
+	$scope.header = {};
+
 	/*
 	 * Métodos
 	 */
