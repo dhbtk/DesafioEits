@@ -7,6 +7,7 @@ Stockontrol.controller('MainController',function($scope, $http, $state, $window)
 		currentUser: null
 	}
 
+	/** Mantém a URL da parcial do cabeçalho **/
 	$scope.header = {};
 
 	/*
