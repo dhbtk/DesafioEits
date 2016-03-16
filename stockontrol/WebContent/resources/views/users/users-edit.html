@@ -1,0 +1,24 @@
+<div layout="column">
+	<md-input-container>
+		<label>Nome Completo</label>
+		<input type="text" ng-model="selectedUser.fullName" required>
+	</md-input-container>
+	<md-input-container>
+		<label>Email</label>
+		<input type="email" ng-model="selectedUser.email" required>
+	</md-input-container>
+	<md-input-container>
+		<label>Senha</label>
+		<input type="password" ng-model="selectedUser.password">
+	</md-input-container>
+	<md-input-container>
+		<label>Confirmação de Senha</label>
+		<input type="password" ng-model="selectedUser.passwordConfirmation">
+	</md-input-container>
+	<md-input-container>
+		<label>Perfil</label>
+		<md-select ng-model="selectedUser.profile">
+			<md-option ng-repeat="profile in model.profileOptions" value="{{profile.value}}">{{profile.name}}</md-option>
+		</md-select>
+	</md-input-container>
+</div>

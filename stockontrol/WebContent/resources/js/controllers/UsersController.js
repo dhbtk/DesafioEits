@@ -15,7 +15,6 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $wind
 			{name: "Usuário", value: "User"},
 			{name: "Administrador", value: "Administrator"}
 		],
-		selectedUsers: [],
 		selectedUser: null,
 		request: {
 			content: [],
@@ -70,6 +69,7 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $wind
 			$scope.fetchUsers();
 		}
 	};
+
 	/*
 	 * Inicialização
 	 */
@@ -78,7 +78,5 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $wind
 	$scope.fetchUsers();
 
 	// Atualizando a lista de usuários conforme os filtros
-	$scope.$watch('model.filters.active', function(){ $scope.fetchUsers(); });
-	$scope.$watch('model.filters.profile', function(){ $scope.fetchUsers(); });
-	// Para não chamar o serviço demais, não usamos watch na input de busca
+	$scope.$watch('model.filters', function(){ $scope.fetchUsers(); }, true);
 });

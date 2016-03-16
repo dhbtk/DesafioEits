@@ -2,7 +2,7 @@
 	<div class="md-toolbar-tools" layout="row">
 		<div class="search-box">
 			<md-icon>search</md-icon>
-			<input type="text" ng-model="model.filters.text" ng-keyup="handleSearchBoxKeyPress($event)">
+			<input type="text" ng-model="model.filters.text" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
 		</div>
 		<md-radio-group ng-model="model.filters.active" layout="row">
 			<md-radio-button ng-value="true">
@@ -50,3 +50,11 @@
 	</md-table-container>
 	<md-table-pagination md-limit="model.pageSize" md-page="model.page" md-total="{{model.request.totalElements}}" md-on-paginate="paginateTable" md-page-select></md-table-pagination>
 </div>
+<md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="rightPanel" layout="column">
+	<md-toolbar class="md-hue-2">
+		<div class="md-toolbar-tools">
+			<h2><span>{{model.selectedUser.fullName}}</span></h2>
+		</div>
+	</md-toolbar>
+	<div ng-include="'/resources/views/users/users-edit.html'"></div>
+</md-sidenav>
