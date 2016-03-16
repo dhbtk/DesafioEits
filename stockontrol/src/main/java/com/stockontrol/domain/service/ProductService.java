@@ -34,9 +34,8 @@ public class ProductService
 	{
 		QProduct product = QProduct.product;
 		PredicateList predicates = new PredicateList();
-		predicates
-				.add(categoryId, product.category.id.eq(categoryId))
-				.add(name, product.name.containsIgnoreCase(name));
+		predicates.add(categoryId, () -> product.category.id.eq(categoryId)).add(name,
+				() -> product.name.containsIgnoreCase(name));
 		return productRepository.findAll(predicates.getIntersection(), page);
 	}
 

@@ -66,8 +66,9 @@ public class UserService
 
 		predicates
 				.add(nameOrEmail,
-						user.fullName.containsIgnoreCase(nameOrEmail).or(user.email.containsIgnoreCase(nameOrEmail)))
-				.add(active, user.active.eq(active)).add(profile, user.profile.eq(profile));
+						() -> user.fullName.containsIgnoreCase(nameOrEmail)
+								.or(user.email.containsIgnoreCase(nameOrEmail)))
+				.add(active, () -> user.active.eq(active)).add(profile, () -> user.profile.eq(profile));
 		return userRepository.findAll(predicates.getIntersection(), page);
 	}
 

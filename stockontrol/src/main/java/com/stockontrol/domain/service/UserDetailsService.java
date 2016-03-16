@@ -8,10 +8,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.stockontrol.domain.entity.User;
 import com.stockontrol.domain.repository.UserRepository;
 
+@Service("userDetailsService")
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService
 {
 	@Autowired
