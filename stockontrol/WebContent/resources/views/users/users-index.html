@@ -42,7 +42,7 @@
 					<td md-cell>
 						<md-button ng-if="user.active" class="md-warn md-raised">Desativar</md-button>
 						<md-button ng-if="!user.active" class="md-warn md-raised">Ativar</md-button>
-						<md-button class="md-raised md-primary">Editar</md-button>
+						<md-button class="md-raised md-primary" ng-click="openEditUser(user.id)">Editar</md-button>
 					</td>
 				</tr>
 			</tbody>
@@ -53,8 +53,10 @@
 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="rightPanel" layout="column">
 	<md-toolbar class="md-hue-2">
 		<div class="md-toolbar-tools">
-			<h2><span>{{model.selectedUser.fullName}}</span></h2>
+			<h2><span>{{selectedUser.fullName}}</span></h2>
 		</div>
 	</md-toolbar>
-	<div ng-include="'/resources/views/users/users-edit.html'"></div>
+	<md-content layout-padding>
+		<div ng-include="'/resources/views/users/users-edit.html'"></div>
+	</md-content>
 </md-sidenav>

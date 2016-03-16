@@ -17,7 +17,7 @@ function serializeObject(o)
 	return s;
 }
 
-var Stockontrol = angular.module('Stockontrol',['ngMaterial','ui.router', 'md.data.table'])
+var Stockontrol = angular.module('Stockontrol',['ngMaterial', 'ngMessages', 'ui.router', 'md.data.table'])
 
 Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider)
 {

@@ -1,4 +1,4 @@
-Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $window)
+Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $mdSidenav, $window)
 {
 	/** Localização do cabeçalho **/
 	$scope.header.location = '/resources/views/users/users-header.html';
@@ -15,18 +15,24 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $wind
 			{name: "Usuário", value: "User"},
 			{name: "Administrador", value: "Administrator"}
 		],
-		selectedUser: null,
+		user: null,
 		request: {
 			content: [],
 		},
 		page: 1,
-		pageSize: 5,
+		pageSize: 10,
 		// Para exibir/esconder a barrinha de progresso indeterminado
 		tasks: 0,
 	}
 
 	/*
 	 * Métodos
+	 */
+
+	/**
+	 *
+	 * Listagem
+	 *
 	 */
 
 	// Busca os usuários filtrados lá no serviço
@@ -70,6 +76,23 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $wind
 		}
 	};
 
+	/**
+	 *
+	 * Edição
+	 *
+	 */
+
+	$scope.openEditUser = function(id)
+	{
+		$scope.model.tasks++;
+		userService.find(id, function(user)
+		{
+			$scope.model.tasks--;
+			$scope.user = user;
+			$mdSidenav('rightPanel').open();
+		});
+	}
+
 	/*
 	 * Inicialização
 	 */
@@ -79,4 +102,15 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $wind
 
 	// Atualizando a lista de usuários conforme os filtros
 	$scope.$watch('model.filters', function(){ $scope.fetchUsers(); }, true);
+});
+
+Stockontrol.controller('EditUserController', function($scope)
+{
+
+});
+
+Stockontrol.controller('NewUserController', function($scope)
+{
+	$scope.user = new User();
+	$scope.user.active = true;
 });

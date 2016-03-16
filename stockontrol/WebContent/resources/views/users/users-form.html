@@ -1,0 +1,41 @@
+<form name="userForm" layout="column">
+	<md-input-container class="md-block">
+		<label>Nome Completo</label>
+		<input type="text" name="fullName" ng-model="user.fullName" required>
+		<div ng-messages="userForm.fullName.$error">
+			<div ng-message="required">Este campo é necessário.</div>
+		</div>
+	</md-input-container>
+	<md-input-container class="md-block">
+		<label>Email</label>
+		<input type="email" name="email" ng-model="user.email" required>
+		<div ng-messages="userForm.email.$error">
+			<div ng-message="required">Este campo é necessário.</div>
+			<div ng-message="email">Insira um endereço de email válido.</div>
+		</div>
+	</md-input-container>
+	<md-input-container class="md-block">
+		<label>Senha</label>
+		<input type="password" name="password" ng-model="user.password">
+		<div ng-messages="userForm.password.$error">
+			<div ng-message="required">Este campo é necessário.</div>
+		</div>
+	</md-input-container>
+	<md-input-container class="md-block">
+		<label>Confirmação de Senha</label>
+		<input type="password" name="passwordConfirmation" ng-model="user.passwordConfirmation" compare-to="user.password">
+		<div ng-messages="userForm.passwordConfirmation.$error" multiple md-auto-hide>
+			<div ng-message="required">Este campo é necessário.</div>
+			<div ng-message="compareTo">Os campos de senha e de confirmação de senha devem ser iguais.</div>
+		</div>
+	</md-input-container>
+	<md-input-container class="md-block">
+		<label>Perfil</label>
+		<md-select name="profile" ng-model="user.profile" required>
+			<md-option ng-repeat="profile in model.profileOptions" value="{{profile.value}}">{{profile.name}}</md-option>
+		</md-select>
+		<div ng-messages="userForm.profile.$error">
+			<div ng-message="required">Este campo é necessário.</div>
+		</div>
+	</md-input-container>
+</form>
