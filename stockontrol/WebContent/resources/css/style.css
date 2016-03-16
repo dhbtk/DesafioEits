@@ -1,5 +1,82 @@
+/**
+ * Containers
+ */
+
 .login-box-container
 {
 	margin: 0 auto;
 	max-width: 400px;
+}
+
+.container
+{
+	margin: 0 auto;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 15px;
+}
+
+@media(min-width: 1280px)
+{
+	.container
+	{
+		margin: 0 25px;
+	}
+}
+
+@media(min-width: 1600px)
+{
+	.container
+	{
+		margin: 0 35px;
+	}
+}
+
+/**
+ * Barra de filtros
+ */
+
+.filter-toolbar, .filter-toolbar .md-toolbar-tools
+{
+	font-size: 14px;
+}
+
+.filter-toolbar
+{
+	min-height: 48px;
+}
+
+.filter-toolbar .md-toolbar-tools
+{
+	height: 48px;
+}
+
+.filter-toolbar .md-toolbar-tools > *
+{
+	padding-right: 10px;
+}
+
+.filter-toolbar md-input-container.md-input-has-value label
+{
+	display: none;
+}
+
+/**
+ * Tabela de usuários
+ */
+
+.user-table th, .user-table td
+{
+	width: 1em;
+	white-space: nowrap;
+}
+
+.user-table .wide1
+{
+	width: auto;
+}
+
+.user-table .wide2
+{
+	width: auto;
 }

@@ -1,0 +1,52 @@
+<md-toolbar class="md-hue-1 filter-toolbar">
+	<div class="md-toolbar-tools" layout="row">
+		<div class="search-box">
+			<md-icon>search</md-icon>
+			<input type="text" ng-model="model.filters.text" ng-keyup="handleSearchBoxKeyPress($event)">
+		</div>
+		<md-radio-group ng-model="model.filters.active" layout="row">
+			<md-radio-button ng-value="true">
+				Usuários Ativados
+			</md-radio-button>
+			<md-radio-button ng-value="false">
+				Usuários Desativados
+			</md-radio-button>
+		</md-radio-group>
+		<md-input-container>
+			<label>Perfil de Usuário</label>
+			<md-select ng-model="model.filters.profile">
+				<md-option ng-repeat="profile in model.profileOptions" value="{{profile.value}}">{{profile.name}}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+</md-toolbar>
+<md-progress-linear md-mode="indeterminate" ng-if="model.tasks > 0"></md-progress-linear>
+<div class="container md-whiteframe-1dp">
+	<md-table-container>
+		<table md-table class="user-table">
+			<thead md-head>
+				<tr md-row>
+					<th md-column class="wide1">Nome Completo</th>
+					<th md-column class="wide2">Email</th>
+					<th md-column>Ativo</th>
+					<th md-column>Perfil</th>
+					<th md-column>Ações</th>
+				</tr>
+			</thead>
+			<tbody md-body>
+				<tr md-row ng-repeat="user in model.request.content">
+					<td md-cell class="wide1">{{user.fullName}}</td>
+					<td md-cell class="wide2">{{user.email}}</td>
+					<td md-cell>{{user.active ? 'Sim' : 'Não'}}</td>
+					<td md-cell>{{user.profile}}</td>
+					<td md-cell>
+						<md-button ng-if="user.active" class="md-warn md-raised">Desativar</md-button>
+						<md-button ng-if="!user.active" class="md-warn md-raised">Ativar</md-button>
+						<md-button class="md-raised md-primary">Editar</md-button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</md-table-container>
+	<md-table-pagination md-limit="model.pageSize" md-page="model.page" md-total="{{model.request.totalElements}}" md-on-paginate="paginateTable" md-page-select></md-table-pagination>
+</div>

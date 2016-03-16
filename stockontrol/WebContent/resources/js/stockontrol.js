@@ -17,9 +17,15 @@ function serializeObject(o)
 	return s;
 }
 
-var Stockontrol = angular.module('Stockontrol',['ngMaterial','ui.router'])
+var Stockontrol = angular.module('Stockontrol',['ngMaterial','ui.router', 'md.data.table'])
 
-Stockontrol.config(function($stateProvider)
+Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider)
 {
+	$urlRouterProvider.otherwise('users'); //FIXME
 
+	$stateProvider.state('users', {
+		url: '/users',
+		templateUrl: 'resources/views/users/users-index.html',
+		controller: 'UsersController'
+	});
 });
