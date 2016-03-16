@@ -1,5 +1,7 @@
 Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $window)
 {
+	/** Localização do cabeçalho **/
+	$scope.header.location = '/resources/views/users/users-header.html';
 	/*
 	 * Modelo
 	 */
@@ -35,9 +37,8 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $wind
 		text = text || $scope.model.filters.text;
 		active = active || $scope.model.filters.active;
 		profile = profile || $scope.model.filters.profile;
-		page = page || $scope.model.page - 1;
 		pageRequest = new PageRequest();
-		pageRequest.page = page;
+		pageRequest.page = (page || $scope.model.page) - 1;
 		pageRequest.size = limit || $scope.model.pageSize;
 		userService.listAllByFilters(text, active, profile, pageRequest,{
 			callback:function(data)
@@ -57,6 +58,7 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $wind
 
 	$scope.paginateTable = function(page, limit)
 	{
+		console.log('Pedindo página ' + page + ', mostrando ' + limit + ' por página');
 		$scope.fetchUsers(null, null, null, page, limit);
 	}
 
