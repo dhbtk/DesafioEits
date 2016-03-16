@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.mysema.query.types.expr.BooleanExpression;
 
-
 /**
  * Classe helper para gerar listas de condições para chamadas SQL
  * 
@@ -17,6 +16,7 @@ public class PredicateList
 	{
 		BooleanExpression expr();
 	}
+
 	private ArrayList<BooleanExpression> predicates = new ArrayList<BooleanExpression>();
 
 	/**
@@ -25,7 +25,9 @@ public class PredicateList
 	 * @param param
 	 *            O parâmetro cuja nulidade será testada
 	 * @param predicate
-	 *            A expressão a ser adicionada
+	 *            Uma expressão lambda que retorne a expressão a ser adicionada.
+	 *            Um lambda é necessário para evitar que a expressão seja
+	 *            avaliada caso o objeto seja nulo.
 	 * @return Esta instância da classe para encadeamento de chamadas
 	 */
 	public PredicateList add(Object param, PredicateWrapper predicate)
@@ -60,11 +62,10 @@ public class PredicateList
 	{
 		int i;
 		BooleanExpression predicate;
-		if(predicates.size() == 0)
+		if (predicates.size() == 0)
 		{
 			return null;
-		}
-		else
+		} else
 		{
 			for (i = 1, predicate = predicates.get(0); i < predicates.size(); i++)
 			{
