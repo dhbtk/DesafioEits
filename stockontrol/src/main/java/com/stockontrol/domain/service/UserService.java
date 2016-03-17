@@ -4,7 +4,6 @@ import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +14,7 @@ import com.stockontrol.domain.entity.QUser;
 import com.stockontrol.domain.entity.User;
 import com.stockontrol.domain.repository.UserRepository;
 import com.stockontrol.domain.util.PredicateList;
+import com.stockontrol.domain.util.SimplePageRequest;
 
 @Service("userService")
 @Transactional
@@ -59,7 +59,7 @@ public class UserService
 
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
-	public Page<User> listAllByFilters(String nameOrEmail, Boolean active, User.Profile profile, PageRequest page)
+	public Page<User> listAllByFilters(String nameOrEmail, Boolean active, User.Profile profile, SimplePageRequest page)
 	{
 		QUser user = QUser.user;
 		PredicateList predicates = new PredicateList();
@@ -69,7 +69,7 @@ public class UserService
 						() -> user.fullName.containsIgnoreCase(nameOrEmail)
 								.or(user.email.containsIgnoreCase(nameOrEmail)))
 				.add(active, () -> user.active.eq(active)).add(profile, () -> user.profile.eq(profile));
-		return userRepository.findAll(predicates.getIntersection(), page);
+		return userRepository.findAll(predicates.getIntersection(), page != null ? page.toPageRequest() : null);
 	}
 
 	@PreAuthorize("hasRole('USER')")

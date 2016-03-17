@@ -1,7 +1,6 @@
 package com.stockontrol.application.restful;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.stockontrol.domain.entity.User;
 import com.stockontrol.domain.service.UserService;
+import com.stockontrol.domain.util.SimplePageRequest;
 
 @RestController
 @RequestMapping("/users")
@@ -24,7 +24,10 @@ public class UsersController
 			@RequestParam(name = "profile", required = false) User.Profile profile,
 			@RequestParam(name = "page", defaultValue = "0") int page)
 	{
-		return userService.listAllByFilters(filter, active, profile, new PageRequest(page, 20));
+		SimplePageRequest pageRequest = new SimplePageRequest();
+		pageRequest.setPage(page);
+		pageRequest.setSize(20);
+		return userService.listAllByFilters(filter, active, profile, pageRequest);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
