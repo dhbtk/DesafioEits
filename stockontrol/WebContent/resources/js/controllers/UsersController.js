@@ -36,15 +36,22 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $mdSi
 	 */
 
 	// Busca os usuários filtrados lá no serviço
-	$scope.fetchUsers = function(text, active, profile, page, limit)
+	$scope.fetchUsers = function(text, active, profile, page, limit, sortOrder, sortProp)
 	{
+		// Deixando em 'loading'
 		$scope.model.tasks++;
+		// Filtros
 		text = text || $scope.model.filters.text;
 		active = active || $scope.model.filters.active;
 		profile = profile || $scope.model.filters.profile;
-		pageRequest = new PageRequest();
+		// Paginação
+		pageRequest = new SimplePageRequest();
 		pageRequest.page = (page || $scope.model.page) - 1;
 		pageRequest.size = limit || $scope.model.pageSize;
+		// Ordem
+		pageRequest.property = sortProp || 'id';
+		pageRequest.direction = sortOrder || 'ASC';
+		//pageRequest.sort = { orders: [{ direction: 'ASC', property: 'id', nullHandlingHint: null}]};
 		userService.listAllByFilters(text, active, profile, pageRequest,{
 			callback:function(data)
 			{
@@ -104,13 +111,43 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $mdSi
 	$scope.$watch('model.filters', function(){ $scope.fetchUsers(); }, true);
 });
 
-Stockontrol.controller('EditUserController', function($scope)
+Stockontrol.controller('EditUserController', function($scope, $mdSidenav, $mdToast)
 {
+	$scope.form = null;
 
+	$scope.setForm = function(form)
+	{
+		$scope.form = form;
+		console.log(form);
+	}
+	$scope.saveUser = function()
+	{
+		if($scope.form.$valid)
+		{
+			$scope.model.tasks++;
+			userService.save($scope.user, function(data)
+			{
+				$scope.model.tasks--;
+				$mdSidenav('rightPanel').close();
+				$mdToast.show(
+						$mdToast.simple()
+								.textContent('Usuário "teste@teste.com" alterado')
+								.position('bottom')
+								.hideDelay(3000));
+				$scope.fetchUsers();
+			});
+		}
+
+	}
+	$scope.cancel = function()
+	{
+		$mdSidenav('rightPanel').close();
+	}
 });
 
 Stockontrol.controller('NewUserController', function($scope)
 {
+	$scope.form = {}
 	$scope.user = new User();
 	$scope.user.active = true;
 });

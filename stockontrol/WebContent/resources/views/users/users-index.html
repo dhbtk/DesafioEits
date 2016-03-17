@@ -35,7 +35,7 @@
 			</thead>
 			<tbody md-body>
 				<tr md-row ng-repeat="user in model.request.content">
-					<td md-cell class="wide1">{{user.fullName}}</td>
+					<td md-cell class="wide1">{{user.id}} - {{user.fullName}}</td>
 					<td md-cell class="wide2">{{user.email}}</td>
 					<td md-cell>{{user.active ? 'Sim' : 'Não'}}</td>
 					<td md-cell>{{user.profile}}</td>
@@ -53,7 +53,9 @@
 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="rightPanel" layout="column">
 	<md-toolbar class="md-hue-2">
 		<div class="md-toolbar-tools">
-			<h2><span>{{selectedUser.fullName}}</span></h2>
+			<h2><span>{{user.fullName}}</span></h2>
+			<span flex></span>
+			<md-button class="md-icon-button"><md-icon>delete</md-icon></md-button>
 		</div>
 	</md-toolbar>
 	<md-content layout-padding>

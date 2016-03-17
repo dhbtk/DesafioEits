@@ -1,4 +1,5 @@
 <form name="userForm" layout="column">
+	<div ng-init="setForm(userForm)"></div>
 	<md-input-container class="md-block">
 		<label>Nome Completo</label>
 		<input type="text" name="fullName" ng-model="user.fullName" required>
