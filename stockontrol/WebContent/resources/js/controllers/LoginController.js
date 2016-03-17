@@ -37,7 +37,18 @@ angular.module('StockontrolLogin',['ngMaterial']).controller('LoginController', 
 				})
 				.error(function(data, status)
 				{
-					$mdToast.showSimple(status);
+					if(status == "401")
+					{
+						$mdToast.showSimple('Email ou senha incorretos. Por favor tente novamente.');
+					}
+					else if(status == "403")
+					{
+						$mdToast.showSimple('Suas credenciais foram desativadas.');
+					}
+					else
+					{
+						$mdToast.showSimple('Houve um erro desconhecido. Por favor tente novamente. (' + status + ')');
+					}
 					$scope.model.loading = false;
 				});
 	};

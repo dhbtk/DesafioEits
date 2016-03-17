@@ -41,8 +41,8 @@
 					<td md-cell>{{user.active ? 'Sim' : 'Não'}}</td>
 					<td md-cell>{{user.profile == 'Administrator' ? 'Administrador' : 'Usuário'}}</td>
 					<td md-cell style="text-align: right" ng-if="currentUser.admin()">
-						<md-button ng-if="user.active" class="md-warn md-raised">Desativar</md-button>
-						<md-button ng-if="!user.active" class="md-warn md-raised">Ativar</md-button>
+						<md-button ng-if="user.active" ng-click="deactivateUser(user)" class="md-warn md-raised">Desativar</md-button>
+						<md-button ng-if="!user.active" ng-click="activateUser(user)" class="md-warn md-raised">Ativar</md-button>
 						<md-button class="md-raised md-primary" ng-click="openEditUser(user.id)">Editar</md-button>
 					</td>
 				</tr>

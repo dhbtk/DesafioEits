@@ -1,4 +1,4 @@
-Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $mdSidenav, $window)
+Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $mdSidenav, $mdDialog, $window)
 {
 	/** Localização do cabeçalho **/
 	$scope.header.location = '/resources/views/users/users-header.html';
@@ -23,7 +23,7 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $mdSi
 		pageSize: 10,
 		// Para exibir/esconder a barrinha de progresso indeterminado
 		tasks: 0,
-	}
+	};
 
 	/*
 	 * Métodos
@@ -66,13 +66,13 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $mdSi
 			},
 			timeout: 1000,
 		});
-	}
+	};
 
 	$scope.paginateTable = function(page, limit)
 	{
 		console.log('Pedindo página ' + page + ', mostrando ' + limit + ' por página');
 		$scope.fetchUsers(null, null, null, page, limit);
-	}
+	};
 
 	// Chama $scope.fetchUsers() caso a tecla seja um enter
 	$scope.handleSearchBoxKeyPress = function($event)
@@ -84,8 +84,21 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $mdSi
 	};
 
 	/**
+	 * Novo usuário
+	 */
+
+	$scope.openNewUser = function()
+	{
+		$mdDialog.show({
+			controller: 'NewUserController',
+			templateUrl: '/resources/views/users/users-new.html',
+			clickOutsideToClose: true
+		});
+	};
+
+	/**
 	 *
-	 * Edição
+	 * Edição / Desativação / Ativação
 	 *
 	 */
 
@@ -98,7 +111,59 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $mdSi
 			$scope.user = user;
 			$mdSidenav('rightPanel').open();
 		});
-	}
+	};
+
+	$scope.deactivateUser = function(user)
+	{
+		var dialog = $mdDialog.confirm()
+				.title('Desativar Usuário')
+				.textContent('Desativar o usuário "' + user.email + '"?')
+				.ok('Desativar')
+				.cancel('Cancelar');
+		$mdDialog.show(dialog).then(function()
+		{
+			$scope.model.tasks++;
+			userService.find(user.id, function(user)
+			{
+				userService.deactivate(user, function(user)
+				{
+					$scope.model.tasks--;
+					$mdToast.show(
+							$mdToast.simple()
+									.textContent('Usuário "' + user.email + '" desativado')
+									.position('bottom')
+									.hideDelay(3000));
+					$scope.fetchUsers();
+				});
+			});
+		});
+	};
+
+	$scope.activateUser = function(user)
+	{
+		var dialog = $mdDialog.confirm()
+				.title('Ativar Usuário')
+				.textContent('Ativar o usuário "' + user.email + '"?')
+				.ok('Ativar')
+				.cancel('Cancelar');
+		$mdDialog.show(dialog).then(function()
+		{
+			$scope.model.tasks++;
+			userService.find(user.id, function(user)
+			{
+				userService.activate(user, function(user)
+				{
+					$scope.model.tasks--;
+					$mdToast.show(
+							$mdToast.simple()
+									.textContent('Usuário "' + user.email + '" ativado')
+									.position('bottom')
+									.hideDelay(3000));
+					$scope.fetchUsers();
+				});
+			});
+		});
+	};
 
 	/*
 	 * Inicialização
@@ -119,35 +184,71 @@ Stockontrol.controller('EditUserController', function($scope, $mdSidenav, $mdToa
 	{
 		$scope.form = form;
 		console.log(form);
-	}
+	};
+
 	$scope.saveUser = function()
 	{
 		if($scope.form.$valid)
 		{
 			$scope.model.tasks++;
-			userService.save($scope.user, function(data)
+			userService.save($scope.user, function(user)
 			{
 				$scope.model.tasks--;
 				$mdSidenav('rightPanel').close();
 				$mdToast.show(
 						$mdToast.simple()
-								.textContent('Usuário "teste@teste.com" alterado')
+								.textContent('Usuário "' + user.email + '" desativado')
 								.position('bottom')
 								.hideDelay(3000));
 				$scope.fetchUsers();
 			});
 		}
+	};
 
-	}
 	$scope.cancel = function()
 	{
 		$mdSidenav('rightPanel').close();
-	}
+	};
+
 });
 
-Stockontrol.controller('NewUserController', function($scope)
+Stockontrol.controller('NewUserController', function($scope, $mdDialog)
 {
-	$scope.form = {}
+	$scope.form = null;
 	$scope.user = new User();
 	$scope.user.active = true;
+	/*$scope.model = {profileOptions: [
+		{name: "Usuário", value: "User"},
+		{name: "Administrador", value: "Administrator"}
+	]}; // FIXME!!!*/
+
+	$scope.setForm = function(form)
+	{
+		$scope.form = form;
+		console.log(form);
+	};
+
+	$scope.cancel = function()
+	{
+		$mdDialog.cancel();
+	};
+
+	$scope.create = function()
+	{
+		if($scope.form.$valid)
+		{
+			$scope.model.tasks++;
+			userService.insert($scope.user, function(user)
+			{
+				$scope.model.tasks--;
+				$mdSidenav('rightPanel').close();
+				$mdToast.show(
+						$mdToast.simple()
+								.textContent('Usuário "' + user.email + '" criado')
+								.position('bottom')
+								.hideDelay(3000));
+				$scope.fetchUsers();
+			});
+		}
+	};
 });
