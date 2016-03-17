@@ -3,12 +3,12 @@ Stockontrol.controller('MainController',function($scope, $http, $state, $window)
 	/*
 	 * Modelo
 	 */
-	$scope.model = {
-		currentUser: null
-	}
+	$scope.model = {}
 
 	/** Mantém a URL da parcial do cabeçalho **/
 	$scope.header = {};
+
+	/** Usuário atual **/
 
 	/*
 	 * Métodos
@@ -29,8 +29,8 @@ Stockontrol.controller('MainController',function($scope, $http, $state, $window)
 
 	userService.getCurrent(function(data)
 	{
-		$scope.model.currentUser = data;
-		$scope.model.currentUser.admin = function()
+		$scope.currentUser = data;
+		$scope.currentUser.admin = function()
 		{
 			return this.profile == 'Administrator';
 		}

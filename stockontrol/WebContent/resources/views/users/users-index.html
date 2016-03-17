@@ -1,23 +1,24 @@
 <md-toolbar class="md-hue-1 filter-toolbar">
 	<div class="md-toolbar-tools" layout="row">
+		<md-input-container>
+			<label>Status do Usuário</label>
+			<md-select ng-model="model.filters.active">
+				<md-option ng-value="null">Status do Usuário</md-option>
+				<md-option ng-value="true">Usuários Ativos</md-option>
+				<md-option ng-value="false">Usuários Desativados</md-option>
+			</md-select>
+		</md-input-container>
+		<md-input-container>
+			<label>Perfil de Usuário</label>
+			<md-select ng-model="model.filters.profile">
+				<md-option ng-value="null">Perfil de Usuário</md-option>
+				<md-option ng-repeat="profile in model.profileOptions" value="{{profile.value}}">{{profile.name}}</md-option>
+			</md-select>
+		</md-input-container>
 		<div class="search-box">
 			<md-icon>search</md-icon>
 			<input type="text" ng-model="model.filters.text" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
 		</div>
-		<md-radio-group ng-model="model.filters.active" layout="row">
-			<md-radio-button ng-value="true">
-				Usuários Ativados
-			</md-radio-button>
-			<md-radio-button ng-value="false">
-				Usuários Desativados
-			</md-radio-button>
-		</md-radio-group>
-		<md-input-container>
-			<label>Perfil de Usuário</label>
-			<md-select ng-model="model.filters.profile">
-				<md-option ng-repeat="profile in model.profileOptions" value="{{profile.value}}">{{profile.name}}</md-option>
-			</md-select>
-		</md-input-container>
 	</div>
 </md-toolbar>
 <md-progress-linear md-mode="indeterminate" ng-style="{'visibility': (model.tasks > 0) ? 'visible' : 'hidden'}"></md-progress-linear>
@@ -39,7 +40,7 @@
 					<td md-cell class="wide2">{{user.email}}</td>
 					<td md-cell>{{user.active ? 'Sim' : 'Não'}}</td>
 					<td md-cell>{{user.profile == 'Administrator' ? 'Administrador' : 'Usuário'}}</td>
-					<td md-cell style="text-align: right" ng-if="model.currentUser.admin()">
+					<td md-cell style="text-align: right" ng-if="currentUser.admin()">
 						<md-button ng-if="user.active" class="md-warn md-raised">Desativar</md-button>
 						<md-button ng-if="!user.active" class="md-warn md-raised">Ativar</md-button>
 						<md-button class="md-raised md-primary" ng-click="openEditUser(user.id)">Editar</md-button>
