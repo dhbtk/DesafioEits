@@ -30,16 +30,16 @@
 					<th md-column class="wide2">Email</th>
 					<th md-column>Ativo</th>
 					<th md-column>Perfil</th>
-					<th md-column>Ações</th>
+					<th md-column ng-if="model.currentUser.admin()">Ações</th>
 				</tr>
 			</thead>
 			<tbody md-body>
 				<tr md-row ng-repeat="user in model.request.content">
-					<td md-cell class="wide1">{{user.id}} - {{user.fullName}}</td>
+					<td md-cell class="wide1">{{user.fullName}}</td>
 					<td md-cell class="wide2">{{user.email}}</td>
 					<td md-cell>{{user.active ? 'Sim' : 'Não'}}</td>
-					<td md-cell>{{user.profile}}</td>
-					<td md-cell>
+					<td md-cell>{{user.profile == 'Administrator' ? 'Administrador' : 'Usuário'}}</td>
+					<td md-cell style="text-align: right" ng-if="model.currentUser.admin()">
 						<md-button ng-if="user.active" class="md-warn md-raised">Desativar</md-button>
 						<md-button ng-if="!user.active" class="md-warn md-raised">Ativar</md-button>
 						<md-button class="md-raised md-primary" ng-click="openEditUser(user.id)">Editar</md-button>

@@ -1,6 +1,6 @@
 <div ng-controller="UsersController" layout="row">
 	<h2><span>Usuários</span></h2>
-	<md-button>
+	<md-button ng-if="model.currentUser.admin()">
 		Novo
 	</md-button>
 </div>
