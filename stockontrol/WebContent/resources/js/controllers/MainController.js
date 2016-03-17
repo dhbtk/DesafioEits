@@ -30,5 +30,9 @@ Stockontrol.controller('MainController',function($scope, $http, $state, $window)
 	userService.getCurrent(function(data)
 	{
 		$scope.model.currentUser = data;
+		$scope.model.currentUser.admin = function()
+		{
+			return this.profile == 'Administrator';
+		}
 	});
 });
