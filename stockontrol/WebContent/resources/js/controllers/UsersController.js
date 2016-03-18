@@ -89,7 +89,6 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $mdSi
 
 	$scope.openNewUser = function()
 	{
-		console.log('abrindo');
 		$mdDialog.show({
 			controller: 'NewUserController',
 			templateUrl: '/resources/views/users/users-new.html',
