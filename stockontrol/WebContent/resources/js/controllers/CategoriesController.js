@@ -1,24 +1,22 @@
-Stockontrol.controller('CategoriesController',function($scope, $mdToast, $mdSidenav, $mdDialog)
+Stockontrol.controller('CategoriesController',function($controller, $scope, $mdToast, $mdSidenav, $mdDialog)
 {
+	// Herdando do controller base
+	$controller('BaseController', {$scope: $scope});
+
 	/** Localização do cabeçalho **/
 	$scope.header.location = '/resources/views/categories/categories-header.html';
 
 	/*
 	 * Modelo
 	 */
-	$scope.model = {
-		filters: {
+	angular.extend($scope.model, {
+		filters: ['text'],
+		filterData: {
 			text: null,
 		},
 		category: null,
-		request: {
-			content: [],
-		},
-		page: 1,
-		pageSize: 10,
-		// Para exibir/esconder a barrinha de progresso indeterminado
-		tasks: 0,
-	};
+		order: 'name',
+	});
 
 	/*
 	 * Métodos
@@ -30,58 +28,9 @@ Stockontrol.controller('CategoriesController',function($scope, $mdToast, $mdSide
 	 *
 	 */
 
-	$scope.fetchCategories = function(text, page, limit, sortOrder, sortProp)
-	{
-		// Deixando em 'loading'
-		$scope.model.tasks++;
-		// Filtros
-		text = text || $scope.model.filters.text;
-		// Paginação
-		pageRequest = new SimplePageRequest();
-		pageRequest.page = (page || $scope.model.page) - 1;
-		pageRequest.size = limit || $scope.model.pageSize;
-		// Ordem
-		pageRequest.property = sortProp || 'id';
-		pageRequest.direction = sortOrder || 'ASC';
-
-		productService.listAllCategoriesByFilters(text, pageRequest, {
-			callback: function(data)
-			{
-				$scope.model.tasks--;
-				$scope.model.request = data;
-				$scope.$apply();
-			},
-			errorHandler: function()
-			{
-				$scope.model.tasks--;
-				$scope.$apply();
-			},
-			timeout: 1000,
-		});
-	};
-
-	$scope.paginateTable = function(page, limit)
-	{
-		console.log('Pedindo página ' + page + ', mostrando ' + limit + ' por página');
-		$scope.fetchCategories(null, page, limit);
-	};
-
-	// Chama $scope.fetchUsers() caso a tecla seja um enter
-	$scope.handleSearchBoxKeyPress = function($event)
-	{
-		if($event.which === 13)
-		{
-			$scope.fetchCategories();
-		}
-	};
-
 	/*
 	 * Inicialização
 	 */
 
-	// Buscando a lista inicial
-	$scope.fetchCategories();
-
-	// Atualizando a lista conforme os filtros
-	$scope.$watch('model.filters', function(){ $scope.fetchCategories(); }, true);
+	$scope.fetchFunction = productService.listAllCategoriesByFilters;
 });

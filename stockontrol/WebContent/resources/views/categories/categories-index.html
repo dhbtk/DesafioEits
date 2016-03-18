@@ -2,7 +2,7 @@
 	<div class="md-toolbar-tools" layout="row">
 		<div class="search-box">
 			<md-icon>search</md-icon>
-			<input type="text" ng-model="model.filters.text" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
+			<input type="text" ng-model="model.filterData.text" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
 		</div>
 	</div>
 </md-toolbar>
@@ -10,12 +10,12 @@
 <div class="container md-whiteframe-1dp">
 	<md-table-container>
 		<table md-table class="data-table">
-			<thead md-head>
+			<thead md-head md-order="model.order" md-on-reorder="sortTable" md-progress="fetchPromise">
 				<tr md-row>
-					<th md-column class="wide">Nome</th>
-					<th md-column>Total de Produtos</th>
-					<th md-column>Produtos a Vencer</th>
-					<th md-column>Produtos Vencidos</th>
+					<th md-column class="wide" md-order-by="name">Nome</th>
+					<th md-column md-order-by="totalBatchCount">Total de Produtos</th>
+					<th md-column md-order-by="totalExpiringBatchCount">Produtos a Vencer</th>
+					<th md-column md-order-by="totalExpiredBatchCount">Produtos Vencidos</th>
 					<th md-column>Ações</th>
 				</tr>
 			</thead>
@@ -32,5 +32,5 @@
 			</tbody>
 		</table>
 	</md-table-container>
-	<md-table-pagination md-limit="model.pageSize" md-page="model.page" md-total="{{model.request.totalElements}}" md-on-paginate="paginateTable" md-page-select></md-table-pagination>
+	<md-table-pagination md-limit="model.limit" md-page="model.page" md-total="{{model.request.totalElements}}" md-on-paginate="paginateTable" md-page-select></md-table-pagination>
 </div>

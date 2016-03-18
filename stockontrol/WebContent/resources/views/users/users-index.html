@@ -2,7 +2,7 @@
 	<div class="md-toolbar-tools" layout="row">
 		<md-input-container>
 			<label>Status do Usuário</label>
-			<md-select ng-model="model.filters.active">
+			<md-select ng-model="model.filterData.active">
 				<md-option ng-value="null">Status do Usuário</md-option>
 				<md-option ng-value="true">Usuários Ativos</md-option>
 				<md-option ng-value="false">Usuários Desativados</md-option>
@@ -10,14 +10,14 @@
 		</md-input-container>
 		<md-input-container>
 			<label>Perfil de Usuário</label>
-			<md-select ng-model="model.filters.profile">
+			<md-select ng-model="model.filterData.profile">
 				<md-option ng-value="null">Perfil de Usuário</md-option>
 				<md-option ng-repeat="profile in model.profileOptions" value="{{profile.value}}">{{profile.name}}</md-option>
 			</md-select>
 		</md-input-container>
 		<div class="search-box">
 			<md-icon>search</md-icon>
-			<input type="text" ng-model="model.filters.text" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
+			<input type="text" ng-model="model.filterData.text" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
 		</div>
 	</div>
 </md-toolbar>
@@ -25,7 +25,7 @@
 <div class="container md-whiteframe-1dp">
 	<md-table-container>
 		<table md-table class="data-table">
-			<thead md-head md-order="model.order" md-on-reorder="sortTable">
+			<thead md-head md-order="model.order" md-on-reorder="sortTable" md-progress="fetchPromise">
 				<tr md-row>
 					<th md-column md-order-by="fullName" class="wide">Nome Completo</th>
 					<th md-column md-order-by="email" class="wide">Email</th>
@@ -49,7 +49,7 @@
 			</tbody>
 		</table>
 	</md-table-container>
-	<md-table-pagination md-limit="model.pageSize" md-page="model.page" md-total="{{model.request.totalElements}}" md-on-paginate="paginateTable" md-page-select></md-table-pagination>
+	<md-table-pagination md-limit="model.limit" md-page="model.page" md-total="{{model.request.totalElements}}" md-on-paginate="paginateTable" md-page-select></md-table-pagination>
 </div>
 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="rightPanel" layout="column">
 	<md-toolbar class="md-hue-2">

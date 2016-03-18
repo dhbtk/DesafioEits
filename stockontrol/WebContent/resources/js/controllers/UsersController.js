@@ -1,12 +1,16 @@
-Stockontrol.controller('UsersController',function($scope, $mdToast, $mdSidenav, $mdDialog)
+Stockontrol.controller('UsersController',function($controller, $scope, $mdToast, $mdSidenav, $mdDialog)
 {
+	// Herdando do controller base
+	$controller('BaseController', {$scope: $scope});
+
 	/** Localização do cabeçalho **/
 	$scope.header.location = '/resources/views/users/users-header.html';
 	/*
 	 * Modelo
 	 */
-	$scope.model = {
-		filters: {
+	angular.extend($scope.model, {
+		filters: ['text','active','profile'],
+		filterData: {
 			text: null,
 			active: null,
 			profile: null,
@@ -16,84 +20,12 @@ Stockontrol.controller('UsersController',function($scope, $mdToast, $mdSidenav, 
 			{name: "Administrador", value: "Administrator"}
 		],
 		user: null,
-		request: {
-			content: [],
-		},
 		order: 'fullName',
-		page: 1,
-		pageSize: 10,
-		// Para exibir/esconder a barrinha de progresso indeterminado
-		tasks: 0,
-	};
+	});
 
 	/*
 	 * Métodos
 	 */
-
-	/**
-	 *
-	 * Listagem
-	 *
-	 */
-
-	// Busca os usuários filtrados lá no serviço
-	$scope.fetchUsers = function(text, active, profile, page, limit, sortOrder, sortProp)
-	{
-		// Deixando em 'loading'
-		$scope.model.tasks++;
-		// Filtros
-		text = text || $scope.model.filters.text;
-		active = active || $scope.model.filters.active;
-		profile = profile || $scope.model.filters.profile;
-		// Paginação
-		pageRequest = new SimplePageRequest();
-		pageRequest.page = (page || $scope.model.page) - 1;
-		pageRequest.size = limit || $scope.model.pageSize;
-		// Ordem
-		pageRequest.property = sortProp || 'fullName';
-		pageRequest.direction = sortOrder || 'ASC';
-
-		userService.listAllByFilters(text, active, profile, pageRequest, {
-			callback: function(data)
-			{
-				$scope.model.tasks--;
-				$scope.model.request = data;
-				$scope.$apply();
-			},
-			errorHandler: function()
-			{
-				$scope.model.tasks--;
-				$scope.$apply();
-			},
-			timeout: 1000,
-		});
-	};
-
-	$scope.paginateTable = function(page, limit)
-	{
-		console.log('Pedindo página ' + page + ', mostrando ' + limit + ' por página');
-		$scope.fetchUsers(null, null, null, page, limit);
-	};
-
-	$scope.sortTable = function(order)
-	{
-		var direction = 'ASC';
-		if(order[0] == '-')
-		{
-			direction = 'DESC';
-			order = order.slice(1);
-		}
-		$scope.fetchUsers(null, null, null, 1, null, direction, order);
-	};
-
-	// Chama $scope.fetchUsers() caso a tecla seja um enter
-	$scope.handleSearchBoxKeyPress = function($event)
-	{
-		if($event.which === 13)
-		{
-			$scope.fetchUsers();
-		}
-	};
 
 	/**
 	 * Novo usuário
@@ -182,9 +114,6 @@ Stockontrol.controller('UsersController',function($scope, $mdToast, $mdSidenav, 
 	 * Inicialização
 	 */
 
-	// Buscando a lista inicial de usuários
-	$scope.fetchUsers();
-
-	// Atualizando a lista de usuários conforme os filtros
-	$scope.$watch('model.filters', function(){ $scope.fetchUsers(); }, true);
+	// Definindo nossa função de filtragem
+	$scope.fetchFunction = userService.listAllByFilters;
 });

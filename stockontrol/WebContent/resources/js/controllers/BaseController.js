@@ -114,5 +114,5 @@ Stockontrol.controller('BaseController', function($q, $scope)
 	});
 
 	// Atualizando a lista conforme os filtros
-	$scope.$watch('model.filters', function(){ $scope.fetchData(); }, true);
+	$scope.$watch('model.filterData', function(){ if($scope.fetchFunction) $scope.fetchData(); }, true);
 });
