@@ -84,21 +84,16 @@ object[width="0"]
 }
 
 /**
- * Tabela de usuários
+ * Tabelas de consulta
  */
 
-.user-table th, .user-table td
+.data-table th, .data-table td
 {
 	width: 1em;
 	white-space: nowrap;
 }
 
-.user-table .wide1
-{
-	width: auto;
-}
-
-.user-table .wide2
+.data-table .wide
 {
 	width: auto;
 }
