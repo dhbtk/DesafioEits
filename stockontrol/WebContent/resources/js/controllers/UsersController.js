@@ -89,9 +89,11 @@ Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $mdSi
 
 	$scope.openNewUser = function()
 	{
+		console.log('abrindo');
 		$mdDialog.show({
 			controller: 'NewUserController',
 			templateUrl: '/resources/views/users/users-new.html',
+			scope: $scope.$new(),
 			clickOutsideToClose: true
 		});
 	};
@@ -217,10 +219,6 @@ Stockontrol.controller('NewUserController', function($scope, $mdDialog)
 	$scope.form = null;
 	$scope.user = new User();
 	$scope.user.active = true;
-	/*$scope.model = {profileOptions: [
-		{name: "Usuário", value: "User"},
-		{name: "Administrador", value: "Administrator"}
-	]}; // FIXME!!!*/
 
 	$scope.setForm = function(form)
 	{
@@ -241,7 +239,7 @@ Stockontrol.controller('NewUserController', function($scope, $mdDialog)
 			userService.insert($scope.user, function(user)
 			{
 				$scope.model.tasks--;
-				$mdSidenav('rightPanel').close();
+				$mdDialog.cancel();
 				$mdToast.show(
 						$mdToast.simple()
 								.textContent('Usuário "' + user.email + '" criado')
