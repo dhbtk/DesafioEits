@@ -51,9 +51,9 @@ Stockontrol.controller('UsersController',function($scope, $mdToast, $mdSidenav, 
 		// Ordem
 		pageRequest.property = sortProp || 'id';
 		pageRequest.direction = sortOrder || 'ASC';
-		//pageRequest.sort = { orders: [{ direction: 'ASC', property: 'id', nullHandlingHint: null}]};
-		userService.listAllByFilters(text, active, profile, pageRequest,{
-			callback:function(data)
+
+		userService.listAllByFilters(text, active, profile, pageRequest, {
+			callback: function(data)
 			{
 				$scope.model.tasks--;
 				$scope.model.request = data;
