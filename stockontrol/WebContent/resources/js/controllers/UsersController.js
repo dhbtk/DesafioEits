@@ -19,6 +19,7 @@ Stockontrol.controller('UsersController',function($scope, $mdToast, $mdSidenav, 
 		request: {
 			content: [],
 		},
+		order: 'fullName',
 		page: 1,
 		pageSize: 10,
 		// Para exibir/esconder a barrinha de progresso indeterminado
@@ -49,7 +50,7 @@ Stockontrol.controller('UsersController',function($scope, $mdToast, $mdSidenav, 
 		pageRequest.page = (page || $scope.model.page) - 1;
 		pageRequest.size = limit || $scope.model.pageSize;
 		// Ordem
-		pageRequest.property = sortProp || 'id';
+		pageRequest.property = sortProp || 'fullName';
 		pageRequest.direction = sortOrder || 'ASC';
 
 		userService.listAllByFilters(text, active, profile, pageRequest, {
@@ -72,6 +73,17 @@ Stockontrol.controller('UsersController',function($scope, $mdToast, $mdSidenav, 
 	{
 		console.log('Pedindo página ' + page + ', mostrando ' + limit + ' por página');
 		$scope.fetchUsers(null, null, null, page, limit);
+	};
+
+	$scope.sortTable = function(order)
+	{
+		var direction = 'ASC';
+		if(order[0] == '-')
+		{
+			direction = 'DESC';
+			order = order.slice(1);
+		}
+		$scope.fetchUsers(null, null, null, 1, null, direction, order);
 	};
 
 	// Chama $scope.fetchUsers() caso a tecla seja um enter
