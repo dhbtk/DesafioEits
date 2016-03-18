@@ -1,9 +1,10 @@
 Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $state, $window)
 {
+	console.log($state);
 	/*
 	 * Modelo
 	 */
-	$scope.model = {}
+	$scope.model = {};
 
 	/** Mantém a URL da parcial do cabeçalho **/
 	$scope.header = {};
@@ -27,6 +28,14 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 	$scope.openMenu = function()
 	{
 		$mdSidenav('leftMenu').open();
+	};
+
+	$scope.goTo = function(where)
+	{
+		$mdSidenav('leftMenu').close().then(function()
+		{
+			$state.go(where);
+		});
 	};
 
 	/*

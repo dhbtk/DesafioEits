@@ -1,0 +1,11 @@
+<md-toolbar class="md-hue-1 filter-toolbar">
+	<div class="md-toolbar-tools" layout="row">
+		<div class="search-box">
+			<md-icon>search</md-icon>
+			<input type="text" ng-model="model.filters.text" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
+		</div>
+	</div>
+</md-toolbar>
+<md-progress-linear md-mode="indeterminate" ng-style="{'visibility': (model.tasks > 0) ? 'visible' : 'hidden'}"></md-progress-linear>
+<div class="container md-whiteframe-1dp">
+</div>

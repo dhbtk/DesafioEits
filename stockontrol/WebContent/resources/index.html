@@ -41,16 +41,16 @@
 		</md-toolbar>
 		<md-content>
 			<md-list>
-				<md-list-item ng-click="$state.go('batches')">
+				<md-list-item ng-click="goTo('batches')">
 					Estoque
 				</md-list-item>
-				<md-list-item ng-click="$state.go('products')">
+				<md-list-item ng-click="goTo('products')">
 					Produtos
 				</md-list-item>
-				<md-list-item ng-click="$state.go('categories')">
+				<md-list-item ng-click="goTo('categories')">
 					Categorias
 				</md-list-item>
-				<md-list-item ng-click="$state.go('users')">
+				<md-list-item ng-click="goTo('users')">
 					Usuários
 				</md-list-item>
 			</md-list>
@@ -80,5 +80,7 @@
 	<script src="/resources/js/controllers/UsersController.js"></script>
 	<script src="/resources/js/controllers/users/NewUserController.js"></script>
 	<script src="/resources/js/controllers/users/EditUserController.js"></script>
+	<!-- categories -->
+	<script src="/resources/js/controllers/CategoriesController.js"></script>
 </body>
 </html>

@@ -27,5 +27,9 @@ Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvid
 		url: '/users',
 		templateUrl: 'resources/views/users/users-index.html',
 		controller: 'UsersController'
+	}).state('categories', {
+		url: '/categories',
+		templateUrl: 'resources/views/categories/categories-index.html',
+		controller: 'CategoriesController'
 	});
 });
