@@ -1,4 +1,4 @@
-Stockontrol.controller('UsersController',function($scope, $http, $mdToast, $mdSidenav, $mdDialog, $window)
+Stockontrol.controller('UsersController',function($scope, $mdToast, $mdSidenav, $mdDialog)
 {
 	/** Localização do cabeçalho **/
 	$scope.header.location = '/resources/views/users/users-header.html';
