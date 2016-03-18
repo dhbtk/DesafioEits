@@ -17,4 +17,4 @@ Stockontrol.directive('compareTo', function()
 			scope.$watch('otherValue',function() { ngModel.$validate(); });
 		}
 	};
-})
+});

@@ -71,6 +71,13 @@ public class UserService
 				.add(active, () -> user.active.eq(active)).add(profile, () -> user.profile.eq(profile));
 		return userRepository.findAll(predicates.getIntersection(), page != null ? page.toPageRequest() : null);
 	}
+	
+	@PreAuthorize("hasRole('USER')")
+	@RemoteMethod
+	public User findByEmail(String email)
+	{
+		return userRepository.findByEmail(email);
+	}
 
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
