@@ -20,6 +20,7 @@ object[width="0"]
 .container
 {
 	margin: 0 auto;
+	margin-top: 20px;
 	padding-left: 15px;
 	padding-right: 15px;
 	padding-top: 15px;
@@ -30,6 +31,7 @@ object[width="0"]
 	.container
 	{
 		margin: 0 25px;
+		margin-top: 20px;
 	}
 }
 
@@ -38,6 +40,7 @@ object[width="0"]
 	.container
 	{
 		margin: 0 35px;
+		margin-top: 20px;
 	}
 }
 
