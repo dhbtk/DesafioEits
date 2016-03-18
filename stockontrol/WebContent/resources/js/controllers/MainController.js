@@ -1,4 +1,4 @@
-Stockontrol.controller('MainController',function($scope, $http, $state, $window)
+Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $state, $window)
 {
 	/*
 	 * Modelo
@@ -17,11 +17,17 @@ Stockontrol.controller('MainController',function($scope, $http, $state, $window)
 	$scope.openLogoutMenu = function($mdOpenMenu, $event)
 	{
 		$mdOpenMenu($event);
-	}
+	};
+
 	$scope.logout = function()
 	{
 		$window.location.href = "/logout";
-	}
+	};
+
+	$scope.openMenu = function()
+	{
+		$mdSidenav('leftMenu').open();
+	};
 
 	/*
 	 * Inicialização

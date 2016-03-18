@@ -12,7 +12,7 @@
 <body ng-controller="MainController" ng-cloak layout="column">
 	<md-toolbar>
 		<div class="md-toolbar-tools" layout="row">
-			<md-button class="md-icon-button" aria-label="Menu">
+			<md-button class="md-icon-button" aria-label="Menu" ng-click="openMenu()">
 				<md-icon>menu</md-icon>
 			</md-button>
 			<div ng-include="header.location" class="header-partial"></div>
@@ -31,6 +31,31 @@
 		</div>
 	</md-toolbar>
 	<div ui-view></div>
+	<md-sidenav class="md-sidenav-left md-whiteframe-4dp" md-component-id="leftMenu" layout="column">
+		<md-toolbar class="md-hue-2">
+			<div class="md-toolbar-tools">
+				<h2>
+					<span>Menu</span>
+				</h2>
+			</div>
+		</md-toolbar>
+		<md-content>
+			<md-list>
+				<md-list-item ng-click="$state.go('batches')">
+					Estoque
+				</md-list-item>
+				<md-list-item ng-click="$state.go('products')">
+					Produtos
+				</md-list-item>
+				<md-list-item ng-click="$state.go('categories')">
+					Categorias
+				</md-list-item>
+				<md-list-item ng-click="$state.go('users')">
+					Usuários
+				</md-list-item>
+			</md-list>
+		</md-content>
+	</md-sidenav>
 	<!-- deps -->
 	<script src="/webjars/angularjs/1.5.0/angular.js"></script>
 	<script src="/webjars/angular-animate/1.5.0/angular-animate.js"></script>
