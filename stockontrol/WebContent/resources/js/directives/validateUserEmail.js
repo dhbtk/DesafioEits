@@ -6,18 +6,20 @@ Stockontrol.directive('validateUserEmail', function($q)
 		{
 			controller.$asyncValidators.validateUserEmail = function(val)
 			{
-				console.log('val: ', val);
 				if(controller.$isEmpty(val))
 				{
 					return $q.when();
 				}
+				var userId = scope.user.id;
+				console.log('userId: ', userId);
 				console.log('val: ', val);
 				var def = $q.defer();
 
 				userService.findByEmail(val, function(user)
 				{
 					console.log('User: ', user);
-					if(user === null)
+					// Se for o mesmo usuário dá nada
+					if(user === null || user.id === userId)
 					{
 						def.resolve();
 					}
