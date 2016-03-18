@@ -17,6 +17,7 @@ import com.stockontrol.domain.entity.QProduct;
 import com.stockontrol.domain.repository.CategoryRepository;
 import com.stockontrol.domain.repository.ProductRepository;
 import com.stockontrol.domain.util.PredicateList;
+import com.stockontrol.domain.util.SimplePageRequest;
 
 @Service("productService")
 @Transactional
@@ -30,13 +31,13 @@ public class ProductService
 
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
-	public Page<Product> listAllProductsByFilters(Long categoryId, String name, PageRequest page)
+	public Page<Product> listAllProductsByFilters(Long categoryId, String name, SimplePageRequest page)
 	{
 		QProduct product = QProduct.product;
 		PredicateList predicates = new PredicateList();
 		predicates.add(categoryId, () -> product.category.id.eq(categoryId)).add(name,
 				() -> product.name.containsIgnoreCase(name));
-		return productRepository.findAll(predicates.getIntersection(), page);
+		return productRepository.findAll(predicates.getIntersection(), page != null ? page.toPageRequest() : null);
 	}
 
 	@PreAuthorize("hasRole('USER')")
@@ -44,13 +45,6 @@ public class ProductService
 	public void deleteProduct(Long id)
 	{
 		productRepository.delete(id);
-	}
-
-	@PreAuthorize("hasRole('USER')")
-	@RemoteMethod
-	public Page<Product> findAllProducts(PageRequest page)
-	{
-		return productRepository.findAll(page);
 	}
 
 	@PreAuthorize("hasRole('USER')")
@@ -78,15 +72,15 @@ public class ProductService
 
 	@RemoteMethod
 	@PreAuthorize("hasRole('USER')")
-	public Page<Category> listAllCategoriesByFilters(String name, PageRequest page)
+	public Page<Category> listAllCategoriesByFilters(String name, SimplePageRequest page)
 	{
 		QCategory category = QCategory.category;
 		if (name == null)
 		{
-			return categoryRepository.findAll(page);
+			return categoryRepository.findAll(page != null ? page.toPageRequest() : null);
 		} else
 		{
-			return categoryRepository.findAll(category.name.containsIgnoreCase(name), page);
+			return categoryRepository.findAll(category.name.containsIgnoreCase(name), page != null ? page.toPageRequest() : null);
 		}
 	}
 
