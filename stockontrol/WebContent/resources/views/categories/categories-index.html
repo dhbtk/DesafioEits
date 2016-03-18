@@ -22,11 +22,11 @@
 			<tbody md-body>
 				<tr md-row ng-repeat="category in model.request.content">
 					<td md-cell class="wide">{{category.name}}</td>
-					<td md-cell class="wide">{{user.email}}</td>
-					<td md-cell>{{user.active ? 'Sim' : 'Não'}}</td>
-					<td md-cell>{{user.profile == 'Administrator' ? 'Administrador' : 'Usuário'}}</td>
+					<td md-cell>{{category.totalBatchCount == null ? '0' : category.totalBatchCount}}</td>
+					<td md-cell>{{category.totalExpiringBatchCount == null ? '0' : category.totalExpiringBatchCount}}</td>
+					<td md-cell>{{category.totalExpiredBatchCount == null ? '0' : category.totalExpiredBatchCount}}</td>
 					<td md-cell style="text-align: right">
-						<md-button class="md-warn md-raised" ng-click="openEditCategory(category.id)">Editar</md-button>
+						<md-button class="md-raised" ng-click="openEditCategory(category.id)">Editar</md-button>
 					</td>
 				</tr>
 			</tbody>

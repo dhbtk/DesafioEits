@@ -74,4 +74,14 @@ Stockontrol.controller('CategoriesController',function($scope, $mdToast, $mdSide
 			$scope.fetchCategories();
 		}
 	};
+
+	/*
+	 * Inicialização
+	 */
+
+	// Buscando a lista inicial
+	$scope.fetchCategories();
+
+	// Atualizando a lista conforme os filtros
+	$scope.$watch('model.filters', function(){ $scope.fetchCategories(); }, true);
 });
