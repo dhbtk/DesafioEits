@@ -5,7 +5,6 @@ import org.directwebremoting.annotations.RemoteProxy;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +27,8 @@ public class ProductService
 	private ProductRepository productRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private UserService userService;
 
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
@@ -59,6 +60,7 @@ public class ProductService
 	public Product insertProduct(Product product)
 	{
 		Assert.assertNull("Produto já existe!", product.getId());
+		product.setUser(userService.getCurrent());
 		return productRepository.saveAndFlush(product);
 	}
 
@@ -96,6 +98,7 @@ public class ProductService
 	public Category insertCategory(Category category)
 	{
 		Assert.assertNull("Categoria já existe!", category.getId());
+		category.setUser(userService.getCurrent());
 		return categoryRepository.saveAndFlush(category);
 	}
 
