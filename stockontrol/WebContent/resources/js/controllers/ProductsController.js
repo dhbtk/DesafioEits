@@ -33,6 +33,17 @@ Stockontrol.controller('ProductsController',function($controller, $scope, $mdToa
 		});
 	};
 
+	$scope.openEditProduct = function(id)
+	{
+		$scope.model.tasks++;
+		productService.findProduct(id, function(product)
+		{
+			$scope.model.tasks--;
+			$scope.product = product;
+			$mdSidenav('rightPanel').open();
+		});
+	};
+
 	/**
 	 *
 	 * Listagem

@@ -38,3 +38,15 @@
 	</md-table-container>
 	<md-table-pagination md-limit="model.limit" md-page="model.page" md-total="{{model.request.totalElements}}" md-on-paginate="paginateTable" md-page-select></md-table-pagination>
 </div>
+<md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="rightPanel" layout="column">
+	<md-toolbar class="md-hue-2">
+		<div class="md-toolbar-tools">
+			<h2><span>{{product.name}}</span></h2>
+			<span flex></span>
+			<md-button class="md-icon-button"><md-icon>delete</md-icon></md-button>
+		</div>
+	</md-toolbar>
+	<md-content layout-padding>
+		<div ng-include="'/resources/views/products/products-edit.html'"></div>
+	</md-content>
+</md-sidenav>

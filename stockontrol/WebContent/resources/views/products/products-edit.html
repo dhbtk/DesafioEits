@@ -1,0 +1,8 @@
+<div layout="column" ng-controller="EditProductController">
+	<div ng-include="'/resources/views/products/products-form.html'"></div>
+	<div layout="row">
+		<span flex></span>
+		<md-button class="md-raised" ng-click="cancel()">Cancelar</md-button>
+		<md-button class="md-raised md-primary" ng-disabled="form.$invalid" ng-click="save()">Salvar</md-button>
+	</div>
+</div>

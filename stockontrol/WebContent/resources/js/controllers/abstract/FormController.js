@@ -21,7 +21,7 @@ Stockontrol.controller('FormController', function($scope, $mdSidenav, $mdDialog,
 		if($scope.form.$valid)
 		{
 			$scope.model.tasks++;
-			$scope.saveFunction($scope.entity, function(data)
+			$scope.saveFunction($scope[$scope.entity], function(data)
 			{
 				$scope.model.tasks--;
 				$mdSidenav('rightPanel').close();
