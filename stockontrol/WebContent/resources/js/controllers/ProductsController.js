@@ -19,6 +19,8 @@ Stockontrol.controller('ProductsController',function($controller, $scope, $mdToa
 		order: 'name',
 	});
 
+	$scope.categories = [];
+
 	/*
 	 * Métodos
 	 */
@@ -30,6 +32,31 @@ Stockontrol.controller('ProductsController',function($controller, $scope, $mdToa
 			templateUrl: '/resources/views/products/products-new.html',
 			scope: $scope.$new(),
 			clickOutsideToClose: true
+		});
+	};
+
+	$scope.getProductCategory = function(product, callback)
+	{
+		productService.findCategory(product.categoryId, function(category)
+		{
+			product.category = category;
+			callback(product);
+		});
+	};
+
+	$scope.updateProductWrapper = function(product, callback)
+	{
+		$scope.getProductCategory(product, function(product)
+		{
+			productService.updateProduct(product, callback);
+		});
+	};
+
+	$scope.insertProductWrapper = function(product, callback)
+	{
+		$scope.getProductCategory(product, function(product)
+		{
+			productService.insertProduct(product, callback);
 		});
 	};
 
@@ -55,4 +82,9 @@ Stockontrol.controller('ProductsController',function($controller, $scope, $mdToa
 	 */
 
 	$scope.fetchFunction = productService.listAllProductsByFilters;
+
+	productService.listAllCategoriesByFilters(null, null, function(data)
+	{
+		$scope.categories = data.content;
+	});
 });

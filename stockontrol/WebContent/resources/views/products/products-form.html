@@ -16,8 +16,8 @@
 	</md-input-container>
 	<md-input-container class="md-block">
 		<label>Categoria</label>
-		<md-select ng-model="product.category" name="category">
-			<md-option ng-repeat="category in categories" ng-value="category">{{category.name}}</md-option>
+		<md-select ng-model="product.categoryId" name="category">
+			<md-option ng-repeat="category in categories" ng-value="category.id">{{category.name}}</md-option>
 		</md-select>
 		<div ng-messages="productForm.category.$error">
 			<div ng-message="required">Este campo é necessário.</div>
