@@ -16,6 +16,7 @@ import com.stockontrol.domain.entity.Batch;
 import com.stockontrol.domain.entity.QBatch;
 import com.stockontrol.domain.repository.BatchRepository;
 import com.stockontrol.domain.util.PredicateList;
+import com.stockontrol.domain.util.SimplePageRequest;
 
 @Service("batchService")
 @Transactional
@@ -46,7 +47,7 @@ public class BatchService
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
 	public Page<Batch> listAllByFilters(String productName, String identifier, LocalDate maxExpirationDate,
-			Long productId, PageRequest page)
+			Long productId, SimplePageRequest page)
 	{
 		QBatch batch = QBatch.batch;
 		PredicateList predicates = new PredicateList();
@@ -54,21 +55,21 @@ public class BatchService
 				.add(identifier, () -> batch.identifier.containsIgnoreCase(identifier))
 				.add(maxExpirationDate, () -> batch.expiresAt.loe(maxExpirationDate))
 				.add(productId, () -> batch.product.id.eq(productId));
-		return batchRepository.findAll(predicates.getIntersection(), page);
+		return batchRepository.findAll(predicates.getIntersection(), page != null ? page.toPageRequest() : null);
 	}
 
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
-	public Page<Batch> listAllExpired(Long productId, PageRequest page)
+	public Page<Batch> listAllExpired(Long productId, SimplePageRequest page)
 	{
-		return batchRepository.listAllExpired(productId, page);
+		return batchRepository.listAllExpired(productId, page != null ? page.toPageRequest() : null);
 	}
 
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
-	public Page<Batch> listAllExpiring(Long productId, PageRequest page)
+	public Page<Batch> listAllExpiring(Long productId, SimplePageRequest page)
 	{
-		return batchRepository.listAllExpiring(productId, page);
+		return batchRepository.listAllExpiring(productId, page != null ? page.toPageRequest() : null);
 	}
 
 	@PreAuthorize("hasRole('USER')")
