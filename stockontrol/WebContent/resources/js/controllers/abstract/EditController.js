@@ -1,4 +1,4 @@
-Stockontrol.controller('EditController', function($controller, $scope, $mdSidenav, $mdToast)
+Stockontrol.controller('EditController', function($controller, $scope)
 {
 	$controller('FormController', {$scope: $scope});
 

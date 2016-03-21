@@ -1,4 +1,4 @@
-Stockontrol.controller('FormController', function($scope)
+Stockontrol.controller('FormController', function($scope, $mdSidenav, $mdDialog, $mdToast)
 {
 	$scope.form = null;
 
@@ -25,6 +25,7 @@ Stockontrol.controller('FormController', function($scope)
 			{
 				$scope.model.tasks--;
 				$mdSidenav('rightPanel').close();
+				$mdDialog.cancel();
 				$mdToast.show(
 						$mdToast.simple()
 								.textContent($scope.successMessage(data))
