@@ -109,6 +109,7 @@ Stockontrol.controller('BaseController', function($q, $scope)
 	{
 		if(newVal)
 		{
+			$scope.fetchData();
 			firstFetch();
 		}
 	});

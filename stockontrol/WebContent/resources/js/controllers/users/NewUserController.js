@@ -29,7 +29,7 @@ Stockontrol.controller('NewUserController', function($scope, $mdDialog)
 								.textContent('Usuário "' + user.email + '" criado')
 								.position('bottom')
 								.hideDelay(3000));
-				$scope.fetchUsers();
+				$scope.fetchData();
 			});
 		}
 	};

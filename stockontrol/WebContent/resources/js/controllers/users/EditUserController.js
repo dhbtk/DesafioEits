@@ -22,7 +22,7 @@ Stockontrol.controller('EditUserController', function($scope, $mdSidenav, $mdToa
 								.textContent('Usuário "' + user.email + '" desativado')
 								.position('bottom')
 								.hideDelay(3000));
-				$scope.fetchUsers();
+				$scope.fetchFetchData();
 			});
 		}
 	};
