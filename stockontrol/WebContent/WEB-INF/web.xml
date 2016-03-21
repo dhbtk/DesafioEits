@@ -11,6 +11,7 @@
 		classpath:/jpaContext.xml
 		classpath:/security.xml
 		classpath:/dwr.xml
+		classpath:/email.xml
 		</param-value>
 	</context-param>
 	

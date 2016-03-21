@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.stockontrol.application.aspect.EmailerAspect;
 import com.stockontrol.domain.entity.QUser;
 import com.stockontrol.domain.entity.User;
 import com.stockontrol.domain.repository.UserRepository;
@@ -25,6 +26,8 @@ public class UserService
 	private UserRepository userRepository;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+	@Autowired
+	private EmailerAspect emailer; // FIXME - não consegui fazer o aspecto funcionar
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@RemoteMethod
@@ -102,6 +105,8 @@ public class UserService
 	public User insert(User user)
 	{
 		user.setPasswordDigest(encoder.encode(user.getPassword()));
-		return userRepository.saveAndFlush(user);
+		User newUser = userRepository.saveAndFlush(user);
+		emailer.sendNewUserEmail(user);
+		return newUser;
 	}
 }
