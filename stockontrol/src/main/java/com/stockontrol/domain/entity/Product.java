@@ -32,6 +32,7 @@ public class Product extends BaseEntity
 	@Audited
 	private List<Batch> batches = new ArrayList<Batch>();
 
+	@NotNull
 	@ManyToOne
 	@Audited
 	private Category category;
