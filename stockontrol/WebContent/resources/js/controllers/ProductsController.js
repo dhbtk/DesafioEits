@@ -23,6 +23,16 @@ Stockontrol.controller('ProductsController',function($controller, $scope, $mdToa
 	 * Métodos
 	 */
 
+	$scope.openNewProduct = function()
+	{
+		$mdDialog.show({
+			controller: 'NewProductController',
+			templateUrl: '/resources/views/products/products-new.html',
+			scope: $scope.$new(),
+			clickOutsideToClose: true
+		});
+	};
+
 	/**
 	 *
 	 * Listagem
