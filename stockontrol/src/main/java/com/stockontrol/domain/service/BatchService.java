@@ -24,12 +24,15 @@ public class BatchService
 {
 	@Autowired
 	private BatchRepository batchRepository;
+	@Autowired
+	private UserService userService;
 
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
 	public Batch insert(Batch batch)
 	{
 		Assert.assertNull("Lote já existe!", batch.getId());
+		batch.setUser(userService.getCurrent());
 		return batchRepository.saveAndFlush(batch);
 	}
 
