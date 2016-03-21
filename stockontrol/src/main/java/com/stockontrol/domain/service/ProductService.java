@@ -45,7 +45,8 @@ public class ProductService
 	@RemoteMethod
 	public void deleteProduct(Long id)
 	{
-		productRepository.delete(id);
+		Product product = productRepository.findOne(id);
+		productRepository.delete(product);
 	}
 
 	@PreAuthorize("hasRole('USER')")

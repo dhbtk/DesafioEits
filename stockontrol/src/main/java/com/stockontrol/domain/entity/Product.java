@@ -1,15 +1,11 @@
 package com.stockontrol.domain.entity;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -28,17 +24,10 @@ public class Product extends BaseEntity
 	@Formula("(select count(*) from batches b where b.product_id = id)")
 	private Long batchCount;
 
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Audited
-	private List<Batch> batches = new ArrayList<Batch>();
-
 	@NotNull
 	@ManyToOne
 	@Audited
 	private Category category;
-
-	@Column(name = "category_id", insertable = false, updatable = false)
-	private Long categoryId;
 
 	@Formula("(select count(*) from batches b where b.product_id = id and date(b.expires_at) <= date(now()))")
 	private Long expiredBatchCount;
@@ -58,7 +47,7 @@ public class Product extends BaseEntity
 
 	@NotNull
 	@Audited
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private User user;
 
 	public Long getBatchCount()
@@ -66,19 +55,9 @@ public class Product extends BaseEntity
 		return batchCount;
 	}
 
-	public List<Batch> getBatches()
-	{
-		return batches;
-	}
-
 	public Category getCategory()
 	{
 		return category;
-	}
-
-	public Long getCategoryId()
-	{
-		return categoryId;
 	}
 
 	public Long getExpiredBatchCount()
@@ -106,19 +85,9 @@ public class Product extends BaseEntity
 		return user;
 	}
 
-	public void setBatches(List<Batch> batches)
-	{
-		this.batches = batches;
-	}
-
 	public void setCategory(Category category)
 	{
 		this.category = category;
-	}
-
-	public void setCategoryId(Long categoryId)
-	{
-		this.categoryId = categoryId;
 	}
 
 	public void setName(String name)

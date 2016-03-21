@@ -71,6 +71,35 @@ Stockontrol.controller('ProductsController',function($controller, $scope, $mdToa
 		});
 	};
 
+	$scope.destroy = function(product)
+	{
+		var dialog = $mdDialog.confirm()
+				.title('Excluir produto')
+				.textContent('Tem certeza que quer excluir o produto "' + product.name + '"? Esta ação não pode ser desfeita.')
+				.ok('Excluir')
+				.cancel('Cancelar');
+		$mdDialog.show(dialog).then(function()
+		{
+			productService.deleteProduct(product.id,{
+				callback: function()
+				{
+					$mdSidenav('rightPanel').close();
+					$mdToast.show(
+							$mdToast.simple()
+									.textContent('Produto "' + product.name + '" excluído')
+									.position('bottom')
+									.hideDelay(3000));
+					//$scope.fetchData();
+				},
+				errorHandler: function(ex, msg)
+				{
+					console.log(ex);
+					console.log(msg);
+				}
+			});
+		});
+	};
+
 	/**
 	 *
 	 * Listagem

@@ -31,10 +31,6 @@ public class Category extends BaseEntity
 	@Audited
 	private String name;
 
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Audited
-	private List<Product> Products = new ArrayList<>();
-
 	@Formula("(SELECT SUM((SELECT COUNT(*) FROM batches b WHERE b.product_id = p.id)) FROM products p WHERE p.category_id = id)")
 	private Long totalBatchCount;
 
@@ -57,11 +53,6 @@ public class Category extends BaseEntity
 	public String getName()
 	{
 		return name;
-	}
-
-	public List<Product> getProducts()
-	{
-		return Products;
 	}
 
 	public Long getTotalBatchCount()
@@ -92,11 +83,6 @@ public class Category extends BaseEntity
 	public void setName(String name)
 	{
 		this.name = name;
-	}
-
-	public void setProducts(List<Product> products)
-	{
-		Products = products;
 	}
 
 	public void setUser(User user)
