@@ -17,7 +17,7 @@
 			</md-button>
 			<div ng-include="header.location" class="header-partial"></div>
 			<span flex></span>
-			<span style="font-size: 70%">{{model.currentUser.email}}</span>
+			<span style="font-size: 70%">{{currentUser.email}}</span>
 			<md-menu>
 				<md-button ng-click="openLogoutMenu($mdOpenMenu, $event)" class="md-icon-button" aria-label="Menu">
 					<md-icon md-menu-origin aria-label="Opções">more_vert</md-icon>
@@ -83,5 +83,7 @@
 	<script src="/resources/js/controllers/users/EditUserController.js"></script>
 	<!-- categories -->
 	<script src="/resources/js/controllers/CategoriesController.js"></script>
+	<!-- products -->
+	<script src="/resources/js/controllers/ProductsController.js"></script>
 </body>
 </html>

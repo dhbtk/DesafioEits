@@ -31,5 +31,13 @@ Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvid
 		url: '/categories',
 		templateUrl: 'resources/views/categories/categories-index.html',
 		controller: 'CategoriesController'
+	}).state('products', {
+		url: '/products',
+		templateUrl: 'resources/views/products/products-index.html',
+		controller: 'ProductsController'
+	}).state('batches', {
+		url: '/batches',
+		templateUrl: 'resources/views/batches/batches-index.html',
+		controller: 'BatchesController'
 	});
 });

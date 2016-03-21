@@ -19,7 +19,7 @@ Stockontrol.controller('EditUserController', function($scope, $mdSidenav, $mdToa
 				$mdSidenav('rightPanel').close();
 				$mdToast.show(
 						$mdToast.simple()
-								.textContent('Usuário "' + user.email + '" desativado')
+								.textContent('Usuário "' + user.email + '" alterado')
 								.position('bottom')
 								.hideDelay(3000));
 				$scope.fetchFetchData();

@@ -5,6 +5,7 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 	 * Modelo
 	 */
 	$scope.model = {};
+	$scope.currentUser;
 
 	/** Mantém a URL da parcial do cabeçalho **/
 	$scope.header = {};
