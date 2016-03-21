@@ -1,36 +1,12 @@
-Stockontrol.controller('NewUserController', function($scope, $mdDialog)
+Stockontrol.controller('NewUserController', function($controller, $scope)
 {
-	$scope.form = null;
+	$controller('NewController', {$scope: $scope});
 	$scope.user = new User();
 	$scope.user.active = true;
-
-	$scope.setForm = function(form)
+	$scope.entity = $scope.user;
+	$scope.saveFunction = userService.insert;
+	$scope.successMessage = function(user)
 	{
-		$scope.form = form;
-		console.log(form);
-	};
-
-	$scope.cancel = function()
-	{
-		$mdDialog.cancel();
-	};
-
-	$scope.create = function()
-	{
-		if($scope.form.$valid)
-		{
-			$scope.model.tasks++;
-			userService.insert($scope.user, function(user)
-			{
-				$scope.model.tasks--;
-				$mdDialog.cancel();
-				$mdToast.show(
-						$mdToast.simple()
-								.textContent('Usuário "' + user.email + '" criado')
-								.position('bottom')
-								.hideDelay(3000));
-				$scope.fetchData();
-			});
-		}
+		return 'Usuário "' + user.email + '" criado';
 	};
 });
