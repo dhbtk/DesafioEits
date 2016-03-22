@@ -220,5 +220,10 @@
 		<artifactId>aspectjweaver</artifactId>
 		<version>1.8.9</version>
 	</dependency>
+	<dependency>
+		<groupId>org.webjars.bower</groupId>
+		<artifactId>momentjs</artifactId>
+		<version>2.12.0</version>
+	</dependency>
 	</dependencies>
 </project>
