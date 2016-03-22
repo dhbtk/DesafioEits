@@ -89,7 +89,7 @@ Stockontrol.controller('ProductsController',function($controller, $scope, $mdToa
 									.textContent('Produto "' + product.name + '" excluído')
 									.position('bottom')
 									.hideDelay(3000));
-					//$scope.fetchData();
+					$scope.fetchData();
 				},
 				errorHandler: function(ex, msg)
 				{
