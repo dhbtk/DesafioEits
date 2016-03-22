@@ -1,0 +1,42 @@
+<md-toolbar class="md-hue-1 filter-toolbar">
+	<div class="md-toolbar-tools" layout="row">
+		<p>Data Máxima de Vencimento:</p>
+		<input type="date" ng-model="model.filterData.maxDate">
+		<div class="search-box">
+			<md-icon>search</md-icon>
+			<input type="text" ng-model="model.filterData.name" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
+		</div>
+	</div>
+</md-toolbar>
+<md-progress-linear md-mode="indeterminate" ng-style="{'visibility': (model.tasks > 0) ? 'visible' : 'hidden'}"></md-progress-linear>
+<div class="container md-whiteframe-1dp">
+	<md-table-container>
+		<table md-table class="data-table">
+			<thead md-head md-order="model.order" md-on-reorder="sortTable" md-progress="fetchPromise">
+				<tr md-row>
+					<th md-column class="wide" md-order-by="identifier">Identificação</th>
+					<th md-column md-order-by="product.name">Produto</th>
+					<th md-column md-order-by="quantity">Quantidade</th>
+					<th md-column md-order-by="manufacturedAt">Data de Fabricação</th>
+					<th md-column md-order-by="expiresAt">Data de Vencimento</th>
+					<th md-column>Status</th>
+					<th md-column>Ações</th>
+				</tr>
+			</thead>
+			<tbody md-body>
+				<tr md-row ng-repeat="batch in model.request.content">
+					<td md-cell class="wide">{{batch.identifier}}</td>
+					<td md-cell>{{batch.product.name}}</td>
+					<td md-cell>{{batch.quantity}}</td>
+					<td md-cell>{{batch.manufacturedAt}}</td>
+					<td md-cell>{{batch.expiresAt}}</td>
+					<td md-cell>-</td>
+					<td md-cell style="text-align: right">
+						<md-button class="md-raised md-primary" ng-click="openEdit(batch.id)">Registrar Saída</md-button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</md-table-container>
+	<md-table-pagination md-limit="model.limit" md-page="model.page" md-total="{{model.request.totalElements}}" md-on-paginate="paginateTable" md-page-select></md-table-pagination>
+</div>
