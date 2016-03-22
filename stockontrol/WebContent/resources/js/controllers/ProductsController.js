@@ -35,7 +35,7 @@ Stockontrol.controller('ProductsController',function($controller, $scope, $mdToa
 		});
 	};
 
-	$scope.getProductCategory = function(product, callback)
+	function getProductCategory(product, callback)
 	{
 		productService.findCategory(product.categoryId, function(category)
 		{
@@ -46,7 +46,7 @@ Stockontrol.controller('ProductsController',function($controller, $scope, $mdToa
 
 	$scope.updateProductWrapper = function(product, callback)
 	{
-		$scope.getProductCategory(product, function(product)
+		getProductCategory(product, function(product)
 		{
 			productService.updateProduct(product, callback);
 		});
@@ -54,7 +54,7 @@ Stockontrol.controller('ProductsController',function($controller, $scope, $mdToa
 
 	$scope.insertProductWrapper = function(product, callback)
 	{
-		$scope.getProductCategory(product, function(product)
+		getProductCategory(product, function(product)
 		{
 			productService.insertProduct(product, callback);
 		});
