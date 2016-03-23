@@ -68,17 +68,20 @@ Stockontrol.factory("$mdDatePicker", ["$mdDialog", function($mdDialog) {
 	return datePicker;
 }]);
 
-Stockontrol.directive("input", ["$mdDatePicker", "$timeout", function($mdDatePicker, $timeout) {
+Stockontrol.directive("datePicker", ["$mdDatePicker", "$timeout", function($mdDatePicker, $timeout) {
 	return {
-		restrict: 'E',
+		restrict: 'A',
 		require: '?ngModel',
+		scope: {
+			noDatePicker: '='
+		},
 		link: function(scope, element, attrs, ngModel) {
-			if ('undefined' !== typeof attrs.type && 'date' === attrs.type && ngModel) {
+			if (ngModel) {
 				angular.element(element).on("click", function(ev) {
 					ev.preventDefault();
 					$mdDatePicker(ev, ngModel.$modelValue).then(function(selectedDate) {
 						$timeout(function() {
-							ngModel.$setViewValue(moment(selectedDate).format("YYYY-MM-DD"));
+							ngModel.$setViewValue(moment(selectedDate).format("DD/MM/YYYY"));
 							ngModel.$render();
 						});
 					});
