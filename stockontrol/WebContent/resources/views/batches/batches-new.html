@@ -1,0 +1,45 @@
+<md-dialog ng-cloak ng-controller="NewBatchController" style="width: 500px">
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>Entrada de Produto</h2>
+			<span flex></span>
+			<md-button ng-click="cancel()" class="md-icon-button">
+				<md-icon>close</md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content layout-padding>
+		<form name="batchForm">
+			<div ng-init="setForm(batchForm)"></div>
+			<md-input-container class="md-block">
+				<label>Produto</label>
+				<md-select ng-model="batch.product" required name="product">
+					<md-option ng-repeat="product in products" ng-value="product">{{product.name}}</md-option>
+				</md-select>
+			</md-input-container>
+			<md-input-container class="md-block">
+				<label>Identificador</label>
+				<input type="text" name="identifier" ng-model="batch.identifier" required>
+			</md-input-container>
+			<md-input-container class="md-block">
+				<label>Quantidade</label>
+				<input type="number" name="quantity" ng-model="batch.quantity" required>
+			</md-input-container>
+			<div layout="row">
+				<md-input-container class="md-block" flex>
+					<label>Data de Fabricação</label>
+					<input type="date" name="manufacturedAt" ng-model="batch.manufacturedAt" required>
+				</md-input-container>
+				<md-input-container class="md-block" flex>
+					<label>Data de Vencimento</label>
+					<input type="date" name="expiresAt" ng-model="batch.expiresAt" required>
+				</md-input-container>
+			</div>
+		</form>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
+		<span flex></span>
+		<md-button ng-click="cancel()" class="md-raised">Cancelar</md-button>
+		<md-button ng-click="create()" ng-disabled="form.$invalid || model.tasks" class="md-raised md-primary">Registrar</md-button>
+	</md-dialog-actions>
+</md-dialog>

@@ -1,4 +1,4 @@
-Stockontrol.controller('BatchesController', function($controller, $scope)
+Stockontrol.controller('BatchesController', function($controller, $scope, $mdDialog)
 {
 	$controller('BaseController', {$scope: $scope});
 
@@ -8,18 +8,32 @@ Stockontrol.controller('BatchesController', function($controller, $scope)
 	 * Modelo
 	 */
 	angular.extend($scope.model, {
-		filters: ['text', 'maxDate'],
+		filters: ['productName', 'identifier', 'maxDate', 'productId'],
 		filterData: {
-			text: null,
+			productName: null,
+			identifier: null,
 			maxDate: null,
+			productId: null,
 		},
-		category: null,
+		batch: null,
 		order: '-expiresAt',
 	});
+
+	$scope.products = [];
 
 	/*
 	 * Métodos
 	 */
+
+	$scope.openNew = function()
+	{
+		$mdDialog.show({
+			controller: 'NewBatchController',
+			templateUrl: '/resources/views/batches/batches-new.html',
+			scope: $scope.$new(),
+			clickOutsideToClose: true
+		});
+	};
 
 	/**
 	 *
@@ -32,4 +46,11 @@ Stockontrol.controller('BatchesController', function($controller, $scope)
 	 */
 
 	$scope.fetchFunction = batchService.listAllByFilters;
+
+	$scope.model.tasks++;
+	productService.listAllProductsByFilters(null, null, null, function(data)
+	{
+		$scope.model.tasks--;
+		$scope.products = data.content;
+	});
 });

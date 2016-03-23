@@ -2,14 +2,14 @@
 	<div ng-init="setForm(productForm)"></div>
 	<md-input-container class="md-block">
 		<label>Nome</label>
-		<input type="text" name ng-model="product.name" required>
+		<input type="text" name="name" ng-model="product.name" required>
 		<div ng-messages="productForm.name.$error">
 			<div ng-message="required">Este campo é necessário.</div>
 		</div>
 	</md-input-container>
 	<md-input-container class="md-block">
 		<label>Preço</label>
-		<input type="number" name ng-model="product.price" required>
+		<input type="number" name="price" ng-model="product.price" required>
 		<div ng-messages="productForm.price.$error">
 			<div ng-message="required">Este campo é necessário.</div>
 		</div>

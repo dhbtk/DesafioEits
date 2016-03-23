@@ -1,10 +1,16 @@
 <md-toolbar class="md-hue-1 filter-toolbar">
 	<div class="md-toolbar-tools" layout="row">
-		<p>Data Máxima de Vencimento:</p>
-		<input type="date" ng-model="model.filterData.maxDate">
+		<p>Data Máxima de Vencimento</p>
+		<input type="text" date-picker ng-model="model.filterData.maxDate">
+		<p>Nome do Produto</p>
 		<div class="search-box">
 			<md-icon>search</md-icon>
-			<input type="text" ng-model="model.filterData.name" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
+			<input type="text" ng-model="model.filterData.productName" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
+		</div>
+		<p>Identificador</p>
+		<div class="search-box">
+			<md-icon>search</md-icon>
+			<input type="text" ng-model="model.filterData.identifier" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
 		</div>
 	</div>
 </md-toolbar>
@@ -28,8 +34,8 @@
 					<td md-cell class="wide">{{batch.identifier}}</td>
 					<td md-cell>{{batch.product.name}}</td>
 					<td md-cell>{{batch.quantity}}</td>
-					<td md-cell>{{batch.manufacturedAt}}</td>
-					<td md-cell>{{batch.expiresAt}}</td>
+					<td md-cell>{{moment(batch.manufacturedAt).format('DD/MM/YYYY')}}</td>
+					<td md-cell>{{moment(batch.expiresAt).format('DD/MM/YYYY')}}</td>
 					<td md-cell>-</td>
 					<td md-cell style="text-align: right">
 						<md-button class="md-raised md-primary" ng-click="openEdit(batch.id)">Registrar Saída</md-button>
