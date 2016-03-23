@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.regex.Pattern;
 
 import org.directwebremoting.ConversionException;
 import org.directwebremoting.extend.AbstractConverter;
@@ -44,25 +46,29 @@ public class LocalDateTimeConverter extends AbstractConverter
 			return null;
 		}
 		
+		LocalDateTime date = null;
+		
 		try
 		{
-			long seconds = 0;
-			if(val.length() > 0)
+			val = java.net.URLDecoder.decode(val, "UTF-8");
+			
+			if(Pattern.matches("^[0-9]+$", val))
 			{
-				seconds = Long.parseLong(val)/1000;
+				long seconds = 0;
+				if(val.length() > 0)
+				{
+					seconds = Long.parseLong(val)/1000;
+				}
+				date = LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.UTC);
 			}
-			LocalDateTime date = LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.UTC);
-			if(paramType == LocalDate.class)
+			else if(Pattern.matches("^[0-9]{2}/[0-9]{2}/[0-9]{4}$", val))
 			{
-				return date.toLocalDate();
-			}
-			else if(paramType == LocalTime.class)
-			{
-				return date.toLocalTime();
+				LocalDate d = LocalDate.parse(val, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				date = d.atStartOfDay();
 			}
 			else
 			{
-				throw new ConversionException(paramType);
+				throw new IllegalArgumentException("Invalid pattern for Date/Time! Given Pattern: '" + val + "'");
 			}
 		}
 		catch(ConversionException ex)
@@ -72,6 +78,19 @@ public class LocalDateTimeConverter extends AbstractConverter
 		catch(Exception ex)
 		{
 			throw new ConversionException(paramType, ex);
+		}
+		
+		if(paramType == LocalDate.class)
+		{
+			return date.toLocalDate();
+		}
+		else if(paramType == LocalTime.class)
+		{
+			return date.toLocalTime();
+		}
+		else
+		{
+			throw new ConversionException(paramType);
 		}
 	}
 
