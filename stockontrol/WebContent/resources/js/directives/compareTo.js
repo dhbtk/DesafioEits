@@ -1,6 +1,7 @@
 Stockontrol.directive('compareTo', function()
 {
 	return {
+		restrict: 'A',
 		require: 'ngModel',
 		scope: {
 			otherValue: '=compareTo'

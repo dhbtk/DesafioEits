@@ -16,23 +16,40 @@
 				<md-select ng-model="batch.product" required name="product">
 					<md-option ng-repeat="product in products" ng-value="product">{{product.name}}</md-option>
 				</md-select>
+				<div ng-messages="batchForm.product.$error">
+					<div ng-message="required">Este campo é necessário.</div>
+				</div>
 			</md-input-container>
 			<md-input-container class="md-block">
 				<label>Identificador</label>
 				<input type="text" name="identifier" ng-model="batch.identifier" required>
+				<div ng-messages="batchForm.identifier.$error">
+					<div ng-message="required">Este campo é necessário.</div>
+				</div>
 			</md-input-container>
 			<md-input-container class="md-block">
 				<label>Quantidade</label>
-				<input type="number" name="quantity" ng-model="batch.quantity" required>
+				<input type="number" name="quantity" ng-model="batch.quantity" min="1" required>
+				<div ng-messages="batchForm.quantity.$error">
+					<div ng-message="required">Este campo é necessário.</div>
+					<div ng-message="min">O lote deve conter pelo menos um item.</div>
+				</div>
 			</md-input-container>
 			<div layout="row">
 				<md-input-container class="md-block" flex>
 					<label>Data de Fabricação</label>
 					<input type="date" name="manufacturedAt" ng-model="batch.manufacturedAt" required>
+					<div ng-messages="batchForm.manufacturedAt.$error">
+						<div ng-message="required">Este campo é necessário.</div>
+					</div>
 				</md-input-container>
 				<md-input-container class="md-block" flex>
 					<label>Data de Vencimento</label>
-					<input type="date" name="expiresAt" ng-model="batch.expiresAt" required>
+					<input type="date" name="expiresAt" ng-model="batch.expiresAt" is-after="batch.manufacturedAt" required>
+					<div ng-messages="batchForm.expiresAt.$error">
+						<div ng-message="required">Este campo é necessário.</div>
+						<div ng-message="isAfter">A data de vencimento deve ser depois da data de fabricação.</div>
+					</div>
 				</md-input-container>
 			</div>
 		</form>

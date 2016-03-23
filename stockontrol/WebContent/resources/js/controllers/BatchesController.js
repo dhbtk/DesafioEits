@@ -48,7 +48,7 @@ Stockontrol.controller('BatchesController', function($controller, $scope, $mdDia
 	$scope.fetchFunction = batchService.listAllByFilters;
 
 	$scope.model.tasks++;
-	productService.listAllProductsByFilters(null, null, null, function(data)
+	productService.listAllProductsByFilters(null, null, {page: 0, size: 5000, property: 'name', direction: 'ASC'}, function(data) // FIXME!!!!!!
 	{
 		$scope.model.tasks--;
 		$scope.products = data.content;
