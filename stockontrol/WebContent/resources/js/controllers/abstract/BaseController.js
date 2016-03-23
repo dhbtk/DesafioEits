@@ -60,11 +60,13 @@ Stockontrol.controller('BaseController', function($q, $scope)
 				$scope.$apply();
 				def.resolve(data);
 			},
-			errorHandler: function()
+			errorHandler: function(ex, msg)
 			{
 				$scope.model.tasks--;
 				$scope.$apply();
-				def.reject(data);
+				console.log(ex);
+				console.log(msg);
+				def.reject(ex);
 			},
 			timeout: 1000,
 		});
