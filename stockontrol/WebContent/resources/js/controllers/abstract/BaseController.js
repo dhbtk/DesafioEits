@@ -45,6 +45,10 @@ Stockontrol.controller('BaseController', function($q, $scope)
 			direction = 'DESC';
 			property = $scope.model.order.slice(1);
 		}
+		else
+		{
+			property = $scope.model.order;
+		}
 		pr.property = property;
 		pr.direction = direction;
 
