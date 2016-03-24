@@ -9,7 +9,6 @@ Stockontrol.controller('BaseController', function($q, $scope)
 		order: 'id',
 		page: 1,
 		limit: 10,
-		tasks: 0,
 	};
 
 	/**
@@ -59,14 +58,12 @@ Stockontrol.controller('BaseController', function($q, $scope)
 		params.push({
 			callback: function(data)
 			{
-				$scope.model.tasks--;
 				$scope.model.request = data;
 				$scope.$apply();
 				def.resolve(data);
 			},
 			errorHandler: function(ex, msg)
 			{
-				$scope.model.tasks--;
 				$scope.$apply();
 				console.log(ex);
 				console.log(msg);
@@ -75,7 +72,7 @@ Stockontrol.controller('BaseController', function($q, $scope)
 			timeout: 1000,
 		});
 		// Chamando a função
-		$scope.model.tasks++;
+
 		$scope.fetchFunction.apply(null, params);
 		$scope.fetchPromise = def.promise;
 		return def.promise;

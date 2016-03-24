@@ -35,6 +35,16 @@ Stockontrol.controller('BatchesController', function($controller, $scope, $mdDia
 		});
 	};
 
+	$scope.registerOutgoing = function(id)
+	{
+		batchService.find(id, function(batch)
+		{
+			$mdDialog.show({
+
+			});
+		});
+	};
+
 	/**
 	 *
 	 * Listagem
@@ -47,10 +57,8 @@ Stockontrol.controller('BatchesController', function($controller, $scope, $mdDia
 
 	$scope.fetchFunction = batchService.listAllByFilters;
 
-	$scope.model.tasks++;
 	productService.listAllProductsByFilters(null, null, null, function(data)
 	{
-		$scope.model.tasks--;
 		$scope.products = data.content.sort(function(a, b)
 		{
 			return a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase());

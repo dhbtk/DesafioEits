@@ -67,12 +67,10 @@ Stockontrol.controller('UsersController',function($controller, $scope, $mdToast,
 				.cancel('Cancelar');
 		$mdDialog.show(dialog).then(function()
 		{
-			$scope.model.tasks++;
 			userService.find(user.id, function(user)
 			{
 				userService.deactivate(user, function(user)
 				{
-					$scope.model.tasks--;
 					$mdToast.show(
 							$mdToast.simple()
 									.textContent('Usuário "' + user.email + '" desativado')
@@ -93,12 +91,10 @@ Stockontrol.controller('UsersController',function($controller, $scope, $mdToast,
 				.cancel('Cancelar');
 		$mdDialog.show(dialog).then(function()
 		{
-			$scope.model.tasks++;
 			userService.find(user.id, function(user)
 			{
 				userService.activate(user, function(user)
 				{
-					$scope.model.tasks--;
 					$mdToast.show(
 							$mdToast.simple()
 									.textContent('Usuário "' + user.email + '" ativado')

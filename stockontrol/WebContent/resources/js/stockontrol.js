@@ -15,13 +15,13 @@ function serializeObject(o)
 		}
 	}
 	return s;
-}
+};
 
-var Stockontrol = angular.module('Stockontrol',['ngMaterial', 'ngMessages', 'ui.router', 'md.data.table'])
+var Stockontrol = angular.module('Stockontrol',['ngMaterial', 'ngMessages', 'ui.router', 'md.data.table']);
 
 Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider)
 {
-	$urlRouterProvider.otherwise('users'); //FIXME
+	$urlRouterProvider.otherwise('batches');
 
 	$stateProvider.state('users', {
 		url: '/users',
@@ -39,5 +39,9 @@ Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvid
 		url: '/batches',
 		templateUrl: 'resources/views/batches/batches-index.html',
 		controller: 'BatchesController'
+	}).state('report', {
+		url: '/report',
+		templateUrl: 'resources/views/report/report.html',
+		controller: 'ReportController'
 	});
 });

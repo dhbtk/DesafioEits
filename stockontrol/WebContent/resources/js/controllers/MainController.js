@@ -1,16 +1,38 @@
-Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $state, $window)
+Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $state, $window, $timeout)
 {
-	console.log($state);
+	// defaults do DWR
+	dwr.engine.setTextHtmlHandler(function()
+	{
+		$window.location.href = "/";
+	});
+
+	dwr.engine.setPreHook(function()
+	{
+		$timeout(function()
+		{
+			$scope.tasks++;
+		});
+	});
+
+	dwr.engine.setPostHook(function()
+	{
+		$timeout(function()
+		{
+			$scope.tasks--;
+		});
+	});
+
 	/*
 	 * Modelo
 	 */
 	$scope.model = {};
-	$scope.currentUser;
+	$scope.tasks = 0;
 
 	/** Mantém a URL da parcial do cabeçalho **/
 	$scope.header = {};
 
 	/** Usuário atual **/
+	$scope.currentUser = null;
 
 	/*
 	 * Métodos
