@@ -48,9 +48,12 @@ Stockontrol.controller('BatchesController', function($controller, $scope, $mdDia
 	$scope.fetchFunction = batchService.listAllByFilters;
 
 	$scope.model.tasks++;
-	productService.listAllProductsByFilters(null, null, {page: 0, size: 5000, property: 'name', direction: 'ASC'}, function(data) // FIXME!!!!!!
+	productService.listAllProductsByFilters(null, null, null, function(data)
 	{
 		$scope.model.tasks--;
-		$scope.products = data.content;
+		$scope.products = data.content.sort(function(a, b)
+		{
+			return a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase());
+		});
 	});
 });
