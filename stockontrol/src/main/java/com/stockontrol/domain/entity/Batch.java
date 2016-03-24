@@ -78,6 +78,11 @@ public class Batch extends BaseEntity
 	{
 		return user;
 	}
+	
+	public boolean isExpired()
+	{
+		return LocalDate.now().isAfter(expiresAt);
+	}
 
 	@AssertTrue
 	public boolean isValidRange()
