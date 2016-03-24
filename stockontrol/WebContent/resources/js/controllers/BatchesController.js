@@ -39,13 +39,11 @@ Stockontrol.controller('BatchesController', function($controller, $scope, $mdDia
 	{
 		batchService.find(id, function(batch)
 		{
+			$scope.batch = batch;
 			$mdDialog.show({
 				controller: 'EditBatchController',
 				templateUrl: '/resources/views/batches/batches-edit.html',
 				scope: $scope.$new(),
-				locals: {
-					batch: batch,
-				},
 				clickOutsideToClose: true
 			});
 		});
