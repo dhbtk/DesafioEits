@@ -1,0 +1,30 @@
+<md-dialog ng-cloak ng-controller="EditBatchController" style="width: 500px">
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>Registrar Saída</h2>
+			<span flex></span>
+			<md-button ng-click="cancel()" class="md-icon-button">
+				<md-icon>close</md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content layout-padding>
+		<form name="batchForm">
+			<div ng-init="setForm(batchForm)"></div>
+			<md-input-container class="md-block">
+				<label>Quantidade</label>
+				<input type="number" name="quantity" ng-model="quantity" min="1" max="{{batch.quantity}}" required>
+				<div ng-messages="batchForm.quantity.$error">
+					<div ng-message="required">Este campo é necessário.</div>
+					<div ng-message="min">Você deve retirar pelo menos um item.</div>
+					<div ng-message="max">Você pode retirar no máximo {{batch.quantity}} itens.</div>
+				</div>
+			</md-input-container>
+		</form>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
+		<span flex></span>
+		<md-button ng-click="cancel()" class="md-raised">Cancelar</md-button>
+		<md-button ng-click="save()" ng-disabled="form.$invalid || tasks" class="md-raised md-primary">Confirmar</md-button>
+	</md-dialog-actions>
+</md-dialog>

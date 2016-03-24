@@ -40,7 +40,7 @@
 					<td md-cell>{{batch.expiresAt | date:'dd/MM/yyyy'}}</td>
 					<td md-cell>{{batch.expired ? 'Vencido' : 'A vencer'}}</td>
 					<td md-cell style="text-align: right">
-						<md-button class="md-raised md-primary" ng-click="openEdit(batch.id)">Registrar Saída</md-button>
+						<md-button class="md-raised md-primary" ng-click="registerOutgoing(batch.id)">Registrar Saída</md-button>
 					</td>
 				</tr>
 			</tbody>
