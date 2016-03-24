@@ -16,7 +16,7 @@ Stockontrol.controller('BatchesController', function($controller, $scope, $mdDia
 			productId: null,
 		},
 		batch: null,
-		order: '-expiresAt',
+		order: 'expiresAt',
 	});
 
 	$scope.products = [];
