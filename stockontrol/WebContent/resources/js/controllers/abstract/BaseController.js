@@ -1,4 +1,4 @@
-Stockontrol.controller('BaseController', function($q, $scope)
+Stockontrol.controller('BaseController', function($q, $scope, $timeout)
 {
 	$scope.model = {
 		filters: [],
@@ -58,13 +58,14 @@ Stockontrol.controller('BaseController', function($q, $scope)
 		params.push({
 			callback: function(data)
 			{
-				$scope.model.request = data;
-				$scope.$apply();
+				$timeout(function()
+				{
+					$scope.model.request = data;
+				});
 				def.resolve(data);
 			},
 			errorHandler: function(ex, msg)
 			{
-				$scope.$apply();
 				console.log(ex);
 				console.log(msg);
 				def.reject(ex);
