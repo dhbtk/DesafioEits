@@ -46,6 +46,17 @@ public class SimplePageRequest implements Serializable
 		}
 		return spr;
 	}
+	
+	public SimplePageRequest()
+	{
+		
+	}
+	
+	public SimplePageRequest(int page, int size)
+	{
+		this.page = page;
+		this.size = size;
+	}
 
 	public int getPage()
 	{
