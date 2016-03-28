@@ -1,7 +1,6 @@
 package com.stockontrol.application.restful;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +12,7 @@ import com.stockontrol.domain.entity.Batch;
 import com.stockontrol.domain.entity.Product;
 import com.stockontrol.domain.service.BatchService;
 import com.stockontrol.domain.service.ProductService;
+import com.stockontrol.domain.util.SimplePageRequest;
 
 @RestController
 @RequestMapping("/products")
@@ -26,25 +26,25 @@ public class ProductsController
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public Iterable<Product> index(@RequestParam(required = false, value = "name") String name, @RequestParam(name = "page", defaultValue = "0") int page)
 	{
-		return productService.listAllProductsByFilters(null, name, new PageRequest(page, 20));
+		return productService.listAllProductsByFilters(null, name, new SimplePageRequest(page, 20));
 	}
 
 	@RequestMapping(value = "/{id}/batches", method = RequestMethod.GET)
 	public Iterable<Batch> listBatches(@PathVariable Long id, @RequestParam(name = "page", defaultValue = "0") int page)
 	{
-		return batchService.listAllByFilters(null, null, null, id, new PageRequest(page, 20));
+		return batchService.listAllByFilters(null, null, null, id, new SimplePageRequest(page, 20));
 	}
 	
 	@RequestMapping(value = "/{id}/batches/expiring", method = RequestMethod.GET)
 	public Iterable<Batch> listExpiringBatches(@PathVariable Long id, @RequestParam(name = "page", defaultValue = "0") int page)
 	{
-		return batchService.listAllExpiring(id, new PageRequest(page, 20));
+		return batchService.listAllExpiring(id, new SimplePageRequest(page, 20));
 	}
 	
 	@RequestMapping(value = "/{id}/batches/expired", method = RequestMethod.GET)
 	public Iterable<Batch> listExpiredBatches(@PathVariable Long id, @RequestParam(name = "page", defaultValue = "0") int page)
 	{
-		return batchService.listAllExpired(id, new PageRequest(page, 20));
+		return batchService.listAllExpired(id, new SimplePageRequest(page, 20));
 	}
 	
 	@RequestMapping(value = "/{id}/batches", method = RequestMethod.POST)
@@ -73,9 +73,9 @@ public class ProductsController
 		{
 			product.setPrice(sentProduct.getPrice());
 		}
-		if(sentProduct.getCategoryId() != null)
+		if(sentProduct.getCategory() != null)
 		{
-			product.setCategory(productService.findCategory(sentProduct.getCategoryId()));
+			product.setCategory(sentProduct.getCategory());
 		}
 		return productService.updateProduct(product);
 	}
