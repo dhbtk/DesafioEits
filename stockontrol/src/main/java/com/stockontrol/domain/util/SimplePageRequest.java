@@ -29,6 +29,23 @@ public class SimplePageRequest implements Serializable
 	private int size;
 	private String property;
 	private Direction direction;
+	
+	public static SimplePageRequest fromPageRequest(PageRequest p)
+	{
+		SimplePageRequest spr = new SimplePageRequest();
+		spr.setPage(p.getPageNumber());
+		spr.setSize(p.getPageSize());
+		if(p.getSort() != null)
+		{
+			for(Order order: p.getSort())
+			{
+				spr.setProperty(order.getProperty());
+				spr.setDirection(order.getDirection() == Sort.Direction.ASC ? Direction.ASC : Direction.DESC);
+				break;
+			}
+		}
+		return spr;
+	}
 
 	public int getPage()
 	{
