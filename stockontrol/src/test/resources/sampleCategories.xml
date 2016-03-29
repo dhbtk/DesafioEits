@@ -1,1 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+	<categories id="1" created_at="2016-03-14 00:00:00.0"
+		updated_at="2016-03-14 00:00:00.0" user_id="1" description="Refrigerantes em geral"
+		name="Refrigerantes" />
+	<categories id="2" created_at="2016-03-14 00:00:00.0"
+		updated_at="2016-03-14 00:00:00.0" user_id="1"
+		description="As famigeradas 'porcarias' que não devemos comer muito"
+		name="Salgadinhos" />
+</dataset>
