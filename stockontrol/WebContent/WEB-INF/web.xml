@@ -12,6 +12,7 @@
 		classpath:/security.xml
 		classpath:/dwr.xml
 		classpath:/email.xml
+		classpath:/appConfig.xml
 		</param-value>
 	</context-param>
 	

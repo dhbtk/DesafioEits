@@ -1,5 +1,7 @@
 package com.stockontrol.domain.repository;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,9 +17,9 @@ public interface BatchRepository extends JpaRepository<Batch, Long>, QueryDslPre
 {
 	public Page<Batch> findAllByProduct(Product product, Pageable page);
 	
-	@Query("select b from Batch b where date(b.expiresAt) <= date(now()) and b.product.id = ?1")
-	public Page<Batch> listAllExpired(Long productId, Pageable page);
+	@Query("select b from Batch b where date(b.expiresAt) <= date(?2) and b.product.id = ?1")
+	public Page<Batch> listAllExpiringBefore(Long productId, LocalDateTime date, Pageable page);
 	
-	@Query("select b from Batch b where date(b.expiresAt) > date(now()) and b.product.id = ?1")
-	public Page<Batch> listAllExpiring(Long productId, Pageable page);
+	@Query("select b from Batch b where date(b.expiresAt) > date(?2) and b.product.id = ?1")
+	public Page<Batch> listAllExpiringAfter(Long productId, LocalDateTime date, Pageable page);
 }

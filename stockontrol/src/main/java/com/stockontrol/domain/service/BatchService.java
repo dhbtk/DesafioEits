@@ -1,6 +1,8 @@
 package com.stockontrol.domain.service;
 
+import java.time.Clock;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
@@ -26,6 +28,8 @@ public class BatchService
 	private BatchRepository batchRepository;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private Clock clock;
 
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
@@ -61,14 +65,16 @@ public class BatchService
 	@RemoteMethod
 	public Page<Batch> listAllExpired(Long productId, SimplePageRequest page)
 	{
-		return batchRepository.listAllExpired(productId, page != null ? page.toPageRequest() : null);
+		return batchRepository.listAllExpiringBefore(productId, LocalDateTime.now(clock),
+				page != null ? page.toPageRequest() : null);
 	}
 
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
 	public Page<Batch> listAllExpiring(Long productId, SimplePageRequest page)
 	{
-		return batchRepository.listAllExpiring(productId, page != null ? page.toPageRequest() : null);
+		return batchRepository.listAllExpiringAfter(productId, LocalDateTime.now(clock),
+				page != null ? page.toPageRequest() : null);
 	}
 
 	@PreAuthorize("hasRole('USER')")
