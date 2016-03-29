@@ -13,9 +13,12 @@
 			<div ng-init="setForm(batchForm)"></div>
 			<md-input-container class="md-block">
 				<label>Produto</label>
-				<md-select ng-model="batch.product" required name="product">
-					<md-option ng-repeat="product in products" ng-value="product">{{product.name}}</md-option>
-				</md-select>
+				<md-autocomplete md-search-text="searchText" md-selected-item="batch.product" md-items="product in products" md-item-text="product.name" required>
+					<md-item-template>
+						<span md-highlight-text="searchText" md-highlight-flags="^i">{{product.name}}</span>
+					</md-item-template>
+					<md-not-found>Produtos não encontrados.</md-not-found>
+				</md-autocomplete>
 				<div ng-messages="batchForm.product.$error">
 					<div ng-message="required">Este campo é necessário.</div>
 				</div>
