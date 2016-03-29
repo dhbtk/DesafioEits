@@ -28,6 +28,29 @@ public class UserServiceTest extends AbstractIntegrationTests
 		user = userService.deactivate(user);
 		
 		assertFalse(user.isActive());
+		
+		user = userService.activate(user);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldNotDeactivateInactiveUser()
+	{
+		User user = userService.findByEmail("admin@teste.com");
+		assertNotNull(user);
+		assertTrue(user.isActive());
+		
+		user = userService.deactivate(user);
+		
+		user = userService.deactivate(user); // kabum
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldNotActivateActiveUser()
+	{
+		User user = userService.findByEmail("admin@teste.com");
+		assertNotNull(user);
+		assertTrue(user.isActive());
+		user = userService.activate(user); // explode joga arremessa
 	}
 	
 	@Test
@@ -37,8 +60,7 @@ public class UserServiceTest extends AbstractIntegrationTests
 		assertNotNull(user);
 		if(user.isActive())
 		{
-			shouldDeactivateUser();
-			user = userService.findByEmail("admin@teste.com");
+			user = userService.deactivate(user);
 		}
 		
 		user = userService.activate(user);
@@ -63,6 +85,28 @@ public class UserServiceTest extends AbstractIntegrationTests
 	}
 	
 	@Test
+	public void shouldHaveUnchangedPasswordDigest()
+	{
+		User user = userService.findByEmail("admin@teste.com");
+		String digest = user.getPasswordDigest();
+		user.setFullName("Admin");
+		user = userService.save(user);
+		
+		assertTrue(digest.equals(user.getPasswordDigest()));
+	}
+	
+	@Test
+	public void shouldHaveChangedPasswordDigest()
+	{
+		User user = userService.findByEmail("admin@teste.com");
+		String digest = user.getPasswordDigest();
+		user.setPassword("admin");
+		user = userService.save(user);
+		assertTrue(user.getPassword() == null);
+		assertFalse(digest.equals(user.getPasswordDigest()));
+	}
+	
+	@Test
 	public void shouldFindByFilters()
 	{
 		Page<User> res;
@@ -78,12 +122,12 @@ public class UserServiceTest extends AbstractIntegrationTests
 		assertTrue(res.getContent().size() == 1);
 		
 		// ativo
-		shouldDeactivateUser();
+		userService.deactivate(userService.findByEmail("admin@teste.com"));
 		res = userService.listAllByFilters(null, false, null, null);
 		assertNotNull(res);
 		assertTrue(res.getContent().size() == 1);
 		
-		shouldActivateUser();
+		userService.activate(userService.findByEmail("admin@teste.com"));
 		res = userService.listAllByFilters(null, true, null, null);
 		assertNotNull(res);
 		assertTrue(res.getContent().size() == 2);
@@ -98,5 +142,25 @@ public class UserServiceTest extends AbstractIntegrationTests
 		assertTrue(res.getContent().size() == 1);
 	}
 	
+	@Test
+	public void shouldFindUser()
+	{
+		User user = userService.find(new Long(1));
+		assertNotNull(user);
+	}
 	
+	@Test
+	public void shouldInsertUser()
+	{
+		User user = new User();
+		user.setEmail("teste@usuario.com");
+		user.setFullName("Teste");
+		user.setPassword("umdoistresquatro");
+		user.setActive(true);
+		user.setProfile(User.Profile.User);
+		
+		user = userService.insert(user);
+		
+		assertNotNull(user);
+	}
 }
