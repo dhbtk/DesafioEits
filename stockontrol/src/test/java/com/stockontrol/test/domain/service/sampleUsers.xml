@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+	<users id="1" created_at="2016-03-21 14:33:52.211" updated_at="2016-03-21 14:33:52.211"
+		active="true" email="admin@teste.com" full_name="Admin"
+		password_digest="$2a$10$jQ5.OZzoOrcxQvdS2OBIm.AI2zH3ZP0q1CgCC.9Tp0.4is05ZqVTS"
+		profile="1" />
+	<users id="2" created_at="2016-03-21 14:33:52.211" updated_at="2016-03-21 14:33:52.211"
+		active="true" email="user@teste.com" full_name="Usuário"
+		password_digest="$2a$10$jQ5.OZzoOrcxQvdS2OBIm.AI2zH3ZP0q1CgCC.9Tp0.4is05ZqVTS"
+		profile="0" />
+</dataset>
