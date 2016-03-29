@@ -13,8 +13,8 @@ import com.stockontrol.domain.entity.User;
 import com.stockontrol.domain.service.UserService;
 import com.stockontrol.test.domain.AbstractIntegrationTests;
 
-@DatabaseSetup("sampleUsers.xml")
-public class UserServiceTest extends AbstractIntegrationTests
+@DatabaseSetup("/sampleUsers.xml")
+public class UserServiceTests extends AbstractIntegrationTests
 {
 	@Autowired
 	private UserService userService;
