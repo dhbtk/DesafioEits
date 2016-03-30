@@ -21,7 +21,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Product extends BaseEntity
 {
 
-	@Formula("(select count(*) from batches b where b.product_id = id)")
+	@Formula("(select sum(b.quantity) from batches b where b.product_id = id)")
 	private Long batchCount;
 
 	@NotNull
@@ -29,10 +29,10 @@ public class Product extends BaseEntity
 	@Audited
 	private Category category;
 
-	@Formula("(select count(*) from batches b where b.product_id = id and date(b.expires_at) <= date(now()))")
+	@Formula("(select sum(b.quantity) from batches b where b.product_id = id and date(b.expires_at) <= date(now()))")
 	private Long expiredBatchCount;
 
-	@Formula("(select count(*) from batches b where b.product_id = id and date(b.expires_at) > date(now()))")
+	@Formula("(select sum(b.quantity) from batches b where b.product_id = id and date(b.expires_at) > date(now()))")
 	private Long expiringBatchCount;
 
 	@NotBlank

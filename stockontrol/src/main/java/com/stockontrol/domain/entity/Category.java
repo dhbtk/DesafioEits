@@ -25,14 +25,14 @@ public class Category extends BaseEntity
 	@Audited
 	private String name;
 
-	@Formula("(SELECT SUM((SELECT COUNT(*) FROM batches b WHERE b.product_id = p.id)) FROM products p WHERE p.category_id = id)")
+	@Formula("(SELECT SUM((SELECT SUM(b.quantity) FROM batches b WHERE b.product_id = p.id)) FROM products p WHERE p.category_id = id)")
 	private Long totalBatchCount;
 
-	@Formula("(SELECT SUM((SELECT COUNT(*) FROM batches b WHERE b.product_id = p.id AND "
+	@Formula("(SELECT SUM((SELECT SUM(b.quantity) FROM batches b WHERE b.product_id = p.id AND "
 			+ "DATE(b.expires_at) <= DATE(NOW()))) FROM products p WHERE p.category_id = id)")
 	private Long totalExpiredBatchCount;
 
-	@Formula("(SELECT SUM((SELECT COUNT(*) FROM batches b WHERE b.product_id = p.id AND "
+	@Formula("(SELECT SUM((SELECT SUM(b.quantity) FROM batches b WHERE b.product_id = p.id AND "
 			+ " DATE(b.expires_at) > DATE(NOW()))) FROM products p WHERE p.category_id = id)")
 	private Long totalExpiringBatchCount;
 
