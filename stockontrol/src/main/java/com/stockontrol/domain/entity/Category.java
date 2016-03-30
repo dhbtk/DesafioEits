@@ -40,6 +40,8 @@ public class Category extends BaseEntity
 	@Audited
 	@ManyToOne
 	private User user;
+	
+	
 	public String getDescription()
 	{
 		return description;

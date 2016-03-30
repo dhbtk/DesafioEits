@@ -2,7 +2,6 @@ package com.stockontrol.domain.entity;
 
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -12,6 +11,8 @@ import javax.validation.constraints.NotNull;
 
 import org.directwebremoting.annotations.DataTransferObject;
 import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -26,6 +27,7 @@ public class Product extends BaseEntity
 
 	@NotNull
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@Audited
 	private Category category;
 
@@ -47,7 +49,7 @@ public class Product extends BaseEntity
 
 	@NotNull
 	@Audited
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne
 	private User user;
 
 	public Long getBatchCount()

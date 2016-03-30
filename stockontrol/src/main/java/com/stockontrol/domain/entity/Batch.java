@@ -11,6 +11,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.directwebremoting.annotations.DataTransferObject;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -37,6 +39,7 @@ public class Batch extends BaseEntity
 	@NotNull
 	@Audited
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Product product;
 
 	@Min(1)
