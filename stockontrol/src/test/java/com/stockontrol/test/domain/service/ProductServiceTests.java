@@ -3,12 +3,15 @@ package com.stockontrol.test.domain.service;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.stockontrol.domain.entity.Category;
+import com.stockontrol.domain.entity.Product;
 import com.stockontrol.domain.service.ProductService;
 import com.stockontrol.domain.service.UserService;
 import com.stockontrol.test.domain.AbstractIntegrationTests;
@@ -80,5 +83,55 @@ public class ProductServiceTests extends AbstractIntegrationTests
 		productService.deleteCategory(id);
 		Category c = productService.findCategory(id);
 		assertTrue(c == null);
+	}
+	
+	@Test
+	public void shouldListProductsByFilters()
+	{
+		Page<Product> res;
+		
+		// Sem filtros
+		res = productService.listAllProductsByFilters(null, null, null);
+		assertTrue(res.getContent().size() == 22);
+		
+		// Por categoria
+		res = productService.listAllProductsByFilters(new Long(1), null, null);
+		assertTrue(res.getContent().size() == 14);
+		
+		res = productService.listAllProductsByFilters(new Long(2), null, null);
+		assertTrue(res.getContent().size() == 8);
+		
+		// Por categoria e nome
+		res = productService.listAllProductsByFilters(new Long(1), "2L", null);
+		assertTrue(res.getContent().size() == 13);
+		
+		res = productService.listAllProductsByFilters(new Long(1), "1,5L", null);
+		assertTrue(res.getContent().size() == 1);
+	}
+	
+	@Test
+	@DatabaseSetup({"/sampleUsers.xml", "/sampleCategories.xml", "/sampleProducts.xml", "/sampleBatches.xml"})
+	public void shouldDeleteProduct()
+	{
+		Long id = new Long(1);
+		productService.deleteProduct(id);
+		Product p = productService.findProduct(id);
+		assertTrue(p == null);
+	}
+	
+	@Test
+	public void shouldFindProduct()
+	{
+		assertNotNull(productService.findProduct(new Long(1)));
+	}
+	
+	@Test
+	public void shouldUpdateProduct()
+	{
+		Product p = productService.findProduct(new Long(9));
+		BigDecimal newPrice = new BigDecimal("1.99");
+		p.setPrice(newPrice);
+		p = productService.updateProduct(p);
+		assertTrue(newPrice.equals(p.getPrice()));
 	}
 }
