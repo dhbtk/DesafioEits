@@ -82,10 +82,6 @@ public class BatchServiceTests extends AbstractIntegrationTests
 	public void shouldListAllExpired()
 	{
 		Page<Batch> res;
-		// Sem produto
-		res = batchService.listAllExpired(null, null);
-		assertTrue(res.getContent().size() == 81);
-		// Com
 		res = batchService.listAllExpired(new Long(1), null);
 		assertTrue(res.getContent().size() == 7);
 	}
@@ -94,10 +90,6 @@ public class BatchServiceTests extends AbstractIntegrationTests
 	public void shouldListAllExpiring()
 	{
 		Page<Batch> res;
-		// Sem produto
-		res = batchService.listAllExpiring(null, null);
-		assertTrue(res.getContent().size() == 155);
-		// Com
 		res = batchService.listAllExpiring(new Long(1), null);
 		assertTrue(res.getContent().size() == 7);
 	}
