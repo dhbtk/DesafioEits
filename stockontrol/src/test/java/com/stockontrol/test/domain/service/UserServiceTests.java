@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.stockontrol.domain.entity.User;
 import com.stockontrol.domain.service.UserService;
 import com.stockontrol.test.domain.AbstractIntegrationTests;
