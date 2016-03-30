@@ -41,7 +41,6 @@ public class Category extends BaseEntity
 	@ManyToOne
 	private User user;
 	
-	
 	public String getDescription()
 	{
 		return description;

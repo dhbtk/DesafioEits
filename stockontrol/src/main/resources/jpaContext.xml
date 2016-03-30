@@ -43,6 +43,7 @@
 			<property name="jpaPropertyMap">
 				<map>
 					<entry key="hibernate.format_sql" value="true" />
+					<entry key="org.hibernate.envers.store_data_at_delete" value="true" />	
 				</map>
 			</property>
 		</bean>
@@ -65,6 +66,7 @@
 				<map>
 					<entry key="hibernate.format_sql" value="true" />
 					<entry key="hibernate.hbm2ddl.auto" value="create" />
+					<entry key="org.hibernate.envers.store_data_at_delete" value="true" />
 				</map>
 			</property>
 		</bean>
