@@ -13,8 +13,8 @@ puts %(<dataset>)
 id = 1
 file['products'].each do |name, data|
 	seq = 1
-	gen = Rubystats::NormalDistribution.new(150, 30)
-	gen.rng((25..115).sort_by{rand}[0]).map(&:to_i).each do |qtd|
+	gen = Rubystats::NormalDistribution.new(90, 20)
+	gen.rng((25..55).sort_by{rand}[0]).map(&:to_i).each do |qtd|
 		identifier = "%.4s%.3d" % [(name.hash % 65536).to_s(16).upcase, seq]
 		base_date = Time.now + ((rand - 1)*60).days
 		manufactured_at = base_date - (rand*30).days
