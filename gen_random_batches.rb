@@ -14,7 +14,7 @@ id = 1
 file['products'].each do |name, data|
 	seq = 1
 	gen = Rubystats::NormalDistribution.new(90, 20)
-	gen.rng((25..55).sort_by{rand}[0]).map(&:to_i).each do |qtd|
+	gen.rng((5..15).sort_by{rand}[0]).map(&:to_i).each do |qtd|
 		identifier = "%.4s%.3d" % [(name.hash % 65536).to_s(16).upcase, seq]
 		base_date = Time.now + ((rand - 1)*40).days
 		manufactured_at = base_date - (rand*30).days
