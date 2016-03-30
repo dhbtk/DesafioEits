@@ -1,1 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+	<products created_at="2016-03-29 16:06:53.568" updated_at="2016-03-29 16:06:53.568"
+		id="1" user_id="1" category_id="2" name="Fandangos" price="3.89" />
+	<products created_at="2016-03-29 16:06:53.568" updated_at="2016-03-29 16:06:53.568"
+		id="2" user_id="1" category_id="2" name="Cebolitos" price="3.89" />
+	<products created_at="2016-03-29 16:06:53.568" updated_at="2016-03-29 16:06:53.568"
+		id="3" user_id="1" category_id="2" name="Cheetos" price="3.89" />
+	<products created_at="2016-03-29 16:06:53.568" updated_at="2016-03-29 16:06:53.568"
+		id="4" user_id="1" category_id="2" name="Doritos" price="3.89" />
+	<products created_at="2016-03-29 16:06:53.568" updated_at="2016-03-29 16:06:53.568"
+		id="5" user_id="1" category_id="2" name="Ruffles" price="3.89" />
+	<products created_at="2016-03-29 16:06:53.568" updated_at="2016-03-29 16:06:53.569"
+		id="6" user_id="1" category_id="2" name="Sensações" price="3.89" />
+	<products created_at="2016-03-29 16:06:53.569" updated_at="2016-03-29 16:06:53.569"
+		id="7" user_id="1" category_id="2" name="Torcida" price="3.89" />
+	<products created_at="2016-03-29 16:06:53.569" updated_at="2016-03-29 16:06:53.569"
+		id="8" user_id="1" category_id="2" name="Yokitos" price="3.89" />
+
+	<products created_at="2016-03-29 16:10:04.980" updated_at="2016-03-29 16:10:04.981"
+		id="9" user_id="1" category_id="1" name="Pepsi 2L" price="4.19" />
+	<products created_at="2016-03-29 16:10:04.981" updated_at="2016-03-29 16:10:04.981"
+		id="10" user_id="1" category_id="1" name="Coca-Cola 2L" price="4.19" />
+	<products created_at="2016-03-29 16:10:04.981" updated_at="2016-03-29 16:10:04.981"
+		id="11" user_id="1" category_id="1" name="Guaraná Antarctica 2L" price="4.19" />
+	<products created_at="2016-03-29 16:10:04.981" updated_at="2016-03-29 16:10:04.981"
+		id="12" user_id="1" category_id="1" name="Guaraná Kuat 2L" price="4.19" />
+	<products created_at="2016-03-29 16:10:04.981" updated_at="2016-03-29 16:10:04.981"
+		id="13" user_id="1" category_id="1" name="Sukita 2L" price="4.19" />
+	<products created_at="2016-03-29 16:10:04.981" updated_at="2016-03-29 16:10:04.981"
+		id="14" user_id="1" category_id="1" name="Soda Limonada 2L" price="4.19" />
+	<products created_at="2016-03-29 16:10:04.981" updated_at="2016-03-29 16:10:04.981"
+		id="15" user_id="1" category_id="1" name="Sprite 2L" price="4.19" />
+	<products created_at="2016-03-29 16:10:04.981" updated_at="2016-03-29 16:10:04.981"
+		id="16" user_id="1" category_id="1" name="Fanta Laranja 2L" price="4.19" />
+	<products created_at="2016-03-29 16:10:04.981" updated_at="2016-03-29 16:10:04.981"
+		id="17" user_id="1" category_id="1" name="Fanta Maçã Verde 2L" price="4.19" />
+	<products created_at="2016-03-29 16:10:04.981" updated_at="2016-03-29 16:10:04.981"
+		id="18" user_id="1" category_id="1" name="Fanta Uva 2L" price="4.19" />
+	<products created_at="2016-03-29 16:10:04.981" updated_at="2016-03-29 16:10:04.981"
+		id="19" user_id="1" category_id="1" name="Schweppes Citrus 1,5L" price="4.19" />
+	<products created_at="2016-03-29 16:10:04.981" updated_at="2016-03-29 16:10:04.981"
+		id="20" user_id="1" category_id="1" name="Gengibirra 2L" price="4.19" />
+	<products created_at="2016-03-29 16:10:04.981" updated_at="2016-03-29 16:10:04.981"
+		id="21" user_id="1" category_id="1" name="Cini Abacaxi 2L" price="4.19" />
+	<products created_at="2016-03-29 16:10:04.981" updated_at="2016-03-29 16:10:04.981"
+		id="22" user_id="1" category_id="1" name="Itubaína 2L" price="4.19" />
+</dataset>

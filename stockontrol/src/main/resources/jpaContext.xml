@@ -64,7 +64,7 @@
 			<property name="jpaPropertyMap">
 				<map>
 					<entry key="hibernate.format_sql" value="true" />
-					<entry key="hibernate.hbm2ddl.auto" value="create-drop" />
+					<entry key="hibernate.hbm2ddl.auto" value="create" />
 				</map>
 			</property>
 		</bean>

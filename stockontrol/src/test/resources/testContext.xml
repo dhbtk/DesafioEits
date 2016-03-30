@@ -17,4 +17,6 @@
 	</bean>
 	
 	<bean id="mailSender" class="com.stockontrol.test.MockJavaMailSender" />
+	
+	<bean id="clock" class="java.time.Clock" factory-method="systemDefaultZone" /> <!-- FIXME adicionar clock fixo -->
 </beans>
