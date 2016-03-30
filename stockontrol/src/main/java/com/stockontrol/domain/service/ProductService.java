@@ -41,7 +41,7 @@ public class ProductService
 		return productRepository.findAll(predicates.getIntersection(), page != null ? page.toPageRequest() : null);
 	}
 
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN')")
 	@RemoteMethod
 	public void deleteProduct(Long id)
 	{
