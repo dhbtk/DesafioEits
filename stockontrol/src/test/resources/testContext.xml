@@ -5,18 +5,29 @@
 
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-	
+
 	<bean id="emailerAspect" class="com.stockontrol.application.aspect.EmailerAspect">
 		<property name="mailSender" ref="mailSender" />
 		<property name="template" ref="newUserTemplateMessage" />
 	</bean>
-	
+
 	<bean id="newUserTemplateMessage" class="org.springframework.mail.SimpleMailMessage">
 		<property name="from" value="stockontrol@edanni.io" />
 		<property name="subject" value="Sua nova conta" />
 	</bean>
-	
+
 	<bean id="mailSender" class="com.stockontrol.test.MockJavaMailSender" />
-	
-	<bean id="clock" class="java.time.Clock" factory-method="systemDefaultZone" /> <!-- FIXME adicionar clock fixo -->
+
+	<bean id="clock" class="java.time.Clock" factory-method="fixed">
+		<constructor-arg>
+			<bean class="java.time.Instant" factory-method="parse">
+				<constructor-arg value="2016-03-30T15:00:00.00Z" />
+			</bean>
+		</constructor-arg>
+		<constructor-arg>
+			<bean class="java.time.ZoneId" factory-method="of">
+				<constructor-arg value="America/Sao_Paulo" />
+			</bean>
+		</constructor-arg>
+	</bean>
 </beans>
