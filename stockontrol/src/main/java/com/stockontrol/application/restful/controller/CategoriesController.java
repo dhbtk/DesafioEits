@@ -1,7 +1,5 @@
 package com.stockontrol.application.restful.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,14 +36,14 @@ public class CategoriesController
 	}
 
 	@RequestMapping(value = "/{id}/products", method = RequestMethod.POST)
-	public Product insertProduct(@PathVariable Long id, @Valid @RequestBody Product product)
+	public Product insertProduct(@PathVariable Long id, @RequestBody Product product)
 	{
 		product.setCategory(productService.findCategory(id));
 		return productService.insertProduct(product);
 	}
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.POST)
-	public Category create(@Valid @RequestBody Category category)
+	public Category create(@RequestBody Category category)
 	{
 		return productService.insertCategory(category);
 	}
