@@ -17,6 +17,11 @@ Stockontrol.controller('BaseController', function($q, $scope, $timeout)
 	$scope.fetchFunction = null;
 
 	/**
+	 * Callback adicional da função de filtragem, opcional
+	 */
+	$scope.fetchFunctionCallback = null;
+
+	/**
 	 * Método que busca um serviço de filtragem e retorna uma promise
 	 */
 	$scope.fetchData = function()
@@ -61,6 +66,10 @@ Stockontrol.controller('BaseController', function($q, $scope, $timeout)
 				$timeout(function()
 				{
 					$scope.model.request = data;
+					if($scope.fetchFunctionCallback)
+					{
+						$scope.fetchFunctionCallback(data);
+					}
 				});
 				def.resolve(data);
 			},

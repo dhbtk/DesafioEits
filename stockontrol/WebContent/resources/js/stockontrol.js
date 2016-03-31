@@ -21,7 +21,7 @@ var Stockontrol = angular.module('Stockontrol',['ngMaterial', 'ngMessages', 'ui.
 
 Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider)
 {
-	$urlRouterProvider.otherwise('batches');
+	$urlRouterProvider.otherwise('report');
 
 	$stateProvider.state('users', {
 		url: '/users',
