@@ -58,7 +58,7 @@ public class BatchService
 				.add(identifier, () -> batch.identifier.containsIgnoreCase(identifier))
 				.add(maxExpirationDate, () -> batch.expiresAt.loe(maxExpirationDate))
 				.add(productId, () -> batch.product.id.eq(productId));
-		return batchRepository.findAll(predicates.getIntersection(), page != null ? page.toPageRequest() : null);
+		return batchRepository.findAll(predicates.getIntersection(), SimplePageRequest.toPageRequest(page));
 	}
 
 	@PreAuthorize("hasRole('USER')")
@@ -66,7 +66,7 @@ public class BatchService
 	public Page<Batch> listAllExpired(Long productId, SimplePageRequest page)
 	{
 		return batchRepository.listAllExpiringBefore(productId, LocalDateTime.now(clock),
-				page != null ? page.toPageRequest() : null);
+				SimplePageRequest.toPageRequest(page));
 	}
 
 	@PreAuthorize("hasRole('USER')")
@@ -74,7 +74,7 @@ public class BatchService
 	public Page<Batch> listAllExpiring(Long productId, SimplePageRequest page)
 	{
 		return batchRepository.listAllExpiringAfter(productId, LocalDateTime.now(clock),
-				page != null ? page.toPageRequest() : null);
+				SimplePageRequest.toPageRequest(page));
 	}
 
 	@PreAuthorize("hasRole('USER')")

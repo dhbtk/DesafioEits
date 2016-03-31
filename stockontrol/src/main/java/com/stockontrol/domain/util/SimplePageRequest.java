@@ -98,17 +98,21 @@ public class SimplePageRequest implements Serializable
 		this.direction = direction;
 	}
 	
-	public PageRequest toPageRequest()
+	public static PageRequest toPageRequest(SimplePageRequest page)
 	{
 		Sort sort;
-		if(this.direction != null && this.property != null)
+		if(page == null)
 		{
-			sort = new Sort(new Order(this.direction == SimplePageRequest.Direction.ASC ? Sort.Direction.ASC : Sort.Direction.DESC, this.property));
+			return null;
+		}
+		if(page.getDirection() != null && page.getProperty() != null)
+		{
+			sort = new Sort(new Order(page.getDirection() == SimplePageRequest.Direction.ASC ? Sort.Direction.ASC : Sort.Direction.DESC, page.getProperty()));
 		}
 		else
 		{
 			sort = null;
 		}
-		return new PageRequest(this.page, this.size, sort);
+		return new PageRequest(page.getPage(), page.getSize(), sort);
 	}
 }

@@ -38,7 +38,7 @@ public class ProductService
 		PredicateList predicates = new PredicateList();
 		predicates.add(categoryId, () -> product.category.id.eq(categoryId)).add(name,
 				() -> product.name.containsIgnoreCase(name));
-		return productRepository.findAll(predicates.getIntersection(), page != null ? page.toPageRequest() : null);
+		return productRepository.findAll(predicates.getIntersection(), SimplePageRequest.toPageRequest(page));
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
@@ -80,10 +80,10 @@ public class ProductService
 		QCategory category = QCategory.category;
 		if (name == null)
 		{
-			return categoryRepository.findAll(page != null ? page.toPageRequest() : null);
+			return categoryRepository.findAll(SimplePageRequest.toPageRequest(page));
 		} else
 		{
-			return categoryRepository.findAll(category.name.containsIgnoreCase(name), page != null ? page.toPageRequest() : null);
+			return categoryRepository.findAll(category.name.containsIgnoreCase(name), SimplePageRequest.toPageRequest(page));
 		}
 	}
 

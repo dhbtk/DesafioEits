@@ -72,7 +72,7 @@ public class UserService
 						() -> user.fullName.containsIgnoreCase(nameOrEmail)
 								.or(user.email.containsIgnoreCase(nameOrEmail)))
 				.add(active, () -> user.active.eq(active)).add(profile, () -> user.profile.eq(profile));
-		return userRepository.findAll(predicates.getIntersection(), page != null ? page.toPageRequest() : null);
+		return userRepository.findAll(predicates.getIntersection(), SimplePageRequest.toPageRequest(page));
 	}
 	
 	@PreAuthorize("hasRole('USER')")
