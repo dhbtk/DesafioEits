@@ -11,6 +11,12 @@ Stockontrol.controller('BaseController', function($q, $scope, $timeout)
 		limit: 10,
 	};
 
+	$scope.paginationLabel = {
+		page: 'Página:',
+		rowsPerPage: 'Tamanho da página:',
+		of: 'de'
+	};
+
 	/**
 	 * Esse valor deve ser mudado para a função de filtragem do serviço DWR
 	 */
