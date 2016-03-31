@@ -10,9 +10,11 @@
 <body ng-controller="LoginController" ng-cloak>
 	<div style="padding-top: 50px">
 		<div layout="column" class="login-box-container" md-whiteframe="1">
-			<md-toolbar>
+			<md-toolbar style="border-top-left-radius: 3px; border-top-right-radius: 3px;">
 				<div class="md-toolbar-tools">
+					<span flex></span>
 					<h2><span>Controle de Estoque</span></h2>
+					<span flex></span>
 				</div>
 			</md-toolbar>
 			<md-progress-linear md-mode="indeterminate" ng-if="model.loading"></md-progress-linear>
