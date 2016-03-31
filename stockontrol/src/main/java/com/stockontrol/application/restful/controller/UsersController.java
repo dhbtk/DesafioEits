@@ -1,4 +1,4 @@
-package com.stockontrol.application.restful;
+package com.stockontrol.application.restful.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +12,7 @@ import com.stockontrol.domain.service.UserService;
 import com.stockontrol.domain.util.SimplePageRequest;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UsersController
 {
 	@Autowired

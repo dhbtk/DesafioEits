@@ -1,4 +1,4 @@
-package com.stockontrol.application.restful;
+package com.stockontrol.application.restful.controller;
 
 import javax.validation.Valid;
 
@@ -16,7 +16,7 @@ import com.stockontrol.domain.service.ProductService;
 import com.stockontrol.domain.util.SimplePageRequest;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 public class CategoriesController
 {
 	@Autowired

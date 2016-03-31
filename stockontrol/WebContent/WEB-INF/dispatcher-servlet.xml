@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
-    <context:component-scan base-package="com.stockontrol.application.controller"/>
+    <context:component-scan base-package="com.stockontrol.application.*" />
     
     <mvc:annotation-driven />
     
