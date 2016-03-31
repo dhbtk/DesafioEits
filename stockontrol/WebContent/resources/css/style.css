@@ -76,12 +76,34 @@ object[width="0"]
 
 .filter-toolbar .md-toolbar-tools > *
 {
-	padding-right: 10px;
+	margin-right: 10px;
 }
 
 .filter-toolbar md-input-container.md-input-has-value label
 {
 	display: none;
+}
+
+.search-box
+{
+	background-color: #fff;
+	border-radius: 3px;
+	padding: 3px;
+	display: flex;
+}
+
+.search-box > md-icon
+{
+	color: rgba(0, 0, 0, 0.53) !important;
+}
+
+.search-box input
+{
+	border: none;
+	border-radius: 0;
+	outline: 0;
+	height: 24px;
+	width: 200px;
 }
 
 /**
