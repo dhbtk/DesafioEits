@@ -1,0 +1,21 @@
+<md-dialog ng-cloak ng-controller="NewCategoryController" style="width: 500px">
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>Nova Categoria</h2>
+			<span flex></span>
+			<md-button ng-click="cancel()" class="md-icon-button">
+				<md-icon>close</md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			<div ng-include="'/resources/views/categories/categories-form.html'"></div>
+		</div>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
+		<span flex></span>
+		<md-button ng-click="cancel()" class="md-raised">Cancelar</md-button>
+		<md-button ng-click="create()" ng-disabled="form.$invalid || tasks" class="md-raised md-primary">Salvar</md-button>
+	</md-dialog-actions>
+</md-dialog>

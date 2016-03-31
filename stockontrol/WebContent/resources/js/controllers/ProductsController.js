@@ -62,10 +62,8 @@ Stockontrol.controller('ProductsController',function($controller, $scope, $mdToa
 
 	$scope.openEditProduct = function(id)
 	{
-		$scope.model.tasks++;
 		productService.findProduct(id, function(product)
 		{
-			$scope.model.tasks--;
 			$scope.product = product;
 			$mdSidenav('rightPanel').open();
 		});
@@ -80,7 +78,7 @@ Stockontrol.controller('ProductsController',function($controller, $scope, $mdToa
 				.cancel('Cancelar');
 		$mdDialog.show(dialog).then(function()
 		{
-			productService.deleteProduct(product.id,{
+			productService.deleteProduct(product.id, {
 				callback: function()
 				{
 					$mdSidenav('rightPanel').close();

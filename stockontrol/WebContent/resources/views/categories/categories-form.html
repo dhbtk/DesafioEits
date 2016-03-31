@@ -1,0 +1,14 @@
+<form name="categoryForm" layout="column">
+	<div ng-init="setForm(categoryForm)"></div>
+	<md-input-container class="md-block">
+		<label>Nome</label>
+		<input type="text" name="name" ng-model="category.name" required>
+		<div ng-messages="categoryForm.name.$error">
+			<div ng-message="required">Este campo é necessário.</div>
+		</div>
+	</md-input-container>
+	<md-input-container class="md-block">
+		<label>Descrição</label>
+		<textarea ng-model="category.description" md-select-on-focus rows="5"></textarea>
+	</md-input-container>
+</form>
