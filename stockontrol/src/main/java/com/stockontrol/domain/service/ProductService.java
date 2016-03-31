@@ -112,7 +112,7 @@ public class ProductService
 	}
 
 	@RemoteMethod
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('ADMIN')")
 	public void deleteCategory(Long id)
 	{
 		categoryRepository.delete(id);
