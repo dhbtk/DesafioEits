@@ -5,25 +5,22 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
+import org.flywaydb.test.annotation.FlywayTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.stockontrol.domain.entity.Category;
 import com.stockontrol.domain.entity.Product;
 import com.stockontrol.domain.service.ProductService;
-import com.stockontrol.domain.service.UserService;
 import com.stockontrol.test.domain.AbstractIntegrationTests;
 
-@DatabaseSetup({"/sampleUsers.xml", "/sampleCategories.xml", "/sampleProducts.xml"})
 public class ProductServiceTests extends AbstractIntegrationTests
 {
 	@Autowired
 	private ProductService productService;
-	@Autowired
-	private UserService userService;
 	
+	@FlywayTest
 	@Test
 	public void shouldFindCategory()
 	{
@@ -34,6 +31,7 @@ public class ProductServiceTests extends AbstractIntegrationTests
 		assertNotNull(c);
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldListCategoriesByFilters()
 	{
@@ -52,18 +50,19 @@ public class ProductServiceTests extends AbstractIntegrationTests
 		assertTrue(res.getContent().size() == 2);
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldInsertCategory()
 	{
 		Category c = new Category();
 		c.setName("Doces");
 		c.setDescription("Coisas doces de comer");
-		c.setUser(userService.find(new Long(1)));
 		
 		c = productService.insertCategory(c);
 		assertNotNull(c.getId());
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldUpdateCategory()
 	{
@@ -76,6 +75,7 @@ public class ProductServiceTests extends AbstractIntegrationTests
 		assertTrue(newDescription.equals(c.getDescription()));
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldDeleteCategory()
 	{
@@ -85,6 +85,7 @@ public class ProductServiceTests extends AbstractIntegrationTests
 		assertTrue(c == null);
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldListProductsByFilters()
 	{
@@ -109,8 +110,8 @@ public class ProductServiceTests extends AbstractIntegrationTests
 		assertTrue(res.getContent().size() == 1);
 	}
 	
+	@FlywayTest
 	@Test
-	@DatabaseSetup({"/sampleUsers.xml", "/sampleCategories.xml", "/sampleProducts.xml", "/sampleBatches.xml"})
 	public void shouldDeleteProduct()
 	{
 		Long id = new Long(1);
@@ -119,12 +120,14 @@ public class ProductServiceTests extends AbstractIntegrationTests
 		assertTrue(p == null);
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldFindProduct()
 	{
 		assertNotNull(productService.findProduct(new Long(1)));
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldUpdateProduct()
 	{
@@ -133,5 +136,17 @@ public class ProductServiceTests extends AbstractIntegrationTests
 		p.setPrice(newPrice);
 		p = productService.updateProduct(p);
 		assertTrue(newPrice.equals(p.getPrice()));
+	}
+	
+	@FlywayTest
+	@Test
+	public void shouldInsertProduct()
+	{
+		Product p = new Product();
+		p.setName("Pipoca Doce");
+		p.setPrice(new BigDecimal("0.99"));
+		p.setCategory(productService.findCategory(new Long(1)));
+		p = productService.insertProduct(p);
+		assertNotNull(p.getId());
 	}
 }

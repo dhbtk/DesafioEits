@@ -1,6 +1,7 @@
 package com.stockontrol.test.domain.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.time.Clock;
 import java.time.Duration;
@@ -8,17 +9,16 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
+import org.flywaydb.test.annotation.FlywayTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.stockontrol.domain.entity.Batch;
 import com.stockontrol.domain.service.BatchService;
 import com.stockontrol.domain.service.ProductService;
 import com.stockontrol.test.domain.AbstractIntegrationTests;
 
-@DatabaseSetup({ "/sampleUsers.xml", "/sampleCategories.xml", "/sampleProducts.xml", "/sampleBatches.xml" })
 public class BatchServiceTests extends AbstractIntegrationTests
 {
 	@Autowired
@@ -28,6 +28,7 @@ public class BatchServiceTests extends AbstractIntegrationTests
 	@Autowired
 	private Clock clock;
 
+	@FlywayTest
 	@Test
 	public void shouldReturnFixedTime()
 	{
@@ -35,6 +36,7 @@ public class BatchServiceTests extends AbstractIntegrationTests
 		assertTrue(clock.instant().equals(this.clock.instant()));
 	}
 
+	@FlywayTest
 	@Test
 	public void shouldInsertBatch()
 	{
@@ -48,12 +50,14 @@ public class BatchServiceTests extends AbstractIntegrationTests
 		assertNotNull(b.getId());
 	}
 
+	@FlywayTest
 	@Test
 	public void shouldFindBatch()
 	{
 		assertNotNull(batchService.find(new Long(1)));
 	}
 
+	@FlywayTest
 	@Test
 	public void shouldListAllByFilters()
 	{
@@ -78,6 +82,7 @@ public class BatchServiceTests extends AbstractIntegrationTests
 		assertTrue(res.getContent().size() == 81);
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldListAllExpired()
 	{
@@ -86,6 +91,7 @@ public class BatchServiceTests extends AbstractIntegrationTests
 		assertTrue(res.getContent().size() == 7);
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldListAllExpiring()
 	{
@@ -94,6 +100,7 @@ public class BatchServiceTests extends AbstractIntegrationTests
 		assertTrue(res.getContent().size() == 7);
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldRegisterOutgoingAndDeleteItself()
 	{
@@ -101,6 +108,7 @@ public class BatchServiceTests extends AbstractIntegrationTests
 		assertTrue(b == null);
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldRegisterOutgoing()
 	{
@@ -108,6 +116,7 @@ public class BatchServiceTests extends AbstractIntegrationTests
 		assertNotNull(b);
 	}
 	
+	@FlywayTest
 	@Test(expected = AssertionError.class)
 	public void shouldNotRegisterOutgoing()
 	{

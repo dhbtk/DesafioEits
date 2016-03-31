@@ -4,21 +4,21 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.flywaydb.test.annotation.FlywayTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.stockontrol.domain.entity.User;
 import com.stockontrol.domain.service.UserService;
 import com.stockontrol.test.domain.AbstractIntegrationTests;
 
-@DatabaseSetup("/sampleUsers.xml")
 public class UserServiceTests extends AbstractIntegrationTests
 {
 	@Autowired
 	private UserService userService;
 	
+	@FlywayTest
 	@Test
 	public void shouldDeactivateUser()
 	{
@@ -32,6 +32,7 @@ public class UserServiceTests extends AbstractIntegrationTests
 		user = userService.activate(user);
 	}
 	
+	@FlywayTest
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldNotDeactivateInactiveUser()
 	{
@@ -44,6 +45,7 @@ public class UserServiceTests extends AbstractIntegrationTests
 		user = userService.deactivate(user); // kabum
 	}
 	
+	@FlywayTest
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldNotActivateActiveUser()
 	{
@@ -53,6 +55,7 @@ public class UserServiceTests extends AbstractIntegrationTests
 		user = userService.activate(user); // explode joga arremessa
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldActivateUser()
 	{
@@ -68,6 +71,7 @@ public class UserServiceTests extends AbstractIntegrationTests
 		assertTrue(user.isActive());
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldFindByEmail()
 	{
@@ -75,6 +79,7 @@ public class UserServiceTests extends AbstractIntegrationTests
 		assertNotNull(userService.findByEmail("user@teste.com"));
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldHavePasswordDigest()
 	{
@@ -84,6 +89,7 @@ public class UserServiceTests extends AbstractIntegrationTests
 		assertFalse(user.getPasswordDigest().isEmpty());
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldHaveUnchangedPasswordDigest()
 	{
@@ -95,6 +101,7 @@ public class UserServiceTests extends AbstractIntegrationTests
 		assertTrue(digest.equals(user.getPasswordDigest()));
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldHaveChangedPasswordDigest()
 	{
@@ -106,6 +113,7 @@ public class UserServiceTests extends AbstractIntegrationTests
 		assertFalse(digest.equals(user.getPasswordDigest()));
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldFindByFilters()
 	{
@@ -142,6 +150,7 @@ public class UserServiceTests extends AbstractIntegrationTests
 		assertTrue(res.getContent().size() == 1);
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldFindUser()
 	{
@@ -149,6 +158,7 @@ public class UserServiceTests extends AbstractIntegrationTests
 		assertNotNull(user);
 	}
 	
+	@FlywayTest
 	@Test
 	public void shouldInsertUser()
 	{

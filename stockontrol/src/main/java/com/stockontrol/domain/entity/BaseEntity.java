@@ -10,11 +10,12 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+
 @MappedSuperclass
 public abstract class BaseEntity
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(columnDefinition = "serial")
 	private Long id;
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
@@ -29,5 +31,16 @@
 				<constructor-arg value="America/Sao_Paulo" />
 			</bean>
 		</constructor-arg>
+	</bean>
+	
+	<bean id="systemProps" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject" value="#{@systemProperties}" />
+		<property name="targetMethod" value="putAll" />
+		<property name="arguments">
+			<util:properties>
+				<prop key="flyway.driver">org.postgresql.Driver</prop>
+				<prop key="flyway.url">jdbc:postgresql:stockontrol_test</prop>
+			</util:properties>
+		</property>
 	</bean>
 </beans>
