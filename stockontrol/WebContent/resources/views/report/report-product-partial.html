@@ -1,0 +1,5 @@
+<h3>{{product.name}}</h3>
+<h4>Vencidos ({{product.expiredBatchCount}})</h4>
+<div ng-repeat="batches in [product.expiredBatches]" ng-include="'/resources/views/report/report-batch-table-partial.html'"></div>
+<h4>A vencer ({{product.expiringBatchCount}})</h4>
+<div ng-repeat="batches in [product.expiringBatches]" ng-include="'/resources/views/report/report-batch-table-partial.html'"></div>

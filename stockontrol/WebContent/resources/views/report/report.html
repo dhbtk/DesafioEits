@@ -1,20 +1,14 @@
 <md-toolbar class="md-hue-1 filter-toolbar">
 	<div class="md-toolbar-tools" layout="row">
 		<span>Filtrar por produto:</span>
-
+		<div class="search-box">
+			<md-icon>search</md-icon>
+			<input type="text" ng-model="model.filterData.name" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
+		</div>
 	</div>
 </md-toolbar>
 <md-progress-linear md-mode="indeterminate" ng-style="{'visibility': (tasks > 0) ? 'visible' : 'hidden'}"></md-progress-linear>
 <div class="container md-whiteframe-1dp">
-	<div ng-repeat="product in model.request.content">
-		<h3>{{product.name}}</h3>
-		<h4>Vencidos</h4>
-		<ul>
-			<li ng-repeat="batch in product.expiredBatches">{{batch.identifier}} - {{batch.quantity}}</li>
-		</ul>
-		<h4>A vencer</h4>
-		<ul>
-			<li ng-repeat="batch in product.expiringBatches">{{batch.identifier}} - {{batch.quantity}}</li>
-		</ul>
-	</div>
+	<div ng-repeat="product in model.request.content" ng-include="'/resources/views/report/report-product-partial.html'"></div>
+	<md-table-pagination md-limit="model.limit" md-limit-options="[5]" md-page="model.page" md-total="{{model.request.totalElements}}" md-on-paginate="paginateTable" md-page-select></md-table-pagination>
 </div>

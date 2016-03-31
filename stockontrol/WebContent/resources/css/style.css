@@ -24,6 +24,7 @@ object[width="0"]
 	padding-left: 15px;
 	padding-right: 15px;
 	padding-top: 15px;
+	padding-bottom: 15px;
 }
 
 @media(min-width: 1280px)
@@ -94,6 +95,31 @@ object[width="0"]
 }
 
 .data-table .wide
+{
+	width: auto;
+}
+
+/**
+ * Tabelas de relatório
+ */
+
+table.report-table
+{
+	width: 100%;
+	border-collapse: collapse;
+	padding-bottom: 15px;
+}
+
+table.report-table td, table.report-table th
+{
+	padding: 5px;
+	text-align: left;
+	white-space: nowrap;
+	width: 1em;
+	border-bottom: 1px solid #aaa;
+}
+
+table.report-table td:nth-child(2), table.report-table th:nth-child(2)
 {
 	width: auto;
 }

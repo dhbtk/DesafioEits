@@ -12,6 +12,7 @@ Stockontrol.controller('ReportController', function($controller, $scope)
 		},
 		product: null,
 		order: 'name',
+		limit: 5,
 	});
 
 	function loadProductBatches(product)
@@ -20,11 +21,13 @@ Stockontrol.controller('ReportController', function($controller, $scope)
 		product.expiredBatches = [];
 		batchService.listAllExpiring(product.id, null, function(data)
 		{
-			product.expiringBatches = data.content;
+			data.content.sort(function(a, b) { return a.expiresAt - b.expiresAt});
+			product.expiringBatches = data;
 		});
 		batchService.listAllExpired(product.id, null, function(data)
 		{
-			product.expiredBatches = data.content;
+			data.content.sort(function(a, b) { return a.expiresAt - b.expiresAt});
+			product.expiredBatches = data;
 		});
 	}
 
