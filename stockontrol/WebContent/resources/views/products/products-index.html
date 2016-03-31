@@ -7,6 +7,7 @@
 				<md-option ng-repeat="category in categories" value="{{category.id}}">{{category.name}}</md-option>
 			</md-select>
 		</md-input-container>
+		<p>Nome:</p>
 		<div class="search-box">
 			<md-icon>search</md-icon>
 			<input type="text" ng-model="model.filterData.name" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">

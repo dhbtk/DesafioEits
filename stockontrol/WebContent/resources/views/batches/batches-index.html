@@ -1,13 +1,16 @@
 <md-toolbar class="md-hue-1 filter-toolbar">
 	<div class="md-toolbar-tools" layout="row">
-		<p>Data Máxima de Vencimento</p>
-		<input type="text" date-picker ng-model="model.filterData.maxDate">
-		<p>Nome do Produto</p>
+		<p>Data Máxima de Vencimento:</p>
+		<div class="search-box">
+			<md-icon>date_range</md-icon>
+			<input type="date" ng-model="model.filterData.maxDate">
+		</div>
+		<p>Nome do Produto:</p>
 		<div class="search-box">
 			<md-icon>search</md-icon>
 			<input type="text" ng-model="model.filterData.productName" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
 		</div>
-		<p>Identificador</p>
+		<p>Identificador:</p>
 		<div class="search-box">
 			<md-icon>search</md-icon>
 			<input type="text" ng-model="model.filterData.identifier" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
