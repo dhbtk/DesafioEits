@@ -58,17 +58,9 @@
 		<servlet-class>org.directwebremoting.spring.DwrSpringServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 		<init-param>
-			<param-name>debug</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<init-param>
 			<param-name>configFileLocation</param-name>
 			<param-value>WEB-INF/dwr.xml</param-value>
 		</init-param>
-		<init-param>
-	      <param-name>accessLogLevel</param-name>
-	      <param-value>EXCEPTION</param-value>
-	    </init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dwr</servlet-name>
