@@ -10,5 +10,5 @@
 <md-progress-linear md-mode="indeterminate" ng-style="{'visibility': (tasks > 0) ? 'visible' : 'hidden'}"></md-progress-linear>
 <div class="container md-whiteframe-1dp">
 	<div ng-repeat="product in model.request.content" ng-include="'/resources/views/report/report-product-partial.html'"></div>
-	<md-table-pagination md-limit="model.limit" md-limit-options="[5]" md-page="model.page" md-total="{{model.request.totalElements}}" md-on-paginate="paginateTable" md-page-select></md-table-pagination>
+	<div ng-include="'/resources/views/table-pagination.html'"></div>
 </div>
