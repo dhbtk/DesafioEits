@@ -28,7 +28,7 @@ public class CategoriesController
 	}
 
 	@RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
-	public Iterable<Product> listProducts(@PathVariable Long id,
+	public Iterable<Product> showProducts(@PathVariable Long id,
 			@RequestParam(name = "name", required = false) String name,
 			@RequestParam(name = "page", defaultValue = "0") int page)
 	{
@@ -36,7 +36,7 @@ public class CategoriesController
 	}
 
 	@RequestMapping(value = "/{id}/products", method = RequestMethod.POST)
-	public Product insertProduct(@PathVariable Long id, @RequestBody Product product)
+	public Product createProduct(@PathVariable Long id, @RequestBody Product product)
 	{
 		product.setCategory(productService.findCategory(id));
 		return productService.insertProduct(product);
