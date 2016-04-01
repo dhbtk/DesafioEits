@@ -12,9 +12,12 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
+import com.stockontrol.application.configuration.AppConfig;
+import com.stockontrol.application.configuration.JpaConfig;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("test")
-@ContextConfiguration({ "/jpaContext.xml", "/testContext.xml", "/security.xml" })
+@ContextConfiguration(classes = {AppConfig.class, JpaConfig.class})
 @WithUserDetails("admin@teste.com")
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class, FlywayTestExecutionListener.class, WithSecurityContextTestExecutionListener.class })

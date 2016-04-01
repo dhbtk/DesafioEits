@@ -6,13 +6,17 @@
 	version="2.5">
 
 	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>
+			org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+		</param-value>
+	</context-param>
+	
+	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-		classpath:/jpaContext.xml
-		classpath:/security.xml
-		classpath:/dwr.xml
-		classpath:/email.xml
-		classpath:/appConfig.xml
+			com.stockontrol.application.configuration.AppConfig
+			com.stockontrol.application.configuration.JpaConfig
 		</param-value>
 	</context-param>
 	
