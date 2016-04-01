@@ -49,13 +49,12 @@ public class BatchService
 
 	@PreAuthorize("hasRole('USER')")
 	@RemoteMethod
-	public Page<Batch> listAllByFilters(String productName, String identifier, LocalDate maxExpirationDate,
+	public Page<Batch> listAllByFilters(String filter, LocalDate maxExpirationDate,
 			Long productId, SimplePageRequest page)
 	{
 		QBatch batch = QBatch.batch;
 		PredicateList predicates = new PredicateList();
-		predicates.add(productName, () -> batch.product.name.containsIgnoreCase(productName))
-				.add(identifier, () -> batch.identifier.containsIgnoreCase(identifier))
+		predicates.add(filter, () -> batch.product.name.containsIgnoreCase(filter).or(batch.identifier.containsIgnoreCase(filter)))
 				.add(maxExpirationDate, () -> batch.expiresAt.loe(maxExpirationDate))
 				.add(productId, () -> batch.product.id.eq(productId));
 		return batchRepository.findAll(predicates.getIntersection(), SimplePageRequest.toPageRequest(page));

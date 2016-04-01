@@ -8,10 +8,9 @@ Stockontrol.controller('BatchesController', function($controller, $scope, $mdDia
 	 * Modelo
 	 */
 	angular.extend($scope.model, {
-		filters: ['productName', 'identifier', 'maxDate', 'productId'],
+		filters: ['filter', 'maxDate', 'productId'],
 		filterData: {
-			productName: null,
-			identifier: null,
+			filter: null,
 			maxDate: null,
 			productId: null,
 		},

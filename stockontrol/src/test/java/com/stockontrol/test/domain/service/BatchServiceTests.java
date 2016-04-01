@@ -64,21 +64,21 @@ public class BatchServiceTests extends AbstractIntegrationTests
 		Page<Batch> res;
 
 		// Nome do produto
-		res = batchService.listAllByFilters("Fandangos", null, null, null, null);
+		res = batchService.listAllByFilters("Fandangos", null, null, null);
 		assertTrue(res.getContent().size() == 14);
 
 		// Identificador
 		// No caso desse conjunto de dados o prefixo de 4 letras do id é baseado
 		// no nome do produto, aí fica fácil para determinar quantos devem sair
-		res = batchService.listAllByFilters(null, "E778", null, null, null);
+		res = batchService.listAllByFilters("E778", null, null, null);
 		assertTrue(res.getContent().size() == 14);
 		
 		// Id do produto
-		res = batchService.listAllByFilters(null, null, null, new Long(1), null);
+		res = batchService.listAllByFilters(null, null, new Long(1), null);
 		assertTrue(res.getContent().size() == 14);
 		
 		// Data máxima de vencimento
-		res = batchService.listAllByFilters(null, null, LocalDate.now(clock), null, null);
+		res = batchService.listAllByFilters(null, LocalDate.now(clock), null, null);
 		assertTrue(res.getContent().size() == 81);
 	}
 	

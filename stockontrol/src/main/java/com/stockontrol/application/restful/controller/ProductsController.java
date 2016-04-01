@@ -32,7 +32,7 @@ public class ProductsController
 	@RequestMapping(value = "/{id}/batches", method = RequestMethod.GET)
 	public Iterable<Batch> listBatches(@PathVariable Long id, @RequestParam(name = "page", defaultValue = "0") int page)
 	{
-		return batchService.listAllByFilters(null, null, null, id, new SimplePageRequest(page, 20));
+		return batchService.listAllByFilters(null, null, id, new SimplePageRequest(page, 20));
 	}
 	
 	@RequestMapping(value = "/{id}/batches/expiring", method = RequestMethod.GET)
