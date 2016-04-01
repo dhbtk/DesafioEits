@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 
 @Configuration
-@ImportResource({"classpath:/dwr.xml", "classpath:/email.xml" })
+@ImportResource({"classpath:/dwr.xml", "classpath:/email.xml", "classpath:/security.xml" })
 @ComponentScan({ "com.stockontrol.application.*", "com.stockontrol.domain.*" })
 public class AppConfig
 {
