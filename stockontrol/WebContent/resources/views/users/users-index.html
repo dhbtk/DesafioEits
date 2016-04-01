@@ -15,6 +15,7 @@
 				<md-option ng-repeat="profile in model.profileOptions" value="{{profile.value}}">{{profile.name}}</md-option>
 			</md-select>
 		</md-input-container>
+		<span flex></span>
 		<div class="search-box">
 			<md-icon>search</md-icon>
 			<input type="text" ng-model="model.filterData.text" ng-model-options="{debounce: 500}" ng-keyup="handleSearchBoxKeyPress($event)">
