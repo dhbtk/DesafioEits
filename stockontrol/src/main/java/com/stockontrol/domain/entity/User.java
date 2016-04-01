@@ -11,6 +11,8 @@ import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Table(name = "users")
 @Entity
 @DataTransferObject(javascript = "User")
@@ -33,6 +35,7 @@ public class User extends BaseEntity
 	@Audited
 	private String email;
 	
+	@JsonIgnore
 	@NotBlank
 	@Column(name = "password_digest", nullable = false, length = 255)
 	@Audited

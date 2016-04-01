@@ -16,6 +16,8 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Table(name = "batches")
 @Entity
 @DataTransferObject(javascript = "Batch")
@@ -87,6 +89,7 @@ public class Batch extends BaseEntity
 		return LocalDate.now().isAfter(expiresAt);
 	}
 
+	@JsonIgnore
 	@AssertTrue
 	public boolean isValidRange()
 	{

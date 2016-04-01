@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -50,6 +51,7 @@ public class WebConfig extends WebMvcConfigurerAdapter
 	public ObjectMapper objectMapper()
 	{
 		return Jackson2ObjectMapperBuilder.json()
+				.serializationInclusion(Include.NON_NULL)
 				.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
 				.modules(new JavaTimeModule())
 				.build();
