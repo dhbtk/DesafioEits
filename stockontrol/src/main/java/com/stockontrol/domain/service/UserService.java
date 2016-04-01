@@ -26,8 +26,6 @@ public class UserService
 	private UserRepository userRepository;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
-	@Autowired
-	private EmailerAspect emailer; // FIXME - não consegui fazer o aspecto funcionar
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@RemoteMethod
@@ -106,7 +104,6 @@ public class UserService
 	{
 		user.setPasswordDigest(encoder.encode(user.getPassword()));
 		User newUser = userRepository.saveAndFlush(user);
-		emailer.sendNewUserEmail(user);
 		return newUser;
 	}
 }

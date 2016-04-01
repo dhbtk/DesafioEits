@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,6 +15,7 @@ import com.stockontrol.application.aspect.EmailerAspect;
 @Configuration
 @ImportResource({"classpath:/dwr.xml", "classpath:/profiles.xml", "classpath:/security.xml" })
 @ComponentScan({ "com.stockontrol.application.*", "com.stockontrol.domain.*" })
+@EnableAspectJAutoProxy
 public class AppConfig
 {
 	@Autowired
