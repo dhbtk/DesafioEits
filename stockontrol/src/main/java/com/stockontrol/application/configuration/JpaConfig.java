@@ -8,7 +8,6 @@ import javax.validation.ValidatorFactory;
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
-@ComponentScan("com.stockontrol.domain.*")
 @EnableJpaRepositories("com.stockontrol.domain.repository")
 @EnableTransactionManagement
 @EnableSpringDataWebSupport

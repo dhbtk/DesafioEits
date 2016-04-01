@@ -17,6 +17,7 @@
 		<param-value>
 			com.stockontrol.application.configuration.AppConfig
 			com.stockontrol.application.configuration.JpaConfig
+			com.stockontrol.application.configuration.WebConfig
 		</param-value>
 	</context-param>
 	
