@@ -102,7 +102,10 @@ Stockontrol.controller('BaseController', function($q, $scope, $timeout)
 		console.log('Pedindo página ' + page + ', mostrando ' + limit + ' por página');
 		$scope.model.page = page;
 		$scope.model.limit = limit;
-		$scope.fetchData();
+		$scope.fetchData().then(function()
+		{
+			window.scrollTo(0, 0);
+		});
 	};
 
 	/**
@@ -111,7 +114,10 @@ Stockontrol.controller('BaseController', function($q, $scope, $timeout)
 	$scope.sortTable = function(order)
 	{
 		$scope.model.order = order;
-		$scope.fetchData();
+		$scope.fetchData().then(function()
+		{
+			window.scrollTo(0, 0);
+		});
 	};
 
 	// Chama $scope.fetchUsers() caso a tecla seja um enter
