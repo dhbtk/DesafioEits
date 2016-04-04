@@ -13,15 +13,24 @@
 			<div ng-init="setForm(batchForm)"></div>
 			<md-input-container class="md-block">
 				<label>Produto</label>
-				<md-autocomplete md-search-text="searchText" md-selected-item="batch.product" md-items="product in products" md-item-text="product.name" required>
+				<md-autocomplete
+						md-delay="500"
+						md-search-text="searchText"
+						md-selected-item="batch.product"
+						md-items="product in products | filter:searchText"
+						md-item-text="product.name"
+						id="products-autocomplete"
+						placeholder="Produto"
+						md-input-name="product"
+						required>
 					<md-item-template>
 						<span md-highlight-text="searchText" md-highlight-flags="^i">{{product.name}}</span>
 					</md-item-template>
-					<md-not-found>Produtos não encontrados.</md-not-found>
+					<md-not-found>Produto não encontrado</md-not-found>
+					<div ng-messages="batchForm.product.$error">
+						<div ng-message="required">Este campo é necessário.</div>
+					</div>
 				</md-autocomplete>
-				<div ng-messages="batchForm.product.$error">
-					<div ng-message="required">Este campo é necessário.</div>
-				</div>
 			</md-input-container>
 			<md-input-container class="md-block">
 				<label>Identificador</label>
@@ -60,6 +69,6 @@
 	<md-dialog-actions layout="row">
 		<span flex></span>
 		<md-button ng-click="cancel()" class="md-raised">Cancelar</md-button>
-		<md-button ng-click="create()" ng-disabled="form.$invalid || model.tasks" class="md-raised md-primary">Registrar</md-button>
+		<md-button ng-click="create()" ng-disabled="form.$invalid || model.tasks || !batch.product" class="md-raised md-primary">Registrar</md-button>
 	</md-dialog-actions>
 </md-dialog>

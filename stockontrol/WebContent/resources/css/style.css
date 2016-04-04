@@ -145,3 +145,22 @@ table.report-table td:nth-child(2), table.report-table th:nth-child(2)
 {
 	width: auto;
 }
+
+/**
+ * Autocomplete no md-input-container
+ */
+
+#products-autocomplete input
+{
+	order: 0;
+}
+
+#products-autocomplete
+{
+	background: transparent;
+}
+
+#products-autocomplete > md-autocomplete-wrap
+{
+	box-shadow: none;
+}
