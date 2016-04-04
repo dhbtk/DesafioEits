@@ -20,6 +20,7 @@ function serializeObject(o)
 angular.module('StockontrolLogin',['ngMaterial']).controller('LoginController', function($scope, $http, $mdToast, $window)
 {
 	$scope.model = {user: {}, loading: false};
+	$scope.fromLogout = $window.location.search == '?logout';
 
 	$scope.handleLogIn = function()
 	{
@@ -44,6 +45,15 @@ angular.module('StockontrolLogin',['ngMaterial']).controller('LoginController', 
 					else if(status == "403")
 					{
 						$mdToast.showSimple('Suas credenciais foram desativadas.');
+					}
+					else if(status == "404")
+					{
+						// Pode gerar um loop infinito talvez
+						// JUSTIFICATIVA: de vez em quando, geralmente no primeiro login da
+						// aplicação, a rota 'POST /login' retorna um 404. Efetuar o login
+						// novamente funciona, então aqui automatizamos isso.
+						// Não consegui descobrir o motivo desse erro.
+						$scope.handleLogIn();
 					}
 					else
 					{
