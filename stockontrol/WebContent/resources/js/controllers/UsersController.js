@@ -76,7 +76,7 @@ Stockontrol.controller('UsersController',function($controller, $scope, $mdToast,
 									.textContent('Usuário "' + user.email + '" desativado')
 									.position('bottom')
 									.hideDelay(3000));
-					$scope.fetchUsers();
+					$scope.fetchData();
 				});
 			});
 		});
@@ -100,7 +100,7 @@ Stockontrol.controller('UsersController',function($controller, $scope, $mdToast,
 									.textContent('Usuário "' + user.email + '" ativado')
 									.position('bottom')
 									.hideDelay(3000));
-					$scope.fetchUsers();
+					$scope.fetchData();
 				});
 			});
 		});
