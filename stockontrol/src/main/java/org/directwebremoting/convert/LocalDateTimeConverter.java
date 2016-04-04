@@ -6,7 +6,9 @@ package org.directwebremoting.convert;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
@@ -27,6 +29,7 @@ import org.directwebremoting.extend.ProtocolConstants;
  */
 public class LocalDateTimeConverter extends AbstractConverter
 {
+	private final ZoneOffset localOffset = ZonedDateTime.now().getOffset();
 
 	/* (non-Javadoc)
 	 * @see org.directwebremoting.extend.Converter#convertInbound(java.lang.Class, org.directwebremoting.extend.InboundVariable)
@@ -59,7 +62,7 @@ public class LocalDateTimeConverter extends AbstractConverter
 				{
 					seconds = Long.parseLong(val)/1000;
 				}
-				date = LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.UTC);
+				date = LocalDateTime.ofEpochSecond(seconds, 0, localOffset);
 			}
 			else if(Pattern.matches("^[0-9]{2}/[0-9]{2}/[0-9]{4}$", val))
 			{
@@ -118,7 +121,7 @@ public class LocalDateTimeConverter extends AbstractConverter
 		{
 			throw new ConversionException(data.getClass());
 		}
-		ms = dt.toEpochSecond(ZoneOffset.UTC)*1000;
+		ms = dt.toEpochSecond(localOffset)*1000;
 		
 		return new NonNestedOutboundVariable("new Date(" + ms + ")");
 	}
