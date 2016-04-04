@@ -2,6 +2,7 @@ package com.stockontrol.application.aspect;
 
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,28 +12,10 @@ import com.stockontrol.domain.entity.User;
 @Aspect
 public class EmailerAspect
 {
+	@Autowired
 	private MailSender mailSender;
+	@Autowired
 	private SimpleMailMessage template;
-
-	public MailSender getMailSender()
-	{
-		return mailSender;
-	}
-
-	public void setMailSender(MailSender mailSender)
-	{
-		this.mailSender = mailSender;
-	}
-
-	public SimpleMailMessage getTemplate()
-	{
-		return template;
-	}
-
-	public void setTemplate(SimpleMailMessage template)
-	{
-		this.template = template;
-	}
 
 	@AfterReturning(pointcut = "target(com.stockontrol.domain.service.UserService) && execution(com.stockontrol.domain.entity.User insert(com.stockontrol.domain.entity.User))", returning = "user")
 	public void sendNewUserEmail(User user)
