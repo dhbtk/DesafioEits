@@ -9,8 +9,10 @@ import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -26,6 +28,21 @@ public class JpaConfig
 {
 	@Autowired
 	private DataSource dataSource;
+	
+	@Bean
+	@Profile("default")
+	public DataSource defaultDataSource()
+	{
+		return new SimpleDriverDataSource(new org.postgresql.Driver(), "jdbc:postgresql:stockontrol");
+	}
+	
+	@Bean
+	@Profile("test")
+	public DataSource testDataSource()
+	{
+		return new SimpleDriverDataSource(new org.postgresql.Driver(), "jdbc:postgresql:stockontrol_test");
+	}
+	
 	
 	@Bean
 	public JpaTransactionManager transactionManager()
