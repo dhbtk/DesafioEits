@@ -5,6 +5,7 @@
 	<title>Controle de Estoque &bull; Login</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/webjars/angular-material/1.0.6/angular-material.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="/resources/css/style.css">
 </head>
 <body ng-controller="LoginController" ng-cloak>
@@ -21,14 +22,13 @@
 			<md-content flex layout-padding>
 				<form layout="column" name="form" ng-submit="handleLogIn()">
 					<md-input-container>
-						<label>Email</label>
-						<input type="email" ng-model="model.user.email" required md-autofocus="autofocus">
+						<md-icon>email</md-icon>
+						<input type="email" placeholder="Email" ng-model="model.user.email" required md-autofocus="autofocus">
 					</md-input-container>
 					<md-input-container>
-						<label>Senha</label>
-						<input type="password" ng-model="model.user.password" required>
+						<md-icon>lock</md-icon>
+						<input type="password" placeholder="Senha" ng-model="model.user.password" required>
 					</md-input-container>
-
 					<md-button class="md-raised md-primary" type="submit">
 						Entrar
 					</md-button>
