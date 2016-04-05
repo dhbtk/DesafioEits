@@ -17,7 +17,7 @@ function serializeObject(o)
 	return s;
 }
 
-angular.module('StockontrolLogin',['ngMaterial']).controller('LoginController', function($scope, $http, $mdToast, $window)
+Stockontrol.controller('LoginController', function($scope, $http, $mdToast, $window, identity, $state, $rootScope)
 {
 	$scope.model = {user: {}, loading: false};
 	$scope.fromLogout = $window.location.search == '?logout';
@@ -30,11 +30,26 @@ angular.module('StockontrolLogin',['ngMaterial']).controller('LoginController', 
 			headers: {'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}
 		};
 		$http.post('/authenticate', serializeObject($scope.model.user), config)
-				.success(function(data)
+				.success(function()
 				{
-					console.log(data);
-					$window.location.href = "/";
-					$scope.model.loading = false;
+					userService.getCurrent({
+						callback: function(user)
+						{
+							identity.authenticate(user);
+							$scope.model.loading = false;
+							$state.go($rootScope.returnToState);
+						},
+						errorHandler: function(a, b)
+						{
+							console.log(a, b);
+							$scope.model.loading = false;
+						},
+						exceptionHandler: function(a, b)
+						{
+							console.log(a, b);
+							$scope.model.loading = false;
+						}
+					});
 				})
 				.error(function(data, status)
 				{

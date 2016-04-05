@@ -40,7 +40,7 @@
 		<div class="md-toolbar-tools">
 			<h2><span>{{category.name}}</span></h2>
 			<span flex></span>
-			<md-button class="md-icon-button" ng-if="currentUser.admin()" ng-click="destroy(category)"><md-icon>delete</md-icon></md-button>
+			<md-button class="md-icon-button" ng-if="identity.admin()" ng-click="destroy(category)"><md-icon>delete</md-icon></md-button>
 		</div>
 	</md-toolbar>
 	<md-content layout-padding>

@@ -1,0 +1,46 @@
+<md-toolbar>
+	<div class="md-toolbar-tools" layout="row">
+		<md-button class="md-icon-button" aria-label="Menu" ng-click="openMenu()">
+			<md-icon>menu</md-icon>
+		</md-button>
+		<div ng-include="header.location" class="header-partial"></div>
+		<span flex></span>
+		<span style="font-size: 70%">{{currentUserEmail}}</span>
+		<md-menu>
+			<md-button ng-click="openLogoutMenu($mdOpenMenu, $event)" class="md-icon-button" aria-label="Menu">
+				<md-icon md-menu-origin aria-label="Opções">more_vert</md-icon>
+			</md-button>
+			<md-menu-content>
+				<md-button ng-click="logout()">
+					Sair
+				</md-button>
+			</md-menu-content>
+		</md-menu>
+	</div>
+</md-toolbar>
+<div ui-view></div>
+<md-sidenav class="md-sidenav-left md-whiteframe-4dp" md-component-id="leftMenu" layout="column">
+	<md-toolbar class="md-hue-2">
+		<div class="md-toolbar-tools">
+			<h2>
+				<span>Menu</span>
+			</h2>
+		</div>
+	</md-toolbar>
+	<md-content>
+		<md-list>
+			<md-list-item ng-click="goTo('batches')">
+				Estoque
+			</md-list-item>
+			<md-list-item ng-click="goTo('products')">
+				Produtos
+			</md-list-item>
+			<md-list-item ng-click="goTo('categories')">
+				Categorias
+			</md-list-item>
+			<md-list-item ng-click="goTo('users')">
+				Usuários
+			</md-list-item>
+		</md-list>
+	</md-content>
+</md-sidenav>

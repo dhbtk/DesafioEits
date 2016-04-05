@@ -32,7 +32,7 @@
 					<th md-column md-order-by="email" class="wide">Email</th>
 					<th md-column md-order-by="active">Ativo</th>
 					<th md-column md-order-by="profile">Perfil</th>
-					<th md-column ng-if="model.currentUser.admin()">Ações</th>
+					<th md-column ng-if="identity.admin()">Ações</th>
 				</tr>
 			</thead>
 			<tbody md-body>
@@ -41,7 +41,7 @@
 					<td md-cell class="wide">{{user.email}}</td>
 					<td md-cell>{{user.active ? 'Sim' : 'Não'}}</td>
 					<td md-cell>{{user.profile == 'Administrator' ? 'Administrador' : 'Usuário'}}</td>
-					<td md-cell style="text-align: right" ng-if="currentUser.admin()">
+					<td md-cell style="text-align: right" ng-if="identity.admin()">
 						<md-button ng-if="user.active" ng-click="deactivateUser(user)" class="md-primary md-raised">Desativar</md-button>
 						<md-button ng-if="!user.active" ng-click="activateUser(user)" class="md-warn md-raised">Ativar</md-button>
 						<md-button class="md-raised" ng-click="openEditUser(user.id)">Editar</md-button>

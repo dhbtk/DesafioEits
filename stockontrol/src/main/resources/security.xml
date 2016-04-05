@@ -8,9 +8,6 @@
 		<authentication-provider user-service-ref="customUserDetailsService">
 			<password-encoder hash="bcrypt" />
 		</authentication-provider>
-		<!-- <authentication-provider> -->
-		<!-- <user-service><user name="admin@admin.com" password="admin" authorities="ROLE_ADMIN,ROLE_USER"/></user-service> -->
-		<!-- </authentication-provider> -->
 	</authentication-manager>
 
 	<global-method-security pre-post-annotations="enabled" />
@@ -23,17 +20,20 @@
 
 	<http pattern="/resources/**" security="none" />
 	<http pattern="/webjars/**" security="none" />
-	<http pattern="/login.html" security="none" />
+	<http pattern="/" security="none" />
 	<http pattern="/api/**">
 		<intercept-url pattern="/**" access="hasRole('USER')" />
-		<http-basic/>
-		<csrf disabled="true"/>
+		<http-basic />
+		<csrf disabled="true" />
 	</http>
 	<http>
+		<intercept-url pattern="/dwr/**" access="isAnonymous() || hasRole('USER')"/>
+		<intercept-url pattern="/index.html" access="isAnonymous() || hasRole('USER')"/>
 		<intercept-url pattern="/**" access="hasRole('USER')" />
-		<form-login login-page="/login.html" password-parameter="password"
+		<form-login login-page="/index.html" password-parameter="password"
 			username-parameter="email" login-processing-url="/authenticate"
-			authentication-failure-handler-ref="authenticationFailureHandler" />
+			authentication-failure-handler-ref="authenticationFailureHandler"
+			authentication-success-handler-ref="authenticationSuccessHandler" />
 		<logout />
 		<csrf disabled="true" />
 	</http>
@@ -50,7 +50,11 @@
 			</beans:value>
 		</beans:property>
 	</beans:bean>
-	
-	<beans:bean id="authenticationFailureHandler" class="com.stockontrol.application.security.AuthenticationFailureHandler" />
+
+	<beans:bean id="authenticationSuccessHandler"
+		class="com.stockontrol.application.security.AuthenticationSuccessHandler" />
+
+	<beans:bean id="authenticationFailureHandler"
+		class="com.stockontrol.application.security.AuthenticationFailureHandler" />
 
 </beans:beans>

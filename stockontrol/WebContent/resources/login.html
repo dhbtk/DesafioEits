@@ -9,37 +9,6 @@
 	<link rel="stylesheet" href="/resources/css/style.css">
 </head>
 <body ng-controller="LoginController" ng-cloak>
-	<div style="padding-top: 50px">
-		<div layout="column" class="login-box-container" md-whiteframe="1">
-			<md-toolbar style="border-top-left-radius: 3px; border-top-right-radius: 3px;">
-				<div class="md-toolbar-tools">
-					<span flex></span>
-					<h2><span>Controle de Estoque</span></h2>
-					<span flex></span>
-				</div>
-			</md-toolbar>
-			<md-progress-linear md-mode="indeterminate" ng-if="model.loading"></md-progress-linear>
-			<md-content flex layout-padding>
-				<div layout="row" ng-if="fromLogout" layout-padding class="md-whiteframe-1dp">
-					<md-icon>info_outline</md-icon>
-					<span flex>Logout efetuado com sucesso.</span>
-				</div>
-				<form layout="column" name="form" ng-submit="handleLogIn()">
-					<md-input-container>
-						<md-icon>email</md-icon>
-						<input type="email" placeholder="Email" ng-model="model.user.email" required md-autofocus="autofocus">
-					</md-input-container>
-					<md-input-container>
-						<md-icon>lock</md-icon>
-						<input type="password" placeholder="Senha" ng-model="model.user.password" required>
-					</md-input-container>
-					<md-button class="md-raised md-primary" type="submit">
-						Entrar
-					</md-button>
-				</form>
-			</md-content>
-		</div>
-	</div>
 	<script src="/webjars/angularjs/1.5.0/angular.js"></script>
 	<script src="/webjars/angular-animate/1.5.0/angular-animate.js"></script>
 	<script src="/webjars/angular-aria/1.5.0/angular-aria.js"></script>

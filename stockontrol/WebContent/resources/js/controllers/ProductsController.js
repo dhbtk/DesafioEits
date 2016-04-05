@@ -1,4 +1,4 @@
-Stockontrol.controller('ProductsController',function($controller, $scope, $mdToast, $mdSidenav, $mdDialog)
+Stockontrol.controller('ProductsController',function($controller, $scope, $mdToast, $mdSidenav, $mdDialog, identity)
 {
 	// Herdando do controller base
 	$controller('BaseController', {$scope: $scope});

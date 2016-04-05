@@ -1,4 +1,4 @@
-Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $state, $window, $timeout)
+Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $state, $window, $timeout, identity, $rootScope)
 {
 	// defaults do DWR
 	dwr.engine.setTextHtmlHandler(function()
@@ -32,7 +32,7 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 	$scope.header = {};
 
 	/** Usuário atual **/
-	$scope.currentUser = null;
+	$scope.currentUserEmail = null;
 
 	/*
 	 * Métodos
@@ -45,7 +45,11 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 
 	$scope.logout = function()
 	{
-		$window.location.href = "/logout";
+		$http.get('/logout').then(function()
+		{
+			identity.authenticate(null);
+			$state.go('login');
+		});
 	};
 
 	$scope.openMenu = function()
@@ -65,12 +69,17 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 	 * Inicialização
 	 */
 
-	userService.getCurrent(function(data)
+	function updateUserEmail(user)
 	{
-		$scope.currentUser = data;
-		$scope.currentUser.admin = function()
+		if(user != null)
 		{
-			return this.profile == 'Administrator';
+			$scope.currentUserEmail = user.email;
 		}
-	});
+		else
+		{
+			identity.currentUser().then(updateUserEmail);
+		}
+	}
+
+	identity.currentUser().then(updateUserEmail);
 });
