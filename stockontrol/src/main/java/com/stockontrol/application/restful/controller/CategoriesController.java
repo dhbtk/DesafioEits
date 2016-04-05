@@ -58,14 +58,7 @@ public class CategoriesController
 	public Category update(@PathVariable Long id, @RequestBody Category sentCategory)
 	{
 		Category category = productService.findCategory(id);
-		if (sentCategory.getName() != null)
-		{
-			category.setName(sentCategory.getName());
-		}
-		if (sentCategory.getDescription() != null)
-		{
-			category.setDescription(sentCategory.getDescription());
-		}
+		sentCategory.copyNonNullpropertiesTo(category);
 		return productService.updateCategory(category);
 	}
 

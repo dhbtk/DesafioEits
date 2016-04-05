@@ -17,7 +17,7 @@ import javax.persistence.PreUpdate;
 
 import org.springframework.beans.BeanUtils;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
+import java.util.Arrays;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable
@@ -70,7 +70,6 @@ public abstract class BaseEntity implements Serializable
 		copyNonNullPropertiesTo(target, (String[]) null);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void copyNonNullPropertiesTo(BaseEntity target, String... skip)
 	{
 		List<String> skipProps = new ArrayList<>();

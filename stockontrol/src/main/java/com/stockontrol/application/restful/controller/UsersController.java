@@ -50,25 +50,7 @@ public class UsersController
 	{
 		User user = userService.find(id);
 		
-		if(sentUser.getFullName() != null)
-		{
-			user.setFullName(sentUser.getFullName());
-		}
-		
-		if(sentUser.getEmail() != null)
-		{
-			user.setEmail(sentUser.getEmail());
-		}
-		
-		if(sentUser.getPassword() != null)
-		{
-			user.setPassword(sentUser.getPassword());
-		}
-		
-		if(sentUser.getProfile() != null)
-		{
-			user.setProfile(sentUser.getProfile());
-		}
+		sentUser.copyNonNullpropertiesTo(user);
 		
 		return userService.save(user);
 	}

@@ -65,18 +65,7 @@ public class ProductsController
 	public Product update(@PathVariable Long id, @RequestBody Product sentProduct)
 	{
 		Product product = productService.findProduct(id);
-		if(sentProduct.getName() != null)
-		{
-			product.setName(sentProduct.getName());
-		}
-		if(sentProduct.getPrice() != null)
-		{
-			product.setPrice(sentProduct.getPrice());
-		}
-		if(sentProduct.getCategory() != null)
-		{
-			product.setCategory(sentProduct.getCategory());
-		}
+		sentProduct.copyNonNullpropertiesTo(product);
 		return productService.updateProduct(product);
 	}
 
