@@ -20,7 +20,7 @@ function serializeObject(o)
 Stockontrol.controller('LoginController', function($scope, $http, $mdToast, $window, identity, $state, $rootScope)
 {
 	$scope.model = {user: {}, loading: false};
-	$scope.fromLogout = $window.location.search == '?logout';
+	$scope.fromLogout = $rootScope.fromLogout;
 
 	$scope.handleLogIn = function()
 	{
@@ -30,51 +30,52 @@ Stockontrol.controller('LoginController', function($scope, $http, $mdToast, $win
 			headers: {'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}
 		};
 		$http.post('/authenticate', serializeObject($scope.model.user), config)
-				.success(function()
-				{
-					userService.getCurrent({
-						callback: function(user)
-						{
-							identity.authenticate(user);
-							$scope.model.loading = false;
-							$state.go($rootScope.returnToState);
-						},
-						errorHandler: function(a, b)
-						{
-							console.log(a, b);
-							$scope.model.loading = false;
-						},
-						exceptionHandler: function(a, b)
-						{
-							console.log(a, b);
-							$scope.model.loading = false;
-						}
-					});
-				})
-				.error(function(data, status)
-				{
-					if(status == "401")
+			.success(function()
+			{
+				userService.getCurrent({
+					callback: function(user)
 					{
-						$mdToast.showSimple('Email ou senha incorretos. Por favor tente novamente.');
-					}
-					else if(status == "403")
+						identity.authenticate(user);
+						$scope.model.loading = false;
+						$rootScope.fromLogout = false;
+						$state.go($rootScope.returnToState || 'batches');
+					},
+					errorHandler: function(a, b)
 					{
-						$mdToast.showSimple('Suas credenciais foram desativadas.');
-					}
-					else if(status == "404")
+						console.log(a, b);
+						$scope.model.loading = false;
+					},
+					exceptionHandler: function(a, b)
 					{
-						// Pode gerar um loop infinito talvez
-						// JUSTIFICATIVA: de vez em quando, geralmente no primeiro login da
-						// aplicação, a rota 'POST /login' retorna um 404. Efetuar o login
-						// novamente funciona, então aqui automatizamos isso.
-						// Não consegui descobrir o motivo desse erro.
-						$scope.handleLogIn();
+						console.log(a, b);
+						$scope.model.loading = false;
 					}
-					else
-					{
-						$mdToast.showSimple('Houve um erro desconhecido. Por favor tente novamente. (' + status + ')');
-					}
-					$scope.model.loading = false;
 				});
+			})
+			.error(function(data, status)
+			{
+				if(status == "401")
+				{
+					$mdToast.showSimple('Email ou senha incorretos. Por favor tente novamente.');
+				}
+				else if(status == "403")
+				{
+					$mdToast.showSimple('Suas credenciais foram desativadas.');
+				}
+				else if(status == "404")
+				{
+					// Pode gerar um loop infinito talvez
+					// JUSTIFICATIVA: de vez em quando, geralmente no primeiro login da
+					// aplicação, a rota 'POST /login' retorna um 404. Efetuar o login
+					// novamente funciona, então aqui automatizamos isso.
+					// Não consegui descobrir o motivo desse erro.
+					$scope.handleLogIn();
+				}
+				else
+				{
+					$mdToast.showSimple('Houve um erro desconhecido. Por favor tente novamente. (' + status + ')');
+				}
+				$scope.model.loading = false;
+			});
 	};
 });

@@ -48,6 +48,7 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 		$http.get('/logout').then(function()
 		{
 			identity.authenticate(null);
+			$rootScope.fromLogout = true;
 			$state.go('login');
 		});
 	};
