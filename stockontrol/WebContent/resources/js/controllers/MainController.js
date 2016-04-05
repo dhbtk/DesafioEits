@@ -1,4 +1,4 @@
-Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $state, $window, $timeout, identity, $rootScope)
+Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $state, $window, $timeout, identityService, $rootScope)
 {
 	// defaults do DWR
 	dwr.engine.setTextHtmlHandler(function()
@@ -48,7 +48,7 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 	{
 		$http.get('/logout').then(function()
 		{
-			identity.authenticate(null);
+			identityService.authenticate(null);
 			$rootScope.fromLogout = true;
 			$state.go('login');
 		});
@@ -78,17 +78,17 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 			if(user != null)
 			{
 				$scope.currentUserEmail = user.email;
-				$scope.isAdmin = identity.admin();
+				$scope.isAdmin = identityService.admin();
 			}
 			else
 			{
 				// JUSTIFICATIVA: devido a condições de corrida de vez em quando o
 				// currentUser() ainda vai ser nulo, então checamos de novo depois de um
 				// tempinho
-				identity.currentUser().then(updateUserEmail);
+				identityService.currentUser().then(updateUserEmail);
 			}
 		}, 500);
 	}
 
-	identity.currentUser().then(updateUserEmail);
+	identityService.currentUser().then(updateUserEmail);
 });

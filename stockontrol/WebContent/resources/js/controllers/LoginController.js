@@ -17,7 +17,7 @@ function serializeObject(o)
 	return s;
 }
 
-Stockontrol.controller('LoginController', function($scope, $http, $mdToast, $window, identity, $state, $rootScope)
+Stockontrol.controller('LoginController', function($scope, $http, $mdToast, $window, identityService, $state, $rootScope)
 {
 	$scope.model = {user: {}, loading: false};
 	$scope.fromLogout = $rootScope.fromLogout;
@@ -35,7 +35,7 @@ Stockontrol.controller('LoginController', function($scope, $http, $mdToast, $win
 				userService.getCurrent({
 					callback: function(user)
 					{
-						identity.authenticate(user);
+						identityService.authenticate(user);
 						$scope.model.loading = false;
 						$rootScope.fromLogout = false;
 						$state.go($rootScope.returnToState || 'batches');

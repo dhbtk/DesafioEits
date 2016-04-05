@@ -7,9 +7,9 @@ Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvid
 	$stateProvider.state('system', {
 		'abstract': true,
 		resolve: {
-			authorize: function(auth)
+			authorize: function(authorizationService)
 			{
-				return auth.authorize();
+				return authorizationService.authorize();
 			}
 		},
 		templateUrl: 'resources/views/system.html'
@@ -43,18 +43,18 @@ Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvid
 		templateUrl: 'resources/views/login.html',
 		controller: 'LoginController',
 		resolve: {
-			authorize: function(auth)
+			authorize: function(authorizationService)
 			{
-				return auth.authorize();
+				return authorizationService.authorize();
 			}
 		}
 	});
 })
-.factory('identity', function($q, $rootScope)
+.factory('identityService', function($q, $rootScope)
 {
 	var _currentUser = undefined, _authenticated = false;
 	return {
-		identityPresent: function()
+		identityServicePresent: function()
 		{
 			return angular.isDefined(_currentUser);
 		},
@@ -108,14 +108,14 @@ Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvid
 		}
 	};
 })
-.factory('auth', function($rootScope, $state, identity)
+.factory('authorizationService', function($rootScope, $state, identityService)
 {
 	return {
 		authorize: function()
 		{
-			return identity.currentUser().then(function()
+			return identityService.currentUser().then(function()
 			{
-				if(!identity.authenticated() && $rootScope.toState.url != '/login')
+				if(!identityService.authenticated() && $rootScope.toState.url != '/login')
 				{
 					$rootScope.returnToState = $rootScope.toState;
 					$state.go('login');
@@ -124,15 +124,15 @@ Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvid
 		}
 	};
 })
-.run(function($rootScope, $state, $stateParams, auth, identity)
+.run(function($rootScope, $state, $stateParams, authorizationService, identityService)
 {
 	$rootScope.$on('$stateChangeStart', function(event, toState, toStateParams)
 	{
 		$rootScope.toState = toState;
 
-		if(identity.identityPresent())
+		if(identityService.identityServicePresent())
 		{
-			auth.authorize();
+			authorizationService.authorize();
 		}
 	});
 });
