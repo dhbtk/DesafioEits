@@ -72,14 +72,17 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 
 	function updateUserEmail(user)
 	{
-		if(user != null)
+		$timeout(function()
 		{
-			$scope.currentUserEmail = user.email;
-		}
-		else
-		{
-			identity.currentUser().then(updateUserEmail);
-		}
+			if(user != null)
+			{
+				$scope.currentUserEmail = user.email;
+			}
+			else
+			{
+				identity.currentUser().then(updateUserEmail);
+			}
+		});
 	}
 
 	identity.currentUser().then(updateUserEmail);

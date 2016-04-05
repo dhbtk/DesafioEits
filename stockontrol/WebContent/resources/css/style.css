@@ -8,6 +8,31 @@ object[width="0"]
 }
 
 /**
+ * Animação do login
+ */
+
+@keyframes slideDown
+{
+	from
+	{
+		transform: translate3d(0, -100%, 0);
+		visibility: visible;
+	}
+	to
+	{
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.login-box-outer-container
+{
+	margin-top: 50px;
+	animation-name: slideDown;
+	animation-duration: 1s;
+	animation-fill-mode: both;
+}
+
+/**
  * Containers
  */
 
