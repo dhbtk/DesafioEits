@@ -33,6 +33,7 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 
 	/** Usuário atual **/
 	$scope.currentUserEmail = null;
+	$scope.isAdmin = false;
 
 	/*
 	 * Métodos
@@ -77,12 +78,16 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 			if(user != null)
 			{
 				$scope.currentUserEmail = user.email;
+				$scope.isAdmin = identity.admin();
 			}
 			else
 			{
+				// JUSTIFICATIVA: devido a condições de corrida de vez em quando o
+				// currentUser() ainda vai ser nulo, então checamos de novo depois de um
+				// tempinho
 				identity.currentUser().then(updateUserEmail);
 			}
-		});
+		}, 500);
 	}
 
 	identity.currentUser().then(updateUserEmail);
