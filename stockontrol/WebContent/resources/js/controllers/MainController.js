@@ -3,7 +3,7 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 	// defaults do DWR
 	dwr.engine.setTextHtmlHandler(function()
 	{
-		$window.location.href = "/";
+		$state.go('login');
 	});
 
 	dwr.engine.setPreHook(function()
