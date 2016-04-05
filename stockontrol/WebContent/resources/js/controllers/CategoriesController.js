@@ -60,11 +60,6 @@ Stockontrol.controller('CategoriesController',function($controller, $scope, $mdT
 									.position('bottom')
 									.hideDelay(3000));
 					$scope.fetchData();
-				},
-				errorHandler: function(ex, msg)
-				{
-					console.log(ex);
-					console.log(msg);
 				}
 			});
 		});

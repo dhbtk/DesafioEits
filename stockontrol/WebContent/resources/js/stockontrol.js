@@ -85,7 +85,6 @@ Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvid
 				userService.getCurrent({
 					callback: function(user)
 					{
-						console.log(user);
 						_currentUser = user;
 						_authenticated = true;
 						def.resolve(_currentUser);

@@ -10,8 +10,6 @@ Stockontrol.directive('compareTo', function()
 		{
 			ngModel.$validators.compareTo = function(modelValue)
 			{
-				console.log('modelValue: ' + modelValue);
-				console.log('otherValue: ' + scope.otherValue);
 				return modelValue == scope.otherValue;
 			}
 

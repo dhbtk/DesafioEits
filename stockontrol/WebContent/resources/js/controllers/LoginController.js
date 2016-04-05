@@ -25,7 +25,6 @@ Stockontrol.controller('LoginController', function($scope, $http, $mdToast, $win
 	$scope.handleLogIn = function()
 	{
 		$scope.model.loading = true;
-		console.log(serializeObject($scope.model.user));
 		var config = {
 			headers: {'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}
 		};
@@ -42,12 +41,10 @@ Stockontrol.controller('LoginController', function($scope, $http, $mdToast, $win
 					},
 					errorHandler: function(a, b)
 					{
-						console.log(a, b);
 						$scope.model.loading = false;
 					},
 					exceptionHandler: function(a, b)
 					{
-						console.log(a, b);
 						$scope.model.loading = false;
 					}
 				});

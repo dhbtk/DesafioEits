@@ -11,13 +11,10 @@ Stockontrol.directive('validateUserEmail', function($q)
 					return $q.when();
 				}
 				var userId = scope.user.id;
-				console.log('userId: ', userId);
-				console.log('val: ', val);
 				var def = $q.defer();
 
 				userService.findByEmail(val, function(user)
 				{
-					console.log('User: ', user);
 					// Se for o mesmo usuário dá nada
 					if(user === null || user.id === userId)
 					{

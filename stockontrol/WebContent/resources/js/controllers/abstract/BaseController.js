@@ -81,8 +81,6 @@ Stockontrol.controller('BaseController', function($q, $scope, $timeout)
 			},
 			errorHandler: function(ex, msg)
 			{
-				console.log(ex);
-				console.log(msg);
 				def.reject(ex);
 			},
 			timeout: 1000,
@@ -99,7 +97,6 @@ Stockontrol.controller('BaseController', function($q, $scope, $timeout)
 	 */
 	$scope.paginateTable = function(page, limit)
 	{
-		console.log('Pedindo página ' + page + ', mostrando ' + limit + ' por página');
 		$scope.model.page = page;
 		$scope.model.limit = limit;
 		$scope.fetchData().then(function()

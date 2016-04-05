@@ -3,7 +3,7 @@ Stockontrol.controller('FormController', function($scope, $mdSidenav, $mdDialog,
 	$scope.form = null;
 
 	/** Função para a mensagem do toast **/
-	$scope.successMessage = function(data) { console.log(data); };
+	$scope.successMessage = function(data) { return "saved" };
 
 	/** Entidade a ser criada/salva **/
 	$scope.entity = null;
@@ -13,7 +13,6 @@ Stockontrol.controller('FormController', function($scope, $mdSidenav, $mdDialog,
 	$scope.setForm = function(form)
 	{
 		$scope.form = form;
-		console.log(form);
 	};
 
 	$scope.save = function()
