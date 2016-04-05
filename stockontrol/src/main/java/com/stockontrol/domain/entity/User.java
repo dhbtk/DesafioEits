@@ -87,11 +87,11 @@ public class User extends BaseEntity
 	{
 		this.profile = profile;
 	}
-	public Boolean isActive()
+	public Boolean getActive()
 	{
 		return active;
 	}
-	public void setActive(boolean active)
+	public void setActive(Boolean active)
 	{
 		this.active = active;
 	}

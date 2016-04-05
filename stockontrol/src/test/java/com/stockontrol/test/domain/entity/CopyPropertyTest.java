@@ -32,7 +32,7 @@ public class CopyPropertyTest
 		assertTrue(user2.getFullName().equals(fullName));
 		assertTrue(user2.getEmail().equals(email));
 		assertTrue(user2.getPassword().equals(password));
-		assertTrue(user2.isActive() == active);
+		assertTrue(user2.getActive() == active);
 		assertTrue(user2.getProfile().equals(profile));
 	}
 	

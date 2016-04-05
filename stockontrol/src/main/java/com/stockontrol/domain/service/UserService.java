@@ -30,7 +30,7 @@ public class UserService
 	@RemoteMethod
 	public User activate(User user)
 	{
-		if (user.isActive())
+		if (user.getActive())
 		{
 			throw new IllegalArgumentException("O usuário já está ativo.");
 		}
@@ -42,7 +42,7 @@ public class UserService
 	@RemoteMethod
 	public User deactivate(User user)
 	{
-		if (!user.isActive())
+		if (!user.getActive())
 		{
 			throw new IllegalArgumentException("O usuário já está inativo.");
 		}

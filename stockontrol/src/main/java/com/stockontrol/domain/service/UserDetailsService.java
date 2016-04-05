@@ -27,7 +27,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 			throw new UsernameNotFoundException("Email não encontrado: " + email);
 		}
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPasswordDigest(),
-				user.isActive(), true, true, true, getUserAuthorities(user));
+				user.getActive(), true, true, true, getUserAuthorities(user));
 	}
 
 	private List<GrantedAuthority> getUserAuthorities(User user)

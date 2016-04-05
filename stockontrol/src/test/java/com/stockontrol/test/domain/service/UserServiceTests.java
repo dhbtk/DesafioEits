@@ -27,7 +27,7 @@ public class UserServiceTests extends AbstractIntegrationTests
 		
 		user = userService.deactivate(user);
 		
-		assertFalse(user.isActive());
+		assertFalse(user.getActive());
 		
 		user = userService.activate(user);
 	}
@@ -38,7 +38,7 @@ public class UserServiceTests extends AbstractIntegrationTests
 	{
 		User user = userService.findByEmail("admin@teste.com");
 		assertNotNull(user);
-		assertTrue(user.isActive());
+		assertTrue(user.getActive());
 		
 		user = userService.deactivate(user);
 		
@@ -51,7 +51,7 @@ public class UserServiceTests extends AbstractIntegrationTests
 	{
 		User user = userService.findByEmail("admin@teste.com");
 		assertNotNull(user);
-		assertTrue(user.isActive());
+		assertTrue(user.getActive());
 		user = userService.activate(user); // explode joga arremessa
 	}
 	
@@ -61,14 +61,14 @@ public class UserServiceTests extends AbstractIntegrationTests
 	{
 		User user = userService.findByEmail("admin@teste.com");
 		assertNotNull(user);
-		if(user.isActive())
+		if(user.getActive())
 		{
 			user = userService.deactivate(user);
 		}
 		
 		user = userService.activate(user);
 		
-		assertTrue(user.isActive());
+		assertTrue(user.getActive());
 	}
 	
 	@FlywayTest

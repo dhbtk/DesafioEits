@@ -14,7 +14,6 @@
 		<convert converter="localDateTime" match="java.time.LocalDateTime" />
 		<convert converter="localDateTime" match="java.time.LocalDate" />
 		
-		
 		<convert converter="jsx3uri" match="jsx3.net.URIResolver" />
 		<convert converter="jsx3doc" match="jsx3.xml.CdfDocument" />
 
