@@ -54,7 +54,7 @@ Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvid
 {
 	var _currentUser = undefined, _authenticated = false;
 	return {
-		identityServicePresent: function()
+		identityPresent: function()
 		{
 			return angular.isDefined(_currentUser);
 		},
@@ -129,7 +129,7 @@ Stockontrol.config(function($mdThemingProvider, $stateProvider, $urlRouterProvid
 	{
 		$rootScope.toState = toState;
 
-		if(identityService.identityServicePresent())
+		if(identityService.identityPresent())
 		{
 			authorizationService.authorize();
 		}
