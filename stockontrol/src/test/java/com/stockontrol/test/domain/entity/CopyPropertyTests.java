@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import com.stockontrol.domain.entity.Batch;
 import com.stockontrol.domain.entity.User;
 
-public class CopyPropertyTest
+public class CopyPropertyTests
 {
 	@Test
 	public void shouldCopyUserProperties()

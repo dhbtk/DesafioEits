@@ -60,18 +60,7 @@ public class PredicateList
 	 */
 	public BooleanExpression getIntersection()
 	{
-		int i;
-		BooleanExpression predicate;
-		if (predicates.size() == 0)
-		{
-			return null;
-		} else
-		{
-			for (i = 1, predicate = predicates.get(0); i < predicates.size(); i++)
-			{
-				predicate = predicate.and(predicates.get(i));
-			}
-			return predicate;
-		}
+		BooleanExpression[] a = {};
+		return BooleanExpression.allOf(predicates.toArray(a));
 	}
 }
