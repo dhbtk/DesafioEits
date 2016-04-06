@@ -21,6 +21,7 @@ Stockontrol.controller('LoginController', function($scope, $http, $mdToast, $win
 {
 	$scope.model = {user: {}, loading: false};
 	$scope.fromLogout = $rootScope.fromLogout;
+	$scope.sessionExpired = $rootScope.sessionExpired;
 
 	$scope.handleLogIn = function()
 	{
@@ -37,6 +38,7 @@ Stockontrol.controller('LoginController', function($scope, $http, $mdToast, $win
 						identityService.authenticate(user);
 						$scope.model.loading = false;
 						$rootScope.fromLogout = false;
+						$rootScope.sessionExpired = false;
 						$state.go($rootScope.returnToState || 'batches');
 					},
 					errorHandler: function(a, b)

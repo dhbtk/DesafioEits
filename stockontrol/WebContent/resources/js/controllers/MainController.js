@@ -3,6 +3,7 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 	// defaults do DWR
 	dwr.engine.setTextHtmlHandler(function()
 	{
+		identityService.authenticate(null);
 		$state.go('login');
 	});
 
@@ -20,6 +21,16 @@ Stockontrol.controller('MainController',function($scope, $mdSidenav, $http, $sta
 		{
 			$scope.tasks--;
 		});
+	});
+
+	dwr.engine.setErrorHandler(function(msg, ex)
+	{
+		if(ex.javaClassName == "org.springframework.security.access.AccessDeniedException")
+		{
+			identityService.authenticate(null);
+			$rootScope.sessionExpired = true;
+			$state.go('login');
+		}
 	});
 
 	/*

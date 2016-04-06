@@ -13,6 +13,10 @@
 				<md-icon>info_outline</md-icon>
 				<span flex>Logout efetuado com sucesso.</span>
 			</div>
+			<div layout="row" ng-if="sessionExpired" layout-padding class="md-whiteframe-1dp">
+				<md-icon>warning</md-icon>
+				<span flex>Sua sessão expirou.</span>
+			</div>
 			<form layout="column" name="form" ng-submit="handleLogIn()">
 				<md-input-container>
 					<md-icon>email</md-icon>
